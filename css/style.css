@@ -361,7 +361,7 @@
   .slide-down-btn { display: none; }
   
   .headshot {
-    background-color: var(--cultured);
+    background-color: #D2DBDD;
     padding-block-start: calc(var(--section-padding) + 30px);
   }
   
@@ -467,6 +467,7 @@
     font-size: var(--fs-18);
     display: grid;
     gap: 15px;
+    background-color: #D2DBDD;
   }
   
   .workexp-item:not(:last-child) { border-block-end: 1px solid var(--black_10); }
@@ -481,7 +482,7 @@
     #CONTACT
   */
   
-  .contact { background-color: var(--cultured); }
+  .contact { background-color:#D2DBDD; }
   
   .contact-list { margin-block: 40px 50px; }
   
