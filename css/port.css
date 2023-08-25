@@ -142,9 +142,6 @@ li:hover img:nth-child(2n+1){
   transform: translateX(-65%) translateY(-75%) rotatez(-45deg);
 }
 @media (min-width:300px) { 
-  body{
-    font-size: 2.75vw;
-  }
   ul {
     grid-template-columns: repeat(2,1fr);
     grid-column-gap: 3vw;
@@ -156,9 +153,7 @@ li:hover img:nth-child(2n+1){
 }
 
 @media (min-width:600px) { 
-  body{
-    font-size: 1.95vw;
-  }
+  
   ul {
     grid-template-columns: repeat(3,1fr);
     grid-column-gap: 2vw;
@@ -170,9 +165,7 @@ li:hover img:nth-child(2n+1){
 }
 
 @media (min-width:900px) { 
-  body{
-    font-size: 1.5vw;
-  }
+ 
   ul {
     grid-template-columns: repeat(4,1fr);
     grid-column-gap: 1.5vw;
@@ -184,9 +177,7 @@ li:hover img:nth-child(2n+1){
 }
 
 @media (min-width:1200px) { 
-  body{
-    font-size: 1.25vw;
-  }
+ 
   ul {
     grid-template-columns: repeat(5,1fr);
     grid-column-gap: 1vw;
@@ -198,9 +189,7 @@ li:hover img:nth-child(2n+1){
 }
 
 @media (min-width:1500px) { 
-  body{
-    font-size: 1vw;
-  }
+  
   ul {
     grid-template-columns: repeat(6,1fr);
     grid-column-gap: 1vw;
