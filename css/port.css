@@ -46,13 +46,6 @@
 
   @import url('https://fonts.googleapis.com/css?family=Raleway');
 
-body{
-  background: #5c746a;
-  background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAAIElEQVQoU2NcWuD6v2nfFwZcgFFdz/I/TlkGBobhoQAAGHYPccmxFlIAAAAASUVORK5CYII=) repeat;
-  color: #1c1c1c;
-  font-family: 'Raleway', sans-serif;
-  font-size: 5vw;
-}
 ul {
   display: grid;
   grid-template-columns: repeat(1,1fr);
