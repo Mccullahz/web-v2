@@ -18,9 +18,7 @@ const addEventOnElem = function (elem, type, callback) {
 
 
 
-/**
- * toggle navbar
- */
+/*** toggle navbar ***/
 
 const navbar = document.querySelector("[data-navbar]");
 const navLinks = document.querySelectorAll("[data-nav-link]");
@@ -42,9 +40,7 @@ addEventOnElem(navLinks, "click", closeNavbar);
 
 
 
-/**
- * header active
- */
+/*** scrolling header ***/
 
 const header = document.querySelector("[data-header]");
 
