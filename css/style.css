@@ -328,7 +328,7 @@
     top: calc(100% + 1px);
     left: 0;
     width: 100%;
-    background-color: var(--white);
+    background-color: #D2DBDD;
     padding-inline: 30px;
     max-height: 0;
     overflow: hidden;
