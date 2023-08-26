@@ -124,7 +124,7 @@
   }
   
   body {
-    background-color: var(--white);
+    background-color: #D2DBDD;
     color: var(--sonic-silver);
     font-size: 1.6rem;
     line-height: 1.75;
@@ -883,7 +883,7 @@
   
   
   
-  
+
   
   /*
    responsive for larger than 1200px screen
