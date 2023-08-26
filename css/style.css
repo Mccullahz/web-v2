@@ -140,7 +140,7 @@
     height: 2px;
   }
   
-  body::-webkit-scrollbar-track { background-color: var(--white); }
+    body::-webkit-scrollbar-track { background-color: #D2DBDD; }
   
   body::-webkit-scrollbar-thumb {
     background-color: var(--spanish-gray);
