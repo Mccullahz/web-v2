@@ -124,7 +124,7 @@
   }
   
   body {
-    background-color: var(--white);
+    background-color: #D2DBDD;
     color: var(--sonic-silver);
     font-size: 1.6rem;
     line-height: 1.75;
@@ -140,11 +140,11 @@
     height: 2px;
   }
   
-  body::-webkit-scrollbar-track { background-color: var(--white); }
+    body::-webkit-scrollbar-track { background-color: #D2DBDD; }
   
   body::-webkit-scrollbar-thumb {
     background-color: var(--spanish-gray);
-    border: 3px solid var(--white);
+    border: 3px solid #D2DBDD;
     border-radius: 50px;
   }
   
@@ -284,7 +284,7 @@
     top: 0;
     left: 0;
     width: 100%;
-    background-color: var(--white);
+    background-color: #D2DBDD;
     padding-block: 15px;
     border-block-end: 1px solid var(--black_10);
     z-index: 4;
@@ -328,7 +328,7 @@
     top: calc(100% + 1px);
     left: 0;
     width: 100%;
-    background-color: var(--white);
+    background-color: #D2DBDD;
     padding-inline: 30px;
     max-height: 0;
     overflow: hidden;
@@ -731,7 +731,7 @@
     }
   
     .header.active {
-      background-color: var(--white);
+      background-color: #D2DBDD;
       padding-block: 20px;
     }
   
@@ -885,7 +885,7 @@
   
   
   
-  
+
   
   /*
    responsive for larger than 1200px screen
