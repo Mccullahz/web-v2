@@ -555,6 +555,8 @@
   */
   
   .footer {
+    position: fixed;
+    bottom: 0;
     background-color: var(--black);
     color: var(--white);
     text-align: center;
