@@ -36,7 +36,15 @@
   }
 
 
-
+  .footer {
+    bottom: 0;
+    background-color: var(--black);
+    color: var(--white);
+    text-align: center;
+    padding-block: 30px;
+    width: 100%;
+    display: flex;
+  }
 
 
 
