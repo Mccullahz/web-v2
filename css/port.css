@@ -36,39 +36,18 @@
   }
 
 
+  .footer {
+    position: fixed;
+    bottom: 0;
+    background-color: var(--black);
+    color: var(--white);
+    text-align: center;
+    padding-block: 30px;
+    width: 100%;
+    display: flex;
+  }
 
 
-   /*
-     FOOTER
-    */
-  
-    .footer .container {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-  
-
-    .footer {
-      position: absolute; 
-      bottom: 0;
-      background-color: var(--black);
-      color: var(--white);
-      text-align: center;
-      padding-block: 30px;
-      width: 100%;
-      display: flex;
-    }
-    
-    .social-list {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-    }
-    
-    .social-link { font-size: 20px; }
-    
-    
 
 
 
