@@ -1,7 +1,3 @@
 [submodule "web-v2"]
 path = web-v2
 url = https://github.com/Mccullahz/web-v2
-
-[submodule "react-app"]
-path = projects/react-app
-url = https://github.com/Mccullahz/web-v2/blob/main/projects/react-app/
