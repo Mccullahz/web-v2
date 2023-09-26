@@ -1,0 +1,26 @@
+.coffee-item {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin: 10px;
+    text-align: center;
+  }
+  
+  .coffee-item img {
+    width: 150px;
+    height: 150px;
+  }
+  
+  .coffee-item h2 {
+    margin: 0;
+    padding: 10px 0;
+  }
+  
+  .item-description,
+  .item-price {
+  display: none;
+  }
+
+  .coffee-item:hover .item-description,
+  .coffee-item:hover .item-price {
+  display: block;
+  }
