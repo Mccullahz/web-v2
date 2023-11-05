@@ -8,6 +8,49 @@
   <title>YouTube Automation Preview</title>
   <!-- Prism CSS -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism.min.css" rel="stylesheet" />
+  <style>
+    .terminal {
+      background-color: #000;
+      color: #0F0;
+      padding: 10px;
+      border-radius: 5px;
+      font-family: 'Courier New', Courier, monospace;
+    }
+  </style>
+</head> 
+
+<body>
+  <!-- code block -->
+  <pre class="terminal"><code class="language-python">
+import os
+import openai
+from googleapiclient.discovery import build
+from googleapiclient.http import MediaFileUpload
+from google_auth_oauthlib.flow import InstalledAppFlow
+import time
+import requests
+import random
+import subprocess
+import shlex
+
+openai.api_key = '/secret/oak'
+...
+</code></pre>
+
+  <!-- Include Prism JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script> <!-- Python highlighting -->
+</body>
+</html><!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YouTube Automation Preview</title>
+  <!-- Prism CSS -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism.min.css" rel="stylesheet" />
 </head> 
 
 
