@@ -83,7 +83,7 @@ while True:
         chosen_music = random.choice(music_files)
 
         # Create the ffmpeg command to add background music
-        ffmpeg_command = f'ffmpeg -i output.mp4 -i {chosen_music} -c copy -shortest final_output.mp4'
+        ffmpeg_command = ffmpeg -i output.mp4 -i {chosen_music} -c copy -shortest final_output.mp4'
         print(f"Running command: {ffmpeg_command}")  # Print the command before executing it
         result = subprocess.run(ffmpeg_command, shell=True, capture_output=True, text=True)
         print(f"Return code: {result.returncode}")  # Print the return code
