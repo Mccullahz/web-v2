@@ -847,9 +847,10 @@
       position: absolute;
       top: 0;
       right: 50px;
-      width: 410px;
-      height: 620px;
+      width: 90%;
+      height: 600px;
       background-image: url('../images/education-2.jpg');
+
       background-repeat: no-repeat;
       background-size: contain;
       background-position: 105%;
