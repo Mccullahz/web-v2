@@ -48,10 +48,10 @@
 
 p {
   position: relative;
-  left: 0%;
+  left: -0%;
   /* Remove the margin-left and set width to 100% to span the text across the window */
   text-align: left;
-  font-size: 1.25em;
+  font-size: 1.0em;
   font-family: monospace;
   white-space: normal;
   overflow: hidden;
@@ -60,6 +60,7 @@ p {
 span {
   color: #fff;
   font-weight: bold;
+  width: 100%;
 }
 
 .line1 {
