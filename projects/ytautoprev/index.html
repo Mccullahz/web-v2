@@ -5,129 +5,140 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>YouTube Automation Preview</title>
-  <!-- Prism CSS -->
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism.min.css" rel="stylesheet" />
-  <style>
-    .terminal {
-      background-color: #000 !important;
-      color: #0F0 !important;
-      padding: 10px ;
-      border-radius: 5px !important;
-      font-family: 'Courier New', Courier, monospace !important;
-    }
-  </style>
-</head> 
+  <title>Zylar Mccullah - Portfolio</title>
+
+  <!--- favicons --->
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <!--- css link --->
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="term.css">
+
+  <!--- google fonts --->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Mulish&family=Poppins:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
+
+  <!--- preload images --->
+
+
+</head>
 
 <body>
-  <!-- code block -->
-  <pre class="terminal"><code class="language-python">
-import os
-import openai
-from googleapiclient.discovery import build
-from googleapiclient.http import MediaFileUpload
-from google_auth_oauthlib.flow import InstalledAppFlow
-import time
-import requests
-import random
-import subprocess
-import shlex
 
-openai.api_key = '/secret/oak'
+  <!--- #HEADER --->
 
-# Initialize GPT-3
-def generate_response(prompt):
-    response = openai.Completion.create(
-        model="text-davinci-003",
-        prompt=prompt,
-        max_tokens=50
-    )
-    return response.choices[0].text.strip()
+  <header class="header" data-header>
+    <div class="container">
 
-# Authenticate / create an API client
-client_secrets_file = "client_secret.json"  # client secrets file path
-scopes = ['https://www.googleapis.com/auth/youtube.upload']
+      <a href="./index.html" class="logo">McCullah</a>
 
-flow = InstalledAppFlow.from_client_secrets_file(client_secrets_file, scopes)
-credentials = flow.run_local_server()
-youtube = build('youtube', 'v3', credentials=credentials)
+      <nav class="navbar" data-navbar>
+        <ul class="navbar-list">
+
+          <li>
+            <a href="/index.html" class="navbar-link" data-nav-link>Home</a>
+          </li>
+            
+          <li>
+            <a href="/port.html" class="navbar-link" data-nav-link>Portfolio</a>
+          </li>
+
+          <li>
+            <a href="/index.html/#contact" class="navbar-link" data-nav-link>Contact</a>
+          </li>
+
+        </ul>
+      </nav>
+
+      <button class="nav-toggle-btn" aria-label="toggle menu" data-nav-toggler>
+        <span class="line line-1"></span>
+        <span class="line line-2"></span>
+        <span class="line line-3"></span>
+      </button>
+
+    </div>
+  </header>
+
+<main>
 
 
-while True:
-    try:
-        # Generate idea
-        video_idea_prompt = "Generate a ##INSERT PROMPT"
-        video_idea = generate_response(video_idea_prompt).strip()
 
-        # Generate title, description, and tags
-        video_title_prompt = "Generate a title for a YouTube short about " + video_idea
-        video_title = generate_response(video_title_prompt).strip()
+  <div class=fakeMenu>
+    <div class="fakeButtons fakeClose"></div>
+    <div class="fakeButtons fakeMinimize"></div>
+    <div class="fakeButtons fakeZoom"></div>
+  </div>
+  <div class="fakeScreen">
+    <p class="line1">user@root$ python3 yt-auto<span class="cursor1">_</span></p>
+    <p class="line2">> dumping python script... <span class="cursor2">_</span></p>
+    <p class="line3">> Error: Maximun File Length Exceeded, please see source code at: https://github.com/Mccullahz/short-yt-auto
 
-        video_description_prompt = "Generate a description for a YouTube short about " + video_idea
-        video_description = generate_response(video_description_prompt).strip()
+  </div>
 
-        video_tags_prompt = "Generate tags for a YouTube short about " + video_idea
-        video_tags = generate_response(video_tags_prompt).strip()
 
-        # Choose a random video file
-        video_files = ['/PATH/TO/VIDEOS']
-        chosen_video = random.choice(video_files)
 
-        # Generate the text clip with the generated text
-        generated_text = video_idea.replace('"', '\\"')  # Escape any existing double quotes in the text      
-        text_overlay = f'drawtext=text="{generated_text}":fontsize=60:fontcolor=white:x=(w-text_w)/2:y=(h-text_h)/2:box=1:boxcolor=black@0.5'
 
-        # Create the ffmpeg command to add text overlay
-        ffmpeg_command = f'ffmpeg -i {chosen_video} -vf "{text_overlay}" -codec:v libx264 -crf 18 output.mp4'
-        print(f"Running command: {ffmpeg_command}")  # Print the command before executing it
-        result = subprocess.run(ffmpeg_command, shell=True, capture_output=True, text=True)
-        print(f"Return code: {result.returncode}")  # Print the return code
-        print(result.stdout)
-        print(result.stderr)
 
-        # Choose a random music file
-        music_files = ['/PATH/TO/MUSIC']
-        chosen_music = random.choice(music_files)
 
-        # Create the ffmpeg command to add background music
-        ffmpeg_command = 'ffmpeg -i output.mp4 -i {chosen_music} -c copy -shortest final_output.mp4'
-        print(f"Running command: {ffmpeg_command}")  # Print the command before executing it
-        result = subprocess.run(ffmpeg_command, shell=True, capture_output=True, text=True)
-        print(f"Return code: {result.returncode}")  # Print the return code
-        print(result.stdout)
-        print(result.stderr)
 
-        # Create a media file upload object and initialize the request to upload the video file
-        media = MediaFileUpload('final_output.mp4', chunksize=-1, resumable=True)
-        request = youtube.videos().insert(
-            part="snippet,status",
-            body={
-                "snippet": {
-                    "title": video_title,
-                    "description": video_description,
-                    "tags": video_tags
-                },
-                "status": {
-                    "privacyStatus": "public"
-                }
-            },
-            media_body=media
-        )
 
-        # Execute and upload
-        response = request.execute()
-        print(response)
 
-        # Avoid hitting rate limits, might need to adjust this
-        time.sleep(10)
+</main>
 
-    except Exception as e:
-        print(f"An error occurred: {e}")
-        time.sleep(10)
-</code></pre>
 
-  <!-- Include Prism JS -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script> <!-- Python highlighting -->
 </body>
+<br>
+
+
+
+
+
+
+
+  <!--- JS LINK FOR NAV --->
+  <script src="script.js" defer></script>
+
+  <!--- ionicon link --->
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+
+
+
+
+
+</body>
+
+
+<!--- #FOOTER --->
+
+  <footer class="footer">
+    <div class="container">
+
+      <ul class="social-list">
+
+
+
+        <li>
+          <a href="https://www.linkedin.com/in/zylar-mccullah-b4654420a/" class="social-link">
+            <ion-icon name="logo-linkedin"></ion-icon>
+          </a>
+        </li>
+        <li>
+          <a href="https://github.com/Mccullahz" class="social-link">
+            <ion-icon name="logo-github"></ion-icon>
+          </a>
+        </li>
+
+      </ul>
+
+    </div>
+  </footer>
+
+
+
 </html>
