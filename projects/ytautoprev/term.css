@@ -51,7 +51,7 @@ p {
   left: -0%;
   /* Remove the margin-left and set width to 100% to span the text across the window */
   text-align: left;
-  font-size: 1.0em;
+  font-size: 1.2em;
   font-family: monospace;
   white-space: normal;
   overflow: hidden;
