@@ -109,6 +109,37 @@ span {
   animation: blink 1s 8.5s 2 forwards;
 }
 
+.line4 {
+  color: #E09690;
+  -webkit-animation: type .5s 8.5s steps(20, end) forwards;
+  -moz-animation: type .5s 8.5s steps(20, end) forwards;
+  -o-animation: type .5s 8.5s steps(20, end) forwards;
+  animation: type .5s 8.5s steps(20, end) forwards;
+}
+
+.cursor4 {
+  -webkit-animation: blink 1s 9.5s 2 forwards;
+  -moz-animation: blink 1s 9.5s 2 forwards;
+  -o-animation: blink 1s 9.5s 2 forwards;
+  animation: blink 1s 9.5s 2 forwards;
+}
+
+.line5 {
+  color: #E09690;
+  -webkit-animation: type .5s 9.5s steps(20, end) forwards;
+  -moz-animation: type .5s 9.5s steps(20, end) forwards;
+  -o-animation: type .5s 9.5s steps(20, end) forwards;
+  animation: type .5s 9.5s steps(20, end) forwards;
+}
+
+.cursor5 {
+  -webkit-animation: blink 1s 10.5s 2 forwards;
+  -moz-animation: blink 1s 10.5s 2 forwards;
+  -o-animation: blink 1s 10.5s 2 forwards;
+  animation: blink 10s 10.5s 2 forwards;
+}
+
+
 
 
 @-webkit-keyframes blink {
