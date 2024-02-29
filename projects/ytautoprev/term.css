@@ -136,7 +136,7 @@ span {
   -webkit-animation: blink 1s 10.5s 2 forwards;
   -moz-animation: blink 1s 10.5s 2 forwards;
   -o-animation: blink 1s 10.5s 2 forwards;
-  animation: blink 10s 10.5s 2 forwards;
+  animation: blink 1s 10.5s 2 forwards;
 }
 
 
