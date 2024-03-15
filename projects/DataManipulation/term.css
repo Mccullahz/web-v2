@@ -1,0 +1,42 @@
+.code-showcase {
+    background-color: #1e1e1e; /* Dark background */
+    padding: 20px;
+    width: 75%;
+    border-radius: 8px;
+    margin: 20px 0;
+    /* center this .code-showcase*/
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#code-block {
+    color: #d4d4d4; /* Default text color */
+    font-family: 'Fira Code', 'Consolas', monospace;
+    white-space: pre-wrap;
+    word-break: break-word;
+    overflow-x: auto;
+    line-height: 1.5;
+    font-size: 16px;
+}
+
+/* Style for keywords */
+#code-block .keyword {
+    color: #569cd6;
+}
+
+/* Style for strings */
+#code-block .string {
+    color: #ce9178;
+}
+
+/* Style for comments */
+#code-block .comment {
+    color: #6A9955;
+}
+
+/* Style for types and predeclared identifiers */
+#code-block .type, #code-block .predeclared {
+    color: #4EC9B0;
+}
+
+/* Optional: Add more specific styles for other elements like functions, numbers, etc. */
