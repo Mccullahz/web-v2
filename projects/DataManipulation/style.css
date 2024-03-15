@@ -349,207 +349,8 @@
     font-family: var(--ff-poppins);
     font-weight: var(--fw-500);
   }
-  
-  
-  
-  
-  
-  /*
-    #headshot
-  */
-  
-  .slide-down-btn { display: none; }
-  
-  .headshot {
-    background-color: #D2DBDD;
-    padding-block-start: calc(var(--section-padding) + 30px);
-  }
-  
-  .headshot-banner {
-    margin-block-end: 60px;
-    max-height: 500px;
-    border-radius: var(--radius-10);
-    margin-inline: auto;
-  }
-  
-  .headshot-title { margin-block: 10px 20px; }
-  
-  .headshot-list { margin-block-end: 25px; }
-  
-  .headshot-list .list-link {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    gap: 12px;
-    color: var(--black);
-    font-size: var(--fs-17);
-    padding-block: 6px;
-  }
-  
-  .headshot-list .list-link:is(:hover, :focus) { color: var(--theme-color); }
-  
-  .headshot-list .list-link .span,
-  .headshot-list .list-link ion-icon { transition: var(--transition); }
-  
-  .headshot-list .list-link:is(:hover, :focus) ion-icon { transform: rotate(-45deg); }
-  
-  .exp-list .list-item {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    gap: 15px;
-    font-family: var(--ff-poppins);
-    line-height: 1.4;
-  }
-  
-  .exp-list .list-item:not(:last-child) { margin-block-end: 15px; }
-  
-  .exp-list .strong {
-    color: var(--black);
-    font-size: var(--fs-35);
-    font-weight: var(--fw-600);
-  }
-  
-  .exp-list .span { font-size: var(--fs-13); }
-  
-  
-  
-  
-  
-  /*
-    #SKILLS
-  */
-  
-  .skills-banner { display: none; }
-  
-  .skills { background-color: var(--black); }
-  
-  .skills .section-title { color: var(--white); }
-  
-  .skills .section-text {
-    color: var(--gray-x-11);
-    margin-block: 60px 65px;
-  }
-  
-  .skills-item:not(:last-child) { margin-block-end: 60px; }
-  
-  .skills-list .wrapper {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    color: var(--white);
-    font-family: var(--ff-poppins);
-    margin-block-end: 60px;
-  }
-  
-  .skill-title {
-    font-size: unset;
-    font-weight: unset;
-  }
-  
-  .skills .progress-box { background-color: var(--white_10); }
-  
-  .skills .progress {
-    background-color: var(--theme-color);
-    height: 8px;
-  }
-  
-  
-  
-  
-  
-  /*
-    #workexp
-  */
-  
-  .workexp-item {
-    padding-block: 20px;
-    font-size: var(--fs-18);
-    display: grid;
-    gap: 15px;
-    background-color: #D2DBDD;
-  }
-  
-  .workexp-item:not(:last-child) { border-block-end: 1px solid var(--black_10); }
-  
-  .workexp-item .item-period { font: unset; }
-  
-  .workexp-item .item-title { color: var(--black); }
-  
-  
-  
-  /*
-    #CONTACT
-  */
-  
-  .contact { background-color:#D2DBDD; }
-  
-  .contact-list { margin-block: 40px 50px; }
-  
-  .contact-item:not(:last-child) { margin-block-end: 22px; }
-  
-  .contact-item {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-  
-  .contact-item ion-icon {
-    color: var(--theme-color);
-    font-size: 22px;
-    flex-shrink: 0;
-    --ionicon-stroke-width: 25px;
-  }
-  
-  .contact-link {
-    color: var(--black);
-    font-family: var(--ff-poppins);
-  }
-  
-  .input-field {
-    color: var(--black);
-    font-family: var(--ff-poppins);
-    font-size: var(--fs-13);
-    letter-spacing: 1.4px;
-    border: 1px solid var(--black_10);
-    padding: 10px;
-    margin-block-end: 30px;
-    outline: none;
-    transition: border var(--transition);
-  }
-  
-  .input-field:focus { border-color: var(--black_30); }
-  
-  textarea.input-field {
-    resize: vertical;
-    min-height: 45px;
-    height: 45px;
-    max-height: 100px;
-  }
-  
-  .submit-btn {
-    background-color: var(--theme-color);
-    color: var(--white);
-    width: 100%;
-    font-size: var(--fs-17);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 8px;
-    padding: 8px 20px;
-    transition: var(--transition);
-  }
-  
-  .submit-btn:is(:hover, :focus) { background-color: var(--black); }
-  
-  .submit-btn ion-icon { transition: var(--transition); }
-  
-  .submit-btn:is(:hover, :focus) ion-icon { transform: rotate(-45deg); }
-  
-  
-  
-  
-  
+   
+
   /*
     #FOOTER
   */
@@ -592,19 +393,7 @@
   
     .scrollbar-item { min-width: calc(50% - 20px); }
   
-  
-  
-    /*
-     headshot
-   */
-  
-    .exp-list {
-      display: flex;
-      justify-content: flex-start;
-      gap: 50px;
-    }
-  
-    .exp-list .list-item:not(:last-child) { margin-block-end: 0; }
+
   
   
   }
@@ -649,16 +438,6 @@
       right: 30px;
     }
   
-  
-  
-    /*
-     workexp
-    */
-  
-    .workexp-item {
-      grid-template-columns: repeat(3, 1fr);
-      gap: 30px;
-    }
   
   
   
@@ -769,58 +548,6 @@
   
   
   
-    /*
-     headshot
-   */
-  
-    .headshot {
-      --section-padding: 70px;
-      padding-block-start: calc(var(--section-padding) + 60px);
-      min-height: 100vh;
-      display: grid;
-      align-items: center;
-    }
-  
-    .headshot .container {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      align-items: center;
-      gap: 150px;
-    }
-  
-    .headshot-banner {
-      order: 1;
-      width: 250px;
-      margin-inline: auto 80px;
-      margin-block-end: 0;
-      overflow: visible;
-      transform: rotate(7deg);
-    }
-  
-    .headshot-banner .img-cover { border-radius: inherit; }
-  
-    .headshot-banner::before {
-      bottom: -40px;
-      left: -95px;
-      width: 90%;
-      height: 100%;
-      background-color: var(--theme-color);
-      z-index: -1;
-      transform: rotate(-15deg);
-      border-radius: var(--radius-10);
-    }
-  
-    .exp-list .span { --fs-13: 1.4rem; }
-  
-    .slide-down-btn {
-      display: block;
-      color: var(--black);
-      font-size: 40px;
-      max-width: max-content;
-      margin-block-start: 40px;
-      transition: var(--transition);
-      animation: scrollDown 2s ease infinite;
-    }
   
     .slide-down-btn:is(:hover, :focus) { color: var(--theme-color); }
   
@@ -829,65 +556,8 @@
       30% { transform: translateY(20px); }
     }
   
-  
-  
-    /*
-     SKILLS
-   */
-  
-    .skills .container {
-      position: relative;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 150px;
-    }
-  
-    .skills-banner {
-      display: block;
-      position: absolute;
-      top: 0;
-      right: 50px;
-      width: 90%;
-      height: 600px;
-      background-image: url('../images/education-2.jpg');
 
-      background-repeat: no-repeat;
-      background-size: contain;
-      background-position: 105%;
-      background-attachment: fixed;
-      overflow: hidden;
-    }
-  
-  
-  
-    /*
-     workexp
-   */
-  
-    .workexp-item { padding-block: 30px; }
-  
-  
-  
-    
-  
-    /*
-     CONTACT
-   */
-  
-    .contact .container {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      align-items: center;
-      gap: 200px;
-    }
-  
-    .contact-list { margin-block-end: 0; }
-  
   }
-  
-  
-  
-
   
   /*
    responsive for larger than 1200px screen
@@ -919,13 +589,4 @@
   
     .header .container { max-width: unset; }
   
-    
-  
-    /*
-     headshot
-    */
-  
-    .headshot-banner { width: 275px; }
-  
   }
-
