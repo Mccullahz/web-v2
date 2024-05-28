@@ -1,3 +1,39 @@
+.code-showcase {
+    background-color: #1e1e1e; /* Dark background */
+    padding: 20px;
+    width: 75%;
+    border-radius: 8px;
+    margin: 20px 0;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#code-block {
+    color: #d4d4d4; /* Default text color */
+    font-family: 'Fira Code', 'Consolas', monospace;
+    white-space: pre-wrap;
+    word-break: break-word;
+    overflow-x: auto;
+    line-height: 1.5;
+    font-size: 16px;
+}
+
+#code-block .keyword {
+    color: #569cd6;
+}
+
+#code-block .string {
+    color: #ce9178;
+}
+
+#code-block .comment {
+    color: #6A9955;
+}
+
+#code-block .type, #code-block .predeclared {
+    color: #4EC9B0;
+}
+
 
 .fakeButtons {
     height: 10px;
