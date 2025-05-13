@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zylar Mccullah - Portfolio</title>
+
+  <!--- favicons --->
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <!--- css link --->
+  <link rel="stylesheet" href="style.css">
+
+  <!--- google fonts --->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Mulish&family=Poppins:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
+
+  <!--- preload images --->
+
+
+</head>
+
+<body>
+
+  <!--- #HEADER --->
+
+  <header class="header" data-header>
+    <div class="container">
+
+      <a href="/index.html" class="logo">McCullah</a>
+
+      <nav class="navbar" data-navbar>
+        <ul class="navbar-list">
+
+          <li>
+            <a href="/index.html" class="navbar-link" data-nav-link>Home</a>
+          </li>
+            
+          <li>
+            <a href="/port.html" class="navbar-link" data-nav-link>Portfolio</a>
+          </li>
+
+          <li>
+            <a href="/index.html/#contact" class="navbar-link" data-nav-link>Contact</a>
+          </li>
+
+        </ul>
+      </nav>
+
+      <button class="nav-toggle-btn" aria-label="toggle menu" data-nav-toggler>
+        <span class="line line-1"></span>
+        <span class="line line-2"></span>
+        <span class="line line-3"></span>
+      </button>
+
+    </div>
+  </header>
+
+<main>
+
+
+  <!--- lms --->
+ 
+    <section class="section lms" id="home" aria-label="lms">
+        <div class="container">
+          <div class="lms-content"> 
+            <figure class="" style="--width: 640; --height: 440;">
+              <img src="/images/lmsfp.jpg" width="640" height="440" alt="LMS-cover" class="img-cover">
+            </figure>
+
+            <p class="section-subtitle">Object Orientation Final Project</p>
+
+            <h1 class="h1 lms-title">Library Management System</h1>
+
+            <ul class="lms-list">
+
+<!--- descripton --->
+
+<section class="section description" id="description" aria-label="description">
+    <div class="container">
+
+      <p class="section-subtitle">Description</p>
+
+      <h2 class="h3 section-title">This project was completed in CS3700 - Object Orientation</h3>
+        <p class="p section-title"> 
+            This is the final project for the course and was the largest project that we have completed this far inside of the computer science courses at Indiana Tech.
+The task of this project is to design a Library Management System (LMS) that stores, retrieves, edits, and deletes information. To complete this project we utilized the learned Java OOP concepts and principles, and also 
+utilized MySQL inside of a docker container running on Ubuntu Linux.
+
+The portion that I took the most initiative to complete was the database portion of the project. I was responsible for creating the database schema, and also writing the SQL statements to perform the CRUD operations. I will mainly be focusing on the going over the database portion of the project in this article.
+</p>
+
+      </div>
+
+<!--- db outline --->
+
+<section class="section db-access" id="db-access" aria-label="db-access">
+    <div class="container">
+
+      <p class="section-subtitle">Database Access</p>
+
+      <h2 class="h3 section-title">For obvious reasons I am redacting credentials and addresses.</h3>
+        <p class="p section-title"> 
+            ## Access Control: <br>
+            - Server Address: 10.10.10.10:3306 <br>
+            - Software: MySQL Server - Docker <br>
+            - User: User <br>
+            - Password: Password <br>
+            - Default Database: LMS <br>
+            
+            ## Docker Configuration
+            Quite simple configuration, Docker Compose file, SQL script to create database and tables, no inserts.
+            
+            Docker Compose File: <br>
+            <pre>
+            version: '3.7'
+            
+            services:
+              mysql:
+                image: mysql
+                restart: always
+                ports:
+                        - "3306:3306"
+                environment:
+                  MYSQL_ROOT_PASSWORD: blank
+                volumes:
+                  - ./createdb.sql:/docker-entrypoint-initdb.d/createdb.sql
+            
+            </pre>
+</p>
+
+      </div>
+
+
+
+      <!--- descripton --->
+
+<section class="section sql" id="sql" aria-label="sql">
+    <div class="container">
+
+      <p class="section-subtitle">SQL</p>
+
+      <h2 class="h3 section-title">This is the SQL script used to create the general structure of the database</h3>
+        <p class="p section-title"> 
+<pre>   
+
+DROP TABLE IF EXISTS Magazine;
+DROP TABLE IF EXISTS ResearchReport;
+DROP TABLE IF EXISTS JournalPaper;
+DROP TABLE IF EXISTS ConferencePaper;
+DROP TABLE IF EXISTS Dissertation;
+DROP TABLE IF EXISTS Thesis;
+DROP TABLE IF EXISTS Book;
+DROP TABLE IF EXISTS Item;
+DROP TABLE IF EXISTS Committee;
+DROP TABLE IF EXISTS Department;
+DROP TABLE IF EXISTS Publisher;
+DROP TABLE IF EXISTS Author;
+
+CREATE TABLE IF NOT EXISTS Author (
+    author_id INT PRIMARY KEY,
+    first_name VARCHAR(255),
+    last_name VARCHAR(255)
+);
+
+CREATE TABLE IF NOT EXISTS Publisher(
+    publisher_id INT PRIMARY KEY,
+    publisher_name VARCHAR(255)
+);
+
+CREATE TABLE IF NOT EXISTS Department (
+    department_id INT PRIMARY KEY,
+    department_name VARCHAR(255)
+);
+
+CREATE TABLE IF NOT EXISTS Committee (
+    committee_id INT PRIMARY KEY,
+    committee_member_name VARCHAR(255)
+);
+
+CREATE TABLE IF NOT EXISTS Item (
+    item_id INT PRIMARY KEY,
+    title VARCHAR(255),
+    publication_year INT,
+    author_id INT,
+    publisher_id INT,
+    FOREIGN KEY (author_id) REFERENCES Author(author_id),
+    FOREIGN KEY (publisher_id) REFERENCES Publisher(publisher_id)
+);
+
+CREATE TABLE IF NOT EXISTS Book (
+    book_id INT PRIMARY KEY,
+    edition_number INT,
+    item_id INT,
+    FOREIGN KEY (item_id) REFERENCES Item(item_id)
+);
+
+CREATE TABLE IF NOT EXISTS Thesis (
+    thesis_id INT PRIMARY KEY,
+    item_id INT,
+    department_id INT,
+    committee_id INT,
+    FOREIGN KEY (item_id) REFERENCES Item(item_id),
+    FOREIGN KEY (department_id) REFERENCES Department(department_id),
+    FOREIGN KEY (committee_id) REFERENCES Committee(committee_id)
+);
+
+CREATE TABLE IF NOT EXISTS Dissertation (
+    dissertation_id INT PRIMARY KEY,
+    item_id INT,
+    department_id INT,
+    committee_id INT,
+    FOREIGN KEY (item_id) REFERENCES Item(item_id),
+    FOREIGN KEY (department_id) REFERENCES Department(department_id),
+    FOREIGN KEY (committee_id) REFERENCES Committee(committee_id)
+);
+
+CREATE TABLE IF NOT EXISTS ConferencePaper (
+    conference_paper_id INT PRIMARY KEY,
+    conference_name VARCHAR(255),
+    location VARCHAR(255),
+    period VARCHAR(255),
+    item_id INT,
+    details TEXT,  -- Additional field for more details
+    FOREIGN KEY (item_id) REFERENCES Item(item_id)
+);
+
+CREATE TABLE IF NOT EXISTS JournalPaper (
+    journal_paper_id INT PRIMARY KEY,
+    journal_name VARCHAR(255),
+    item_id INT,
+    FOREIGN KEY (item_id) REFERENCES Item(item_id)
+);
+
+CREATE TABLE IF NOT EXISTS ResearchReport (
+    research_report_id INT PRIMARY KEY,
+    item_id INT,
+    FOREIGN KEY (item_id) REFERENCES Item(item_id)
+);
+
+CREATE TABLE IF NOT EXISTS Magazine (
+    magazine_id INT PRIMARY KEY,
+    item_id INT,
+    FOREIGN KEY (item_id) REFERENCES Item(item_id)
+);
+
+INSERT INTO Author VALUES (2, 'Zylar', 'McCullah');
+
+
+INSERT INTO Publisher VALUES (1, 'Pearson');
+INSERT INTO Publisher VALUES (2, 'Springer');
+INSERT INTO Publisher VALUES (3, 'McGraw Hill');
+
+INSERT INTO Department VALUES (1, 'Computer Science');
+INSERT INTO Department VALUES (2, 'Physics');
+INSERT INTO Department VALUES (3, 'History');
+
+INSERT INTO Committee VALUES (1, 'John Doe');
+INSERT INTO Committee VALUES (2, 'Jane Smith');
+INSERT INTO Committee VALUES (3, 'Alice Johnson');
+
+INSERT INTO Item VALUES (1, 'Introduction to Algorithms', 2020, 1, 1);
+INSERT INTO Item VALUES (2, 'Quantum Mechanics', 2019, 2, 2);
+INSERT INTO Item VALUES (3, 'World History', 2018, 3, 3);
+
+INSERT INTO Book VALUES (1, 3, 1);
+
+INSERT INTO Thesis VALUES (1, 2, 2, 2);
+
+INSERT INTO Dissertation VALUES (1, 3, 3, 3);
+
+INSERT INTO ConferencePaper VALUES (123, 'Tech Conference', 'New York', '2021', 1, 'details');
+
+INSERT INTO JournalPaper VALUES (1, 'Journal of Advanced Physics', 2);
+
+INSERT INTO ResearchReport VALUES (1, 3);
+</p>
+
+      </div>
+
+      <!--- Java --->
+
+      <section class="section-java" id="java" aria-label="java">
+        <div class="container">
+    
+          <p class="section-subtitle">Java</p>
+    
+          <h2 class="h3 section-title">And here is a little code snippet from the DatabaseUtil class, this is how you would implement database connectivity</h3>
+            <p class="p section-title"> 
+    <pre>   
+      package application;
+
+      import java.sql.Connection;
+      import java.sql.DriverManager;
+      import java.sql.SQLException;
+      
+      
+      public class DatabaseUtil {
+          // yeah dont do this in the real world lol
+          private static final String URL = "jdbc:mysql://10.20.30.40:3306/LMS";
+          private static final String USER = "User";
+          private static final String PASSWORD = "Password";
+      
+          static {
+              try {
+                  Class.forName("com.mysql.cj.jdbc.Driver");
+              } catch (ClassNotFoundException e) {
+                  e.printStackTrace();
+              }
+          }
+      
+          public static Connection getConnection() throws SQLException {
+              return DriverManager.getConnection(URL, USER, PASSWORD);
+          }
+      
+          public static void testConnection() {
+              try (Connection conn = DatabaseUtil.getConnection()) {
+                  if (conn != null) {
+                      System.out.println("Connection successful!");
+                  } else {
+                      System.out.println("Failed to make connection!");
+                  }
+              } catch (SQLException e) {
+                  e.printStackTrace();
+              }
+          }
+      
+      }
+      </pre>
+      </div>
+
+  </section>
+
+</main>
+
+
+</body>
+<br>
+
+  <!--- JS LINK FOR NAV --->
+  <script src="script.js" defer></script>
+
+  <!--- ionicon link --->
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+
+
+
+
+
+</body>
+
+
+<!--- #FOOTER --->
+
+  <footer class="footer">
+    <div class="container">
+
+      <ul class="social-list">
+
+
+
+        <li>
+          <a href="https://www.linkedin.com/in/zylar-mccullah-b4654420a/" class="social-link">
+            <ion-icon name="logo-linkedin"></ion-icon>
+          </a>
+        </li>
+        <li>
+          <a href="https://github.com/Mccullahz" class="social-link">
+            <ion-icon name="logo-github"></ion-icon>
+          </a>
+        </li>
+
+      </ul>
+
+    </div>
+  </footer>
+
+
+
+</html>
