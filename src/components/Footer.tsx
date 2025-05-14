@@ -11,7 +11,8 @@ export const Footer: React.FC = () => {
               className="social-link"
               target="_blank"
               rel="noopener noreferrer"
-            >
+	      	    >
+		<ion-icon name="logo-linkedin" aria-hidden="true"></ion-icon>
             </a>
           </li>
           <li>
@@ -21,6 +22,7 @@ export const Footer: React.FC = () => {
               target="_blank"
               rel="noopener noreferrer"
             >
+	    	<ion-icon name="logo-github" aria-hidden="true"></ion-icon>
             </a>
           </li>
         </ul>

@@ -33,9 +33,9 @@ export const Experience: React.FC = () => (
           },
         ].map((job, i) => (
           <li className="workexp-item" key={i}>
-            <h3 className="item-period">{job.period}</h3>
-            <p className="item-title">{job.title}</p>
+            <h3 className="item-title">{job.title}</h3>
             <p className="item-address">{job.address}</p>
+            <p className="item-period">{job.period}</p>
           </li>
         ))}
       </ul>

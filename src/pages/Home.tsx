@@ -8,9 +8,9 @@ import { Contact } from "../components/Contact";
 export const Home: React.FC = () => (
   <>
     <Hero />
-    <Education />
-    <Skills />
     <Experience />
+    <Skills />
+    <Education />
     <Contact />
   </>
 );

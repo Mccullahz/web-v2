@@ -5,11 +5,11 @@ export const Education: React.FC = () => (
     <div className="container">
       <p className="section-subtitle">Education</p>
 
-      <h2 className="h3 section-title">Indiana Tech, Fort Wayne, Indiana.</h2>
-      <p className="p section-title">B.S Computer Science, 2020 - Present</p>
+      <h2 className="loc">Indiana Tech, Fort Wayne, Indiana.</h2>
+      <p className="deg">B.S Computer Science, 2020 - Present</p>
 
-      <h2 className="h3 section-title">Goshen High School, Goshen, Ohio.</h2>
-      <p className="p section-title">High School Diploma, 2016 - 2020</p>
+      <h2 className="loc">Goshen High School, Goshen, Ohio.</h2>
+      <p className="deg">High School Diploma, 2016 - 2020</p>
     </div>
 
     <div className="custom-shape-divider-bottom-1704684840">

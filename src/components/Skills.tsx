@@ -2,10 +2,10 @@ import React from "react";
 
 export const Skills: React.FC = () => (
   <section
-    className="section skills has-before"
+    className="section-skills has-before"
     id="skills"
     aria-label="skills"
-    style={{ backgroundImage: "url('./images/skills-bg.png')" }}
+    style={{ backgroundImage: "url('../public/images/test.png')" }}
   >
     <div className="container">
       <div className="skills-content">

@@ -10,27 +10,29 @@ export const Header: React.FC = () => {
 
   return (
     <header className="header" data-header>
-      <div className="container">
+      <div className="container header-container">
         <a href="/" className="logo">McCullah</a>
 
-        <nav className={`navbar ${navOpen ? "active" : ""}`} data-navbar>
-          <ul className="navbar-list">
-            <li><a href="#home" className="navbar-link" onClick={() => setNavOpen(false)}>Home</a></li>
-            <li><a href="#portfolio" className="navbar-link" onClick={() => setNavOpen(false)}>Portfolio</a></li>
-            <li><a href="#workexp" className="navbar-link" onClick={() => setNavOpen(false)}>Experience</a></li>
-            <li><a href="#contact" className="navbar-link" onClick={() => setNavOpen(false)}>Contact</a></li>
-          </ul>
-        </nav>
+        <div className="header-actions">
+          <button
+            className={`nav-toggle-btn ${navOpen ? "active" : ""}`}
+            aria-label="toggle menu"
+            onClick={toggleNavbar}
+          >
+            <span className="line line-1"></span>
+            <span className="line line-2"></span>
+            <span className="line line-3"></span>
+          </button>
 
-        <button
-          className={`nav-toggle-btn ${navOpen ? "active" : ""}`}
-          aria-label="toggle menu"
-          onClick={toggleNavbar}
-        >
-          <span className="line line-1"></span>
-          <span className="line line-2"></span>
-          <span className="line line-3"></span>
-        </button>
+          <nav className={`navbar ${navOpen ? "active" : ""}`} data-navbar>
+            <ul className="navbar-list">
+              <li><a href="#home" className="navbar-link" onClick={() => setNavOpen(false)}>Home</a></li>
+              <li><a href="#portfolio" className="navbar-link" onClick={() => setNavOpen(false)}>Portfolio</a></li>
+              <li><a href="#workexp" className="navbar-link" onClick={() => setNavOpen(false)}>Experience</a></li>
+              <li><a href="#contact" className="navbar-link" onClick={() => setNavOpen(false)}>Contact</a></li>
+            </ul>
+          </nav>
+        </div>
       </div>
     </header>
   );
