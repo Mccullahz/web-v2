@@ -1,0 +1,58 @@
+/* ==========================
+   Terminal Specific Styles
+========================== */
+
+.terminal {
+  background-color: var(--color-dark);
+  color: var(--color-light);
+  font-family: monospace;
+  padding: 2rem;
+  height: 80vh;
+  margin-top: 7rem;
+  box-sizing: border-box;
+  overflow-y: auto;
+  cursor: text;
+  display: flex;
+  flex-direction: column;
+  border-radius: 0.5rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.terminal-output {
+  flex: 1;
+  white-space: pre-wrap;
+  margin-top: 10rem;
+  margin-bottom: 5rem;
+}
+
+.terminal-line {
+  line-height: 1.4;
+}
+
+.terminal-input-line {
+  display: flex;
+  align-items: center;
+  font-size: 2rem;
+  margin-top: 3rem;
+}
+
+.terminal-prompt {
+  margin-right: 0.5rem;
+  color: var(--color-theme);
+  font-size: 2rem;
+}
+
+.terminal-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: var(--color-theme);
+  outline: none;
+  font-family: inherit;
+  font-size: 2rem;
+}
+
+.terminal-input::placeholder {
+  color: #0f05;
+}
+

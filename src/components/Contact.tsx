@@ -12,15 +12,17 @@ export const Contact: React.FC = () => (
         </p>
         <ul className="contact-list">
           <li className="contact-item">
+	    <ion-icon name="call-outline" className="contact-icon"></ion-icon>
             <a href="tel:9372052799" className="contact-link">(937)-205-2799</a>
           </li>
           <li className="contact-item">
+	    <ion-icon name="mail-open-outline" className="contact-icon"></ion-icon>
             <a href="mailto:zylardmccullah@gmail.com" className="contact-link">zylardmccullah@gmail.com</a>
           </li>
         </ul>
-      </div>
+	</div>
 
-      <form action="https://formsubmit.com/zylardmccullah@gmail.com" method="POST" className="contact-form">
+      <form action="mailto:zylardmccullah@gmail.com" method="POST" className="contact-form">
         <input type="text" name="name" placeholder="Name" required className="input-field" />
         <input type="email" name="email_address" placeholder="Email" required className="input-field" />
         <textarea name="message" placeholder="Message" required className="input-field"></textarea>

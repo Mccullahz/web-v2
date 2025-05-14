@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 export const Hero: React.FC = () => (
   <section className="section headshot" id="home" aria-label="headshot">
     <div className="container">
@@ -10,12 +11,12 @@ export const Hero: React.FC = () => (
           <h1 className="headshot-title">Student / Developer</h1>
 
           <ul className="headshot-list">
-            <li>
-              <a href="/port.html" className="list-link">
-                <span className="span">Portfolio Page</span>
-		<ion-icon name="arrow-forward-outline" aria-hidden="true"></ion-icon>
-              </a>
-            </li>
+	  <li>
+  	    <Link to="/portfolio" className="list-link">
+    	    <span className="span">Portfolio Page</span>
+    	    <ion-icon name="arrow-forward-outline" aria-hidden="true"></ion-icon>
+  	    </Link>
+	  </li>
             <li>
               <a href="https://techcyberwarriors.org/" className="list-link">
                 <span className="span">Collegiate Cyber Security Experience</span>

@@ -3,7 +3,7 @@
 ========================== */
 :root {
   --color-dark: #222;
-  --color-light: #fff;
+  --color-light: #D2DBDD;
   --color-gray: #777;
   --color-theme: hsl(202, 100%, 57%);
   --radius: 10px;
@@ -26,7 +26,7 @@ html {
 
 body {
   font-size: 1.6rem;
-  background-color: #D2DBDD;
+  background-color: var(--color-light);
   color: var(--color-dark);
   line-height: 1.75;
 }
@@ -82,7 +82,7 @@ img {
   top: 0;
   left: 0;
   width: 100%;
-  background-color: #D2DBDD;
+  background-color: var(--color-light);
   padding: 1rem 0;
   z-index: 10;
 }
@@ -405,6 +405,90 @@ img {
 .social-link {
   font-size: 2rem;
 }
+
+/* ==========================
+   Contact Form
+========================== */
+.contact .section-text {
+  font-size: 1.6rem;
+  font-family: var(--font-body);
+  font-weight: 300;
+  color: var(--color-gray);
+  margin-bottom: 4rem;
+}
+
+.contact-list{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 1rem;
+}
+
+.contact-list { margin-block: 40px 50px; }
+  
+.contact-item:not(:last-child) { margin-block-end: 22px; }
+  
+.contact-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}  
+ 
+.contact-item ion-icon {
+  color: var(--color-theme);
+  font-size: 22px;
+  flex-shrink: 0;
+  --ionicon-stroke-width: 25px;
+}
+  
+.contact-link {
+  color: var(--black);
+  font-family: var(--ff-poppins);
+}
+  
+.contact .container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 200px;
+}
+  
+.contact-list { margin-block-end: 0; }
+  
+.input-field {
+  color: var(--color-dark);
+  background-color: var(--color-light);
+  font-family: var(--ff-poppins);
+  font-size: var(--fs-13);
+  letter-spacing: 1.4px;
+  border: 1px solid var(--color-gray);
+  padding: 10px;
+  margin-block-end: 30px;
+  transition: border var(--transition);
+  min-width: 100%;
+  }
+  
+.input-field:focus { border-color: var(--color-dark); }  
+  
+.submit-btn {
+  background-color: var(--color-theme);
+  color: var(--color-dark);
+  width: 100%;
+  font-size: var(--fs-17);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 20px;
+  transition: var(--transition);
+}
+  
+.submit-btn:is(:hover, :focus) { background-color: var(--black); }
+  
+.submit-btn ion-icon { transition: var(--transition); }
+  
+.submit-btn:is(:hover, :focus) ion-icon { transform: rotate(-45deg); }
 
 
 /* ==========================
