@@ -10,38 +10,37 @@ export const Skills: React.FC = () => (
     <div className="container">
       <div className="skills-content">
         <p className="section-subtitle">Skills</p>
-        <h2 className="h2 section-title">Technical Skills</h2>
 
         <ul className="skills-list">
           <li className="skills-item">
             <div className="wrapper">
-              <h3 className="skill-title">Front-End Development:</h3>
-              <h2 className="skill-title">HTML / CSS / JavaScript / React / NextJS / NPM</h2>
+              <h3 className="discipline">Front-End Development:</h3>
+              <h2 className="items">HTML / CSS / JavaScript / React / NextJS / NPM</h2>
             </div>
           </li>
           <li className="skills-item">
             <div className="wrapper">
-              <h3 className="skill-title">Programming Languages:</h3>
-              <h2 className="skill-title">C++ / Java / Go / Python / Ansible / Bash / Powershell / Zsh</h2>
+              <h3 className="discipline">Programming Languages:</h3>
+              <h2 className="items">C++ / Java / Go / Python / Ansible / Bash / Powershell / Zsh</h2>
             </div>
           </li>
           <li className="skills-item">
             <div className="wrapper">
-              <h3 className="skill-title">Information Systems:</h3>
-              <h2 className="skill-title">Windows Servers / Linux Servers / MySQL / MariaDB / Cisco / Extreme</h2>
+              <h3 className="discipline">Information Systems:</h3>
+              <h2 className="items">Windows Servers / Linux Servers / MySQL / MariaDB / Cisco / Extreme</h2>
             </div>
           </li>
           <li className="skills-item">
             <div className="wrapper">
-              <h3 className="skill-title">Operating Systems:</h3>
-              <h2 className="skill-title">Windows 10/11 / MacOS / Ubuntu, RHEL, Arch</h2>
+              <h3 className="discipline">Operating Systems:</h3>
+              <h2 className="items">Windows 10/11 / MacOS / Ubuntu, RHEL, Arch</h2>
             </div>
           </li>
           <li className="skills-item">
             <div className="wrapper">
-              <h3 className="skill-title">Misc. Items:</h3>
+              <h3 className="discipline">Misc. Items:</h3>
               <br />
-              <h2 className="skill-title">
+              <h2 className="items">
                 Containerization (Docker) / OOP / CI/CD Pipelines
               </h2>
             </div>
