@@ -1,23 +1,38 @@
-// same as footer, just throwing the html in here for now, refactor later
-export function Header(): string {
-  return `
-  <header class="header" data-header>
-    <div class="container">
-      <a href="/" class="logo">McCullah</a>
-      <nav class="navbar" data-navbar>
-        <ul class="navbar-list">
-          <li><a href="#home" class="navbar-link" data-nav-link>Home</a></li>
-          <li><a href="#portfolio" class="navbar-link" data-nav-link>Portfolio</a></li>
-          <li><a href="#workexp" class="navbar-link" data-nav-link>Experience</a></li>
-          <li><a href="#contact" class="navbar-link" data-nav-link>Contact</a></li>
-        </ul>
-      </nav>
-      <button class="nav-toggle-btn" aria-label="toggle menu" data-nav-toggler>
-        <span class="line line-1"></span>
-        <span class="line line-2"></span>
-        <span class="line line-3"></span>
-      </button>
-    </div>
-  </header>`;
-}
+import React, { useState } from "react";
+import "../assets/styles/style.css";
+
+export const Header: React.FC = () => {
+  const [navOpen, setNavOpen] = useState(false);
+
+  const toggleNavbar = () => {
+    setNavOpen(!navOpen);
+  };
+
+  return (
+    <header className="header" data-header>
+      <div className="container">
+        <a href="/" className="logo">McCullah</a>
+
+        <nav className={`navbar ${navOpen ? "active" : ""}`} data-navbar>
+          <ul className="navbar-list">
+            <li><a href="#home" className="navbar-link" onClick={() => setNavOpen(false)}>Home</a></li>
+            <li><a href="#portfolio" className="navbar-link" onClick={() => setNavOpen(false)}>Portfolio</a></li>
+            <li><a href="#workexp" className="navbar-link" onClick={() => setNavOpen(false)}>Experience</a></li>
+            <li><a href="#contact" className="navbar-link" onClick={() => setNavOpen(false)}>Contact</a></li>
+          </ul>
+        </nav>
+
+        <button
+          className={`nav-toggle-btn ${navOpen ? "active" : ""}`}
+          aria-label="toggle menu"
+          onClick={toggleNavbar}
+        >
+          <span className="line line-1"></span>
+          <span className="line line-2"></span>
+          <span className="line line-3"></span>
+        </button>
+      </div>
+    </header>
+  );
+};
 

@@ -1,0 +1,266 @@
+/* ==========================
+   Global Variables & Reset
+========================== */
+:root {
+  --color-dark: #222;
+  --color-light: #fff;
+  --color-gray: #777;
+  --color-theme: hsl(202, 100%, 57%);
+  --radius: 10px;
+  --transition: 0.25s ease;
+  --font-heading: 'Poppins', sans-serif;
+  --font-body: 'Mulish', sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 10px;
+  font-family: var(--font-body);
+  scroll-behavior: smooth;
+}
+
+body {
+  font-size: 1.6rem;
+  background-color: #D2DBDD;
+  color: var(--color-dark);
+  line-height: 1.75;
+}
+
+ul {
+  list-style: none;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+/* ==========================
+   Layout Helpers
+========================== */
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.section {
+  padding: 8rem 0;
+}
+
+.section-title {
+  font-size: 3rem;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  margin-bottom: 3rem;
+}
+
+.section-subtitle {
+  font-family: var(--font-heading);
+  color: var(--color-theme);
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+/* ==========================
+   Header & Navbar
+========================== */
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #D2DBDD;
+  padding: 1.5rem 0;
+  z-index: 10;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.logo {
+  font-size: 2.4rem;
+  font-family: var(--font-heading);
+  font-weight: 600;
+}
+
+.navbar {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background-color: #D2DBDD;
+  overflow: hidden;
+  max-height: 0;
+  visibility: hidden;
+  transition: max-height var(--transition), visibility var(--transition);
+}
+
+.navbar.active {
+  max-height: 100px;
+  visibility: visible;
+}
+
+.navbar-list {
+  display: flex;
+  flex-direction: row;
+  gap: 1.5rem;
+  padding: 2rem;
+}
+
+.navbar-link {
+  font-size: 1.6rem;
+  font-family: var(--font-heading);
+  font-weight: 500;
+}
+
+.nav-toggle-btn {
+  background: none;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  cursor: pointer;
+}
+
+.nav-toggle-btn .line {
+  width: 30px;
+  height: 2px;
+  background-color: var(--color-dark);
+  transition: var(--transition);
+}
+
+.nav-toggle-btn.active .line-1 {
+  transform: translateY(10px) rotate(45deg);
+}
+
+.nav-toggle-btn.active .line-2 {
+  opacity: 0;
+}
+
+.nav-toggle-btn.active .line-3 {
+  transform: translateY(-10px) rotate(-45deg);
+}
+
+/* ==========================
+   Hero / Headshot Section
+========================== */
+.headshot {
+  padding-top: 10rem;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  text-align: center;
+}
+
+.headshot-title {
+  font-size: 2.8rem;
+  font-family: var(--font-heading);
+  font-weight: 600;
+  margin: 2rem 0;
+}
+
+.headshot-list .list-link {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 1.6rem;
+  margin-bottom: 1rem;
+}
+
+.headshot-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 4rem;
+}
+
+.headshot-banner {
+  width: 440px;
+  height: auto;
+  max-height: 600px;
+  overflow: hidden;
+  border-radius: var(--radius);
+  flex-shrink: 0;
+  display: block;
+}
+
+.img-cover {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  display: block;
+  border-radius: inherit;
+}
+
+.headshot-content {
+  max-width: 600px;
+  flex-grow: 1;
+  text-align: left;
+}
+
+.exp-list {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.exp-list .list-item {
+  font-family: var(--font-heading);
+  font-size: 1.6rem;
+  text-align: center;
+}
+
+/* ==========================
+   Footer
+========================== */
+.footer {
+  background-color: var(--color-dark);
+  color: var(--color-light);
+  text-align: center;
+  padding: 3rem 0;
+  margin-top: 4rem;
+}
+
+.social-list {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.social-link {
+  font-size: 2rem;
+}
+
+
+/* ==========================
+   Media Queries
+========================== */
+@media (min-width: 992px) {
+  .headshot-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 4rem; /* space between image and text */
+  }
+
+  .headshot-banner {
+    max-width: 440px;
+  }
+
+  .headshot-content {
+    flex: 1;
+    text-align: left;
+  }
+}
+
