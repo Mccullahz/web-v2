@@ -87,3 +87,28 @@
   color: #0f05;
 }
 
+
+
+/* ========================== 
+   	PMS styles	
+ ========================== */
+.sim-container {
+  margin-top: 7rem;
+  display: flex;
+  flex-direction: column;
+  width: auto;
+  align-items: center;
+  justify-content: center;
+}
+
+.process-sim h2{
+  font-size: 2.4rem;
+  color: var(--color-theme);
+  margin-bottom: 1rem;
+}
+
+.process-sim p{
+  font-size: 1.6rem;
+  color: var(--color-dark);
+  margin-bottom: 2rem;
+}
