@@ -18,10 +18,41 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
+.terminal-header {
+  display: flex;
+  justify-content: center;
+  align-text: center;
+  padding: 1rem;
+  background-color: var(--color-dark);
+  border-bottom: 1px solid var(--color-light);
+}
+.terminal-header-title {
+  font-size: 1.6rem;
+  color: var(--color-light);
+  margin-left: auto;
+}
+
+.terminal-header-buttons{
+  display: flex;
+  gap: 1rem;
+  margin-left: auto;
+}
+
+.terminal-button-green .ion-icon {
+  color: var(--color-green);
+}
+.terminal-button-yellow .ion-icon {
+  color: var(--color-yellow);
+}
+.terminal-button-red .ion-icon {
+  color: var(--color-red);
+}
+
+
 .terminal-output {
   flex: 1;
   white-space: pre-wrap;
-  margin-top: 10rem;
+  margin-top: 1rem;
   margin-bottom: 5rem;
 }
 
