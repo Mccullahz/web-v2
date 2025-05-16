@@ -84,7 +84,7 @@ export const Portfolio: React.FC = () => {
     <div className="terminal-header">
     <span className="terminal-header-title">NotQuiteATerminal</span>
         <div className="terminal-header-buttons">
-	<div className="terminal-button-green"><ion-icon name="scan-circle-outline"></ion-icon></div>
+	<div className="terminal-button-green"><ion-icon name="scan-circle-outline"/></div>
 	<div className="terminal-button-yellow"><ion-icon name="remove-circle-outline"></ion-icon></div>
 	<div className="terminal-button-red"><ion-icon name="close-circle-outline"></ion-icon></div>
 	</div>
