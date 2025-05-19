@@ -4,11 +4,13 @@ export const Pms: React.FC = () => (
     <section className="process-sim">
       <div className="sim-container">
         <h2>Operating System Process Management Simulator – CLI Edition</h2>
-        <img
-          src="/images/pms.gif"
+        <div className="pms-prev">
+	<img
+          src="/images/pms-prev.gif"
           alt="Process Management Simulator Demo"
           className="sim-gif"
         />
+	</div>
 
         <p className="sim-lead">
           A terminal-based application that simulates how an operating system manages processes using only the command line.
@@ -30,6 +32,9 @@ export const Pms: React.FC = () => (
 	  <br />
 	  It shows dynamic transitions between process states:
           <strong> Ready, Running, Waiting, Terminated</strong> — all color-coded in a stylish terminal layout.
+	  <br />
+
+	  For additional details or to view the source code, check out the <a href="https://www.github.com/Mccullahz/process-management-simulator">GitHub repository: Here</a>. Details on how to run the simulator are included in the README, please refer to it for instructions and download the proper version for your OS.
         </p>
       </div>
     </section>
