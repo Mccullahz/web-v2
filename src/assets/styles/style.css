@@ -340,11 +340,15 @@ img {
   /* ==========================
    Skills Section
 ========================= */
+.section-skills {
+  background-color: var(--color-dark);
+  background-image: url(../public/images/skills-bg.png);
+}
   .skills-list .wrapper {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    color: var(--white);
+    color: var(--color-light);
     font-family: var(--ff-poppins);
     margin-block-end: 60px;
   }
@@ -353,11 +357,10 @@ img {
     font-size: 2.0rem;
     font-weight: 600;
     font-family: var(--font-heading);
-
   }
 
   .items {
-  color: var(--color-dark);
+  color: var(--color-light);
   font-size: 1.6rem;
   font-family: var(--font-body);
   font-weight: 500;
