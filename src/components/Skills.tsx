@@ -5,7 +5,7 @@ export const Skills: React.FC = () => (
     className="section-skills has-before"
     id="skills"
     aria-label="skills"
-    style={{ backgroundImage: "url('../public/images/test.png')" }}
+    style={{ backgroundImage: "url('../images/skills-bg.png')" }}
   >
     <div className="container">
       <div className="skills-content">
