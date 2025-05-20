@@ -39,6 +39,9 @@ export const Portfolio: React.FC = () => {
       	break;
       case "gui":
 	response = "One moment while we prepare your graphical interface...";
+        setTimeout(() => {
+	  window.location.href = "/Gui";
+	}, 1000);
 	break
       case "info process-management-simulator":
 	response = "Process Management Simulator: A Go CLI + Go Wails GUI tool for simulating process scheduling algorithms.";
