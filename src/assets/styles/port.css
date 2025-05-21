@@ -87,6 +87,33 @@
   color: #0f05;
 }
 
+/* ==========================
+    	GUI Specific Styles
+ ========================== */
+.gui-container {
+  margin-top: 7rem;
+  display: flex;
+  flex-direction: row;
+  width: auto;
+  align-items: center;
+  justify-content: center;
+}
+
+.gui-card{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-light);
+  border-radius: 0.5rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  padding: 2rem;
+  margin: 1rem;
+  margin-bottom: 2rem;
+  width: 20%;
+  height: 60vh;
+}
+
 
 
 /* ========================== 

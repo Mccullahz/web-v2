@@ -5,7 +5,7 @@
   --color-dark: #222;
   --color-light: #D2DBDD;
   --color-gray: #777;
-  --color-theme: hsl(202, 100%, 57%);
+  --color-theme: #24afff;
   --radius: 10px;
   --transition: 0.25s ease;
   --font-heading: 'Poppins', sans-serif;
@@ -495,6 +495,17 @@ img {
 
 
 /* ==========================
+   404
+   ======================= */
+.fourohfour {
+  margin-top: 17rem;
+  text-align: center;
+  margin-bottom: 26rem;
+  color: var(--color-dark);
+}
+
+
+/* ==========================
    Media Queries
 ========================== */
 @media (min-width: 992px) {
@@ -514,4 +525,5 @@ img {
     text-align: left;
   }
 }
+
 
