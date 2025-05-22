@@ -1,4 +1,6 @@
 import React from "react";
+import { IoCallOutline, IoMailOpenOutline } from "react-icons/io5";
+
 
 export const Contact: React.FC = () => (
   <section className="section contact" id="contact" aria-label="contact">
@@ -10,16 +12,18 @@ export const Contact: React.FC = () => (
           To get in contact with me please fill out this form or send me an email through the link below at any time.
           Thank you!
         </p>
-        <ul className="contact-list">
-          <li className="contact-item">
-	    <ion-icon name="call-outline" className="contact-icon"></ion-icon>
-            <a href="tel:9372052799" className="contact-link">(937)-205-2799</a>
-          </li>
-          <li className="contact-item">
-	    <ion-icon name="mail-open-outline" className="contact-icon"></ion-icon>
-            <a href="mailto:zylardmccullah@gmail.com" className="contact-link">zylardmccullah@gmail.com</a>
-          </li>
-        </ul>
+	<ul className="contact-list">
+	  <li className="contact-item">
+	    <IoCallOutline className="contact-icon" />
+	    <a href="tel:9372052799" className="contact-link">(937)-205-2799</a>
+	  </li>
+	  <li className="contact-item">
+	    <IoMailOpenOutline className="contact-icon" />
+	    <a href="mailto:zylardmccullah@gmail.com" className="contact-link">
+		zylardmccullah@gmail.com
+	    </a>
+	  </li>
+	</ul>
 	</div>
 
       <form action="mailto:zylardmccullah@gmail.com" method="POST" className="contact-form">

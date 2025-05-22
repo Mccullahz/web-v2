@@ -179,12 +179,12 @@ img {
    Hero / Headshot Section
 ========================== */
 /* transition for arrows */
-.list-link ion-icon {
+.list-link svg{
   transition: transform 0.3s ease, color 0.3s ease;
   color: var(--black);
 }
 
-.slide-down-btn ion-icon {
+.slide-down-btn svg {
   font-size: 4rem;
   color: var(--color-dark);
   margin-top: 1rem;
@@ -195,12 +195,12 @@ img {
 }
 
 /* On hover: rotate / bounce and recolor */
-.list-link:is(:hover, :focus) ion-icon {
+.list-link:is(:hover, :focus) svg {
   transform: rotate(-45deg);
   color: var(--theme-color);
 }
 
-.slide-down-btn:is(:hover, :focus) ion-icon{
+.slide-down-btn:is(:hover, :focus) svg {
   color: var(--theme-color);
 }
 @keyframes scrollDown {
@@ -438,11 +438,10 @@ img {
   gap: 12px;
 }  
  
-.contact-item ion-icon {
+.contact-item svg {
   color: var(--color-theme);
   font-size: 22px;
   flex-shrink: 0;
-  --ionicon-stroke-width: 25px;
 }
   
 .contact-link {
@@ -489,9 +488,9 @@ img {
   
 .submit-btn:is(:hover, :focus) { background-color: var(--black); }
   
-.submit-btn ion-icon { transition: var(--transition); }
+.submit-btn svg { transition: var(--transition); }
   
-.submit-btn:is(:hover, :focus) ion-icon { transform: rotate(-45deg); }
+.submit-btn:is(:hover, :focus) svg { transform: rotate(-45deg); }
 
 
 /* ==========================

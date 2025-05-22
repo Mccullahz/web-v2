@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { IoScanCircleOutline, IoRemoveCircleOutline, IoCloseCircleOutline } from "react-icons/io5";
 import "../assets/styles/port.css";
 
 export const Portfolio: React.FC = () => {
@@ -85,11 +86,17 @@ export const Portfolio: React.FC = () => {
   return (
     <div className="terminal" onClick={() => inputRef.current?.focus()}>
     <div className="terminal-header">
-    <span className="terminal-header-title">NotQuiteATerminal</span>
-        <div className="terminal-header-buttons">
-	<div className="terminal-button-green"><ion-icon name="scan-circle-outline"/></div>
-	<div className="terminal-button-yellow"><ion-icon name="remove-circle-outline"></ion-icon></div>
-	<div className="terminal-button-red"><ion-icon name="close-circle-outline"></ion-icon></div>
+    <span className="terminal-header-title">NotQuiteATerminal</span>  
+	<div className="terminal-header-buttons">
+	  <div className="terminal-button-green">
+	    <IoScanCircleOutline />
+	  </div>
+	  <div className="terminal-button-yellow">
+	    <IoRemoveCircleOutline />
+	  </div>
+	  <div className="terminal-button-red">
+	    <IoCloseCircleOutline />
+	  </div>
 	</div>
 	      </div>
      <form className="terminal-input-line" onSubmit={handleCommand}>
