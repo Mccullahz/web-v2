@@ -144,7 +144,17 @@
   transform: rotateY(180deg);
 }
 
+.card_category {
+  font-size: 2rem;
+  color: var(--color-theme);
+  margin-top: 1rem;
+}
 
+.card_using {
+  font-size: 1.6rem;
+  color: var(--color-light);
+  margin-top: 1rem;
+}
 /* ========================== 
    	PMS styles	
  ========================== */

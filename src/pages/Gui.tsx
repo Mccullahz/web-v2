@@ -1,32 +1,36 @@
 import React from "react";
+import { GuiCard } from "../components/GuiCard";
 
-export const Gui: React.FC = () => (
-  <>
-    {/*need to whip up a gui page for the showcasing. ideally we can do this similar to HTML cards, and we could potentially flip the cards on hover to display more information. Front of card could display the GIF for the preview and then on hover we flip the card for displaying the info section from the terminal *info* command section*/}
+export const Gui: React.FC = () => {
+  return (
     <div className="gui-container">
-    <div className="gui-card">
-  <div className="gui-card-inner">
-    <div className="gui-card-front">
-      <h2>Process Management Simulator</h2>
-      <img
-        src="/images/pms-prev.gif"
-        alt="Process Management Simulator Demo"
-        className="sim-gif"
+      <GuiCard
+        title="Process Management Simulator"
+        imageSrc="/images/pms-prev.gif"
+        altText="Process Management Simulator Demo"
+        category="Cross-Platform Application"
+        technologies="Using Go + BubbleTea (CLI) / Go + Wails-React (GUI)"
+        link="/Pms"
+      />
+
+      <GuiCard
+        title="Library Management System"
+        imageSrc="/images/lms-prev.gif"
+        altText="Library Management System Demo"
+        category="Windows Application"
+        technologies="Using Java + FX / MySQL + Docker"
+        link="/Lms"
+      />
+
+      <GuiCard
+        title="Youtube Short Automation"
+	imageSrc="/images/ysa-prev.gif"
+	altText="Youtube Short Automation Demo"
+	category="Linux Application"
+	technologies="Using Python + PyQt5 / Youtube API"
+	link="/Ysa"
       />
     </div>
-    <div className="gui-card-back" onClick={() => window.open("/Pms", "_self")}>
-      <strong>
-        A Go CLI + Go Wails GUI tool for simulating how an operating system manages process via scheduling algorithms
-      </strong>
-      <br />
-      <p>
-	<strong>Click for more information!</strong>
-      </p>
-    </div>
-  </div>
-</div>
-
-      </div>
-  </>
-);
+  );
+};
 
