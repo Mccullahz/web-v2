@@ -93,27 +93,56 @@
 .gui-container {
   margin-top: 7rem;
   display: flex;
-  flex-direction: row;
-  width: auto;
-  align-items: center;
+  gap: 2rem;
   justify-content: center;
+  flex-wrap: wrap;
 }
 
-.gui-card{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background-color: var(--color-light);
-  border-radius: 0.5rem;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-  padding: 2rem;
-  margin: 1rem;
-  margin-bottom: 2rem;
+.gui-card {
+  background-color: transparent;
   width: 20%;
   height: 60vh;
+  perspective: 700px;
 }
 
+.gui-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.8s ease;
+  transform-style: preserve-3d;
+}
+
+.gui-card:hover .gui-card-inner {
+  transform: rotateY(180deg);
+}
+
+.gui-card-front,
+.gui-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  backface-visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.gui-card-front {
+  background-color: var(--color-light);
+  color: var(--color-theme);
+}
+
+.gui-card-back {
+  background-color: var(--color-dark);
+  color: var(--color-light);
+  transform: rotateY(180deg);
+}
 
 
 /* ========================== 
@@ -147,4 +176,7 @@
   justify-content: center;
   max-width: 85%;
   max-height: 60vh;
+  border-radius: 0.5rem;
+  shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  overflow: auto;
 }
