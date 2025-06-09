@@ -1,0 +1,192 @@
+/* ==========================
+   Terminal Specific Styles
+========================== */
+
+.terminal {
+  background-color: var(--color-dark);
+  color: var(--color-light);
+  font-family: monospace;
+  padding: 2rem;
+  height: 80vh;
+  margin-top: 7rem;
+  box-sizing: border-box;
+  overflow-y: auto;
+  cursor: text;
+  display: flex;
+  flex-direction: column;
+  border-radius: 0.5rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.terminal-header {
+  display: flex;
+  justify-content: center;
+  align-text: center;
+  padding: 1rem;
+  background-color: var(--color-dark);
+  border-bottom: 1px solid var(--color-light);
+}
+.terminal-header-title {
+  font-size: 1.6rem;
+  color: var(--color-light);
+  margin-left: auto;
+}
+
+.terminal-header-buttons{
+  display: flex;
+  gap: 1rem;
+  margin-left: auto;
+}
+
+.terminal-button-green .ion-icon {
+  color: var(--color-green);
+}
+.terminal-button-yellow .ion-icon {
+  color: var(--color-yellow);
+}
+.terminal-button-red .ion-icon {
+  color: var(--color-red);
+}
+
+
+.terminal-output {
+  flex: 1;
+  white-space: pre-wrap;
+  margin-top: 1rem;
+  margin-bottom: 5rem;
+}
+
+.terminal-line {
+  line-height: 1.4;
+}
+
+.terminal-input-line {
+  display: flex;
+  align-items: center;
+  font-size: 2rem;
+  margin-top: 3rem;
+}
+
+.terminal-prompt {
+  margin-right: 0.5rem;
+  color: var(--color-theme);
+  font-size: 2rem;
+}
+
+.terminal-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: var(--color-theme);
+  outline: none;
+  font-family: inherit;
+  font-size: 2rem;
+}
+
+.terminal-input::placeholder {
+  color: #0f05;
+}
+
+/* ==========================
+    	GUI Specific Styles
+ ========================== */
+.gui-container {
+  margin-top: 7rem;
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.gui-card {
+  background-color: transparent;
+  width: 20%;
+  height: 60vh;
+  perspective: 700px;
+}
+
+.gui-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.8s ease;
+  transform-style: preserve-3d;
+}
+
+.gui-card:hover .gui-card-inner {
+  transform: rotateY(180deg);
+}
+
+.gui-card-front,
+.gui-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  backface-visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.gui-card-front {
+  background-color: var(--color-light);
+  color: var(--color-theme);
+}
+
+.gui-card-back {
+  background-color: var(--color-dark);
+  color: var(--color-light);
+  transform: rotateY(180deg);
+}
+
+.card_category {
+  font-size: 2rem;
+  color: var(--color-theme);
+  margin-top: 1rem;
+}
+
+.card_using {
+  font-size: 1.6rem;
+  color: var(--color-light);
+  margin-top: 1rem;
+}
+/* ========================== 
+   	PMS styles	
+ ========================== */
+.sim-container {
+  margin-top: 7rem;
+  display: flex;
+  flex-direction: column;
+  width: auto;
+  align-items: center;
+  justify-content: center;
+}
+
+.process-sim h2{
+  font-size: 2.4rem;
+  color: var(--color-theme);
+  margin-bottom: 1rem;
+}
+
+.process-sim p{
+  font-size: 1.6rem;
+  color: var(--color-dark);
+  margin-bottom: 2rem;
+  text-align: center;
+  max-width: 80%;
+}
+
+.pms-prev {
+  display: flex;
+  justify-content: center;
+  max-width: 85%;
+  max-height: 60vh;
+  border-radius: 0.5rem;
+  shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  overflow: auto;
+}
