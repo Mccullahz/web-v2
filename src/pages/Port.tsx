@@ -11,7 +11,7 @@ export const Portfolio: React.FC = () => {
 
   const [history, setHistory] = useState<HistoryEntry[]>([
     { command: "Thank You for Connecting to My Portfolio Terminal!" },
-    { command: "Type `help` to get started." },
+    { command: "Type `help` to get started, or `gui` to launch the user interface" },
   ]);
 
   const [input, setInput] = useState("");
