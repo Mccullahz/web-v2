@@ -28,7 +28,7 @@ export const Ysa: React.FC = () => (
 	<p>
 	<br/>
 
-	  For additional details or to view the source code, check out the <a href="https://www.github.com/Mccullahz/short-youtube-auto">GitHub repository: Here</a>. Details on how to run the script are included in the README, please refer to it for instructions on how to run the script.
+	  For additional details or to view the source code, check out the <a href="https://www.github.com/Mccullahz/short-yt-auto">GitHub repository: Here</a>. Details on how to run the script are included in the README, please refer to it for instructions on how to run the script.
         </p>
       </div>
     </section>
