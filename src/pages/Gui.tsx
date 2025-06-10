@@ -27,7 +27,7 @@ export const Gui: React.FC = () => {
 	imageSrc="/images/ysa-prev.gif"
 	altText="Youtube Short Automation Demo"
 	category="Linux Application"
-	technologies="Using Python + PyQt5 / Youtube API"
+	technologies="Using Python + PyQt5 / Youtube API + Davinci 3.5"
 	link="/Ysa"
       />
     </div>
