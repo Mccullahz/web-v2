@@ -8,7 +8,7 @@ Welcome to my interactive portfolio website, a hybrid between a terminal interfa
 
 - **[zylarmccullah.tech](https://zylarmccullah.tech)**  
 - Custom domain served through Netlify  
-- HTTPS enabled with automatic SSL
+- HTTPS enabled with automatic SSL (Let's Encrypt)
 
 ---
 
