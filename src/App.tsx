@@ -5,6 +5,7 @@ import { Footer } from "./components/Footer";
 import { Home } from "./pages/Home";
 import { Portfolio } from "./pages/Port";
 import { Gui } from "./pages/Gui";
+import { Flacer } from "./pages/Flacer";
 import { Pms } from "./pages/Pms";
 import { Lms } from "./pages/Lms";
 import { Ysa } from "./pages/Ysa";
@@ -18,6 +19,7 @@ export const App: React.FC = () => {
         <Route path="/" element={<Home />} />
         <Route path="/portfolio" element={<Portfolio />} />
 	<Route path="/gui" element={<Gui />} />
+	<Route path="/flacer" element={<Flacer />} />
 	<Route path="/pms" element={<Pms />} />
 	<Route path="/lms" element={<Lms />} />
 	<Route path="/ysa" element={<Ysa />} />

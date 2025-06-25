@@ -1,36 +1,25 @@
 import React from "react";
+import { ProjectPage } from "../components/ProjectPage";
 
 export const Ysa: React.FC = () => (
-    <section className="process-sim">
-      <div className="sim-container">
-        <h2>Operating System Process Management Simulator – CLI Edition</h2>
-        <div className="ysa-prev">
-	<img
-          src="/images/ysa-prev.gif"
-          alt="Youtube Shorts Automation Demo"
-          className="sim-gif"
-        />
-	</div>
+  <ProjectPage
+    title="YouTube Short Automation"
+    gifSrc="/images/ysa-prev.gif"
+    gifAlt="YouTube Short Auto Demo"
+    lead="A terminal-based Python application to automate the entire Youtube Shorts Workflow.</br>
+Built using Python, PyQT, and OpenAI's Davinci models, providing a Linux based CLI environment."
+    overview="This application demonstrates the ease of generating AI content, showcasing the (now obsolute) abilities of even early LLM's. Key features of this script are:"
+    features={[
+      "Python Scripting",
+      "PyQT GUI",
+      "OpenAI API",
+    ]}
+    description={`<br/>
+      <br /><br />
+      For additional details or to view the source code, check out the GitHub repository: Here. Details on how to run the script are included in the README, please refer to it for instructions on how to run the script.
+    `}
+    repoLink="https://www.github.com/Mccullahz/short-yt-auto"
+  />
+);
 
-        <p className="sim-lead">
-          A terminal-based Python application to automate the entire Youtube Shorts Workflow.
-			  <br />
-	Built using Python, PyQT, and OpenAI's Davinci models, providing a Linux based CLI environment.
-        </p>
-
-        <h2>Overview</h2>
-        <p>This application demonstrates the ease of generating AI content, showcasing the (now obsolute) abilities of even early LLM's. Key features of this script are:</p>
-        <ul>
-          <li>T</li>
-          <li>B</li>
-	  <li>F</li>
-        </ul>
-	<p>
-	<br/>
-
-	  For additional details or to view the source code, check out the <a href="https://www.github.com/Mccullahz/short-yt-auto">GitHub repository: Here</a>. Details on how to run the script are included in the README, please refer to it for instructions on how to run the script.
-        </p>
-      </div>
-    </section>
-  );
 

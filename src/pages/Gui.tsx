@@ -4,6 +4,16 @@ import { GuiCard } from "../components/GuiCard";
 export const Gui: React.FC = () => {
   return (
     <div className="gui-container">
+	
+      <GuiCard
+        title="Flacer"
+        imageSrc="/images/flacer-prev.gif"
+        altText="Flacer Demo"
+        category="Cross-Platform High Resolution Audio Player"
+        technologies="Using Go + Wails-React-TS"
+        link="/Flacer"
+      />
+
       <GuiCard
         title="Process Management Simulator"
         imageSrc="/images/pms-prev.gif"
