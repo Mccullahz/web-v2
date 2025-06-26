@@ -55,7 +55,7 @@ export const Hero: React.FC = () => (
             </li>
           </ul>
 
-          <a href="#experience" className="slide-down-btn" aria-label="scroll-down">
+          <a href="#workexp" className="slide-down-btn" aria-label="scroll-down">
             <IoArrowDown aria-hidden="true" />
           </a>
         </div>
