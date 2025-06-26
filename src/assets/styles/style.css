@@ -107,15 +107,10 @@ img {
   color: var(--black);
   letter-spacing: 0.5px;
 }
-.logo {
-  font-size: 2.4rem;
-  font-family: var(--font-heading);
-  font-weight: 600;
-}
 
-.navbar {
+.navbar { 
   position: absolute;
-  top: 0;
+  top: 0; 
   right: 100%;
   background-color: var(--theme-color);
   border-radius: var(--radius);
@@ -244,6 +239,7 @@ img {
   flex-direction: row;
   align-items: center;
   gap: 4rem;
+  height: 100vh;
 }
 
 .headshot-banner {
@@ -314,6 +310,7 @@ img {
   gap: 2rem;
   margin-top: 1rem;
   min-width: 100%;
+  height: 100vh;
 }
 .workexp-list .item-title {
   color: var(--color-dark);
@@ -343,6 +340,8 @@ img {
 .section-skills {
   background-color: var(--color-dark);
   background-image: url(../public/images/skills-bg.png);
+  height: 100vh;
+  padding: 10% 0;
 }
   .skills-list .wrapper {
     display: flex;
@@ -361,6 +360,7 @@ img {
 
   .items {
   color: var(--color-light);
+  margin-top: 2rem;
   font-size: 1.6rem;
   font-family: var(--font-body);
   font-weight: 500;
@@ -373,6 +373,10 @@ img {
   /* ==========================
    Education Section
 ========================== */
+.education {
+  height: 100vh;
+  padding: 10% 0;
+}
 .education .loc{
   color: var(--color-dark);
   font-size: 2.0rem;
@@ -384,7 +388,7 @@ img {
   font-size: 1.6rem;
   font-family: var(--font-heading);
   font-weight: 500;
-  margin-bottom: 1.5rem;
+  margin-bottom: 5rem;
 }
 
 
@@ -392,11 +396,13 @@ img {
    Footer
 ========================== */
 .footer {
+  position: fixed;
+  bottom: 0px;
+  width: 100%;
   background-color: var(--color-dark);
   color: var(--color-light);
   text-align: center;
-  padding: 3rem 0;
-  margin-top: 4rem;
+  padding: 4rem 0;
 }
 
 .social-list {
@@ -412,6 +418,10 @@ img {
 /* ==========================
    Contact Form
 ========================== */
+.contact {
+  padding: 10% 0;
+  height: 80vh;
+}
 .contact .section-text {
   font-size: 1.6rem;
   font-family: var(--font-body);
