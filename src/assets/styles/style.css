@@ -396,13 +396,12 @@ img {
    Footer
 ========================== */
 .footer {
-  position: fixed;
   bottom: 0px;
   width: 100%;
   background-color: var(--color-dark);
   color: var(--color-light);
   text-align: center;
-  padding: 4rem 0;
+  padding: 4vh 0;
 }
 
 .social-list {

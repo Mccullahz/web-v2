@@ -25,7 +25,9 @@ export const App: React.FC = () => {
 	<Route path="/ysa" element={<Ysa />} />
 	<Route path="*" element={<NotFound />} />
       </Routes>
+      <div>
       <Footer />
+      </div>
     </Router>
   );
 };
