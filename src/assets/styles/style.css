@@ -85,6 +85,7 @@ img {
   background-color: var(--color-light);
   padding: 1rem 0;
   z-index: 10;
+  margin-bottom: 2rem;
 }
 
 .header-container {
