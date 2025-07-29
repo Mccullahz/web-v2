@@ -19,12 +19,16 @@ const Table: React.FC = () => (
   </mesh>
 );
 
-const Ticket: React.FC<{ position: [number, number, number] }> = ({ position }) => (
-  <mesh position={position}>
+const Ticket: React.FC<{ position: [number, number, number] }> = ({ position }) => {
+  const [x, , z] = position;
+  const angle = Math.atan2(z, x);
+return (
+  <mesh position={position} rotation={[0, angle, 0]}>
     <boxGeometry args={[0.6, 0.1, 0.5]} />
     <meshStandardMaterial color="white" />
   </mesh>
-);
+)
+};
 
 const Lights = () => (
   <>
