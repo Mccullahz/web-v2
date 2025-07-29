@@ -5,12 +5,16 @@ import { Canvas } from "@react-three/fiber";
 import { OrbitControls, Environment } from "@react-three/drei";
 //import * as THREE from "three";
 
-const Mug: React.FC<{ position: [number, number, number] }> = ({ position }) => (
-  <mesh position={position}>
+const Mug: React.FC<{ position: [number, number, number] }> = ({ position }) => {
+  const [x,  , z] = position;
+  const angle = Math.atan2(z, x);
+return (
+  <mesh position={position} rotation={[0, angle, 0]}>
     <cylinderGeometry args={[0.3, 0.3, 0.5, 32]} />
     <meshStandardMaterial color="#c49e6e" />
   </mesh>
-);
+)
+};
 
 const Table: React.FC = () => (
   <mesh rotation={[Math.PI / 1, 0, 0]}>
@@ -51,10 +55,13 @@ export const ThreeScene: React.FC = () => {
       {/*everything on the table here*/}
       <Mug position={[1, 0.3, 0]} />
       <Ticket position={[1.6, 0.01, 0]} />
+
       <Mug position={[-1, 0.3, 0]} />
       <Ticket position={[-1.6, 0.01, 0]} />
+
       <Mug position={[0, 0.3, 1]} />
       <Ticket position={[0, 0.01, 1.6]} />
+
       <Mug position={[0, 0.3, -1]} />
       <Ticket position={[0, 0.01, -1.6]} />
     </Canvas>
