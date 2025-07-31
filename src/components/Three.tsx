@@ -1,9 +1,7 @@
 // this file will be used to render the Three.js scene, and be the main entry point for the Three.js application. Our gui page will be rendered here, and Gui.tsx will simply call this file 
-
 import React from "react";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls, Environment, Text } from "@react-three/drei";
-//import * as THREE from "three";
 
 const Mug: React.FC<{ position: [number, number, number] }> = ({ position }) => {
   const [x,  , z] = position;
@@ -34,18 +32,21 @@ interface TicketProps {
 const Ticket: React.FC<TicketProps> = ({ position, title, category, tech, onClick }) => {
   const [x, , z] = position;
   const angle = Math.atan2(z, x);
+  const shouldFlipText = Math.abs(angle) > Math.PI / 2;
+  const textRotation: [number, number, number] = [Math.PI / 2, 0, shouldFlipText ? Math.PI : 0];
 
   return (
     <group position={position} rotation={[0, angle, 0]} onClick={onClick}>
-      {/* ticket mesh */}
+      {/* Ticket base */}
       <mesh>
         <boxGeometry args={[0.6, 0.1, 0.5]} />
         <meshStandardMaterial color="white" />
       </mesh>
 
-      {/* text for ticket description, title desc, tech etc I hate doing it this way but i do not know of a more resuable manner, will adjust colors to better fit theme once poc is done */}
+      {/* Title */}
       <Text
-        position={[0, 0.06, 0.1]}
+        position={[-0.16, 0.055, 0]}
+        rotation={textRotation}
         fontSize={0.05}
         color="black"
         maxWidth={0.5}
@@ -54,8 +55,11 @@ const Ticket: React.FC<TicketProps> = ({ position, title, category, tech, onClic
       >
         {title}
       </Text>
+
+      {/* Category */}
       <Text
-        position={[0, 0.06, 0]}
+        position={[0, 0.055, 0]}
+        rotation={textRotation}
         fontSize={0.04}
         color="gray"
         maxWidth={0.5}
@@ -64,8 +68,11 @@ const Ticket: React.FC<TicketProps> = ({ position, title, category, tech, onClic
       >
         {category}
       </Text>
+
+      {/* Tech */}
       <Text
-        position={[0, 0.06, -0.1]}
+        position={[0.16, 0.055, 0]}
+        rotation={textRotation}
         fontSize={0.035}
         color="darkslategray"
         maxWidth={0.5}
@@ -78,12 +85,18 @@ const Ticket: React.FC<TicketProps> = ({ position, title, category, tech, onClic
   );
 };
 
+
 const Lights = () => (
   <>
     <ambientLight intensity={0.3} />
     <directionalLight position={[5, 5, 5]} intensity={1} castShadow />
   </>
 );
+// function to zoom in on the ticket when clicked, this is 1.) not working and 2.) not implemented yet
+const clickZoom = () => {
+	console.log("Ticket clicked nerd!");
+}
+
 
 export const ThreeScene: React.FC = () => {
   return (
@@ -99,20 +112,38 @@ export const ThreeScene: React.FC = () => {
       {/*everything on the table here*/}
       <Mug position={[1, 0.3, 0]} />
       <Ticket position={[1.6, 0.01, 0]} 
-	title="Proof of Concept"
-	category="Frontend Web Development"
-	tech="React, TypeScript"
-	onClick={() => console.log("Ticket clicked!")}
+	title="YouTube Short Automation"
+	category="Linux Application"
+	tech="Python + Youtube API + Davinci 3.5"
+	onClick={() => clickZoom()}
       />
 
       <Mug position={[-1, 0.3, 0]} />
-      <Ticket position={[-1.6, 0.01, 0]} />
+      <Ticket position={[-1.6, 0.01, 0]} 
+      	title="Flacer"
+	category="Cross Platform High Resolution Audio Player"
+	tech=" Using Go + Wails React + TypeScript"
+	onClick={() => clickZoom()}
+
+      />
 
       <Mug position={[0, 0.3, 1]} />
-      <Ticket position={[0, 0.01, 1.6]} />
+      <Ticket position={[0, 0.01, 1.6]}
+      	title="Process Management Simulator"
+	category="Cross Platform Application"
+	tech="Using Go + BubbleTea + Lipgloss"
+	onClick={() => clickZoom()}
+
+      />
 
       <Mug position={[0, 0.3, -1]} />
-      <Ticket position={[0, 0.01, -1.6]} />
+      <Ticket position={[0, 0.01, -1.6]}
+      	title="Library Management System"
+	category="Windows Application"
+	tech="Using Java + JavaFX"
+	onClick={() => clickZoom()}
+
+      />
     </Canvas>
   );
 };
