@@ -2,6 +2,7 @@
 import React from "react";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls, Environment, Text } from "@react-three/drei";
+import * as THREE from "three";
 
 const Mug: React.FC<{ position: [number, number, number] }> = ({ position }) => {
   const [x,  , z] = position;
@@ -32,55 +33,51 @@ interface TicketProps {
 const Ticket: React.FC<TicketProps> = ({ position, title, category, tech, onClick }) => {
   const [x, , z] = position;
   const angle = Math.atan2(z, x);
-  const shouldFlipText = Math.abs(angle) > Math.PI / 2;
-  const textRotation: [number, number, number] = [Math.PI / 2, 0, shouldFlipText ? Math.PI : 0];
+
+  const shouldFlip = angle > Math.PI / 2 || angle < -Math.PI / 2;
+  const rotationY = shouldFlip ? angle + Math.PI : angle;
 
   return (
-    <group position={position} rotation={[0, angle, 0]} onClick={onClick}>
-      {/* Ticket base */}
+    <group position={position} rotation={[0, rotationY, 0]} onClick={onClick}>
       <mesh>
         <boxGeometry args={[0.6, 0.1, 0.5]} />
         <meshStandardMaterial color="white" />
       </mesh>
 
-      {/* Title */}
-      <Text
-        position={[-0.16, 0.055, 0]}
-        rotation={textRotation}
-        fontSize={0.05}
-        color="black"
-        maxWidth={0.5}
-        anchorX="center"
-        anchorY="middle"
-      >
-        {title}
-      </Text>
+      <group rotation={[-Math.PI / 2, 0, -Math.PI / 2]} position={[0, 0.055, 0]}>
+        {/* Title */}
+        <Text
+          position={[0, 0.16, 0]}
+          fontSize={0.05}
+          color="black"
+          anchorX="center"
+          anchorY="middle"
+        >
+          {title}
+        </Text>
 
-      {/* Category */}
-      <Text
-        position={[0, 0.055, 0]}
-        rotation={textRotation}
-        fontSize={0.04}
-        color="gray"
-        maxWidth={0.5}
-        anchorX="center"
-        anchorY="middle"
-      >
-        {category}
-      </Text>
+        {/* Category */}
+        <Text
+          position={[0, 0, 0]}
+          fontSize={0.04}
+          color="gray"
+          anchorX="center"
+          anchorY="middle"
+        >
+          {category}
+        </Text>
 
-      {/* Tech */}
-      <Text
-        position={[0.16, 0.055, 0]}
-        rotation={textRotation}
-        fontSize={0.035}
-        color="darkslategray"
-        maxWidth={0.5}
-        anchorX="center"
-        anchorY="middle"
-      >
-        {tech}
-      </Text>
+        {/* Tech */}
+        <Text
+          position={[0, -0.16, 0]}
+          fontSize={0.035}
+          color="darkslategray"
+          anchorX="center"
+          anchorY="middle"
+        >
+          {tech}
+        </Text>
+      </group>
     </group>
   );
 };
@@ -92,6 +89,7 @@ const Lights = () => (
     <directionalLight position={[5, 5, 5]} intensity={1} castShadow />
   </>
 );
+
 // function to zoom in on the ticket when clicked, this is 1.) not working and 2.) not implemented yet
 const clickZoom = () => {
 	console.log("Ticket clicked nerd!");
@@ -108,10 +106,11 @@ export const ThreeScene: React.FC = () => {
       <Lights />
       <Environment preset="city" />
       <OrbitControls enablePan={false} />
-      <Table />
+      <axesHelper />
+      {/*<Table />*/}
       {/*everything on the table here*/}
       <Mug position={[1, 0.3, 0]} />
-      <Ticket position={[1.6, 0.01, 0]} 
+      <Ticket position={[1.6, 0.01, 0]}
 	title="YouTube Short Automation"
 	category="Linux Application"
 	tech="Python + Youtube API + Davinci 3.5"
