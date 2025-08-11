@@ -2,18 +2,27 @@
 import React from "react";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls, Environment, Text } from "@react-three/drei";
-import * as THREE from "three";
+import {useGLTF} from '@react-three/drei'
 
 const Mug: React.FC<{ position: [number, number, number] }> = ({ position }) => {
-  const [x,  , z] = position;
+  const { scene } = useGLTF("/models/mug.glb");
+
+  const [x, , z] = position;
   const angle = Math.atan2(z, x);
-return (
-  <mesh position={position} rotation={[0, angle, 0]}>
-    <cylinderGeometry args={[0.3, 0.3, 0.5, 32]} />
-    <meshStandardMaterial color="#c49e6e" />
-  </mesh>
-)
+
+  return (
+    <primitive
+      object={scene}
+      position={position}
+      rotation={[0, angle, 0]}
+      scale={[1, 1, 1]}
+      //meshStandardMaterial={{ color: "white", roughness: 0.5, metalness: 0.1 }}
+    />
+  );
 };
+
+// preloading to stop the weird refreshing of the model when the page loads
+useGLTF.preload("/models/mug.glb");
 
 const Table: React.FC = () => (
   <mesh rotation={[Math.PI / 1, 0, 0]}>
@@ -82,7 +91,6 @@ const Ticket: React.FC<TicketProps> = ({ position, title, category, tech, onClic
   );
 };
 
-
 const Lights = () => (
   <>
     <ambientLight intensity={0.3} />
@@ -95,7 +103,6 @@ const clickZoom = () => {
 	console.log("Ticket clicked nerd!");
 }
 
-
 export const ThreeScene: React.FC = () => {
   return (
     <Canvas
@@ -107,7 +114,7 @@ export const ThreeScene: React.FC = () => {
       <Environment preset="city" />
       <OrbitControls enablePan={false} />
       <axesHelper />
-      {/*<Table />*/}
+      <Table />
       {/*everything on the table here*/}
       <Mug position={[1, 0.3, 0]} />
       <Ticket position={[1.6, 0.01, 0]}
@@ -123,7 +130,6 @@ export const ThreeScene: React.FC = () => {
 	category="Cross Platform High Resolution Audio Player"
 	tech=" Using Go + Wails React + TypeScript"
 	onClick={() => clickZoom()}
-
       />
 
       <Mug position={[0, 0.3, 1]} />
@@ -132,7 +138,6 @@ export const ThreeScene: React.FC = () => {
 	category="Cross Platform Application"
 	tech="Using Go + BubbleTea + Lipgloss"
 	onClick={() => clickZoom()}
-
       />
 
       <Mug position={[0, 0.3, -1]} />
@@ -141,7 +146,6 @@ export const ThreeScene: React.FC = () => {
 	category="Windows Application"
 	tech="Using Java + JavaFX"
 	onClick={() => clickZoom()}
-
       />
     </Canvas>
   );
