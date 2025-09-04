@@ -1,5 +1,5 @@
 import React from "react";
-import { ThreeScene } from "../components/Three";
+import { ThreeScene } from "../three/Three";
 
 export const Gui: React.FC = () => {
   return (
