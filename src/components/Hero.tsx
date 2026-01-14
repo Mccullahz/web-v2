@@ -14,7 +14,7 @@ export const Hero: React.FC = () => (
         </figure>
 
         <div className="headshot-content">
-          <p className="section-subtitle">Zylar McCullah</p>
+          <p className="text-3xl">Zylar McCullah</p>
           <h1 className="headshot-title">Student / Developer</h1>
 
           <ul className="headshot-list">

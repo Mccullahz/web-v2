@@ -9,6 +9,7 @@ import { Pms } from "./pages/Pms";
 import { Lms } from "./pages/Lms";
 import { Ysa } from "./pages/Ysa";
 import { NotFound } from "./pages/NotFound";
+import "./index.css";
 
 export const App: React.FC = () => {
   return (

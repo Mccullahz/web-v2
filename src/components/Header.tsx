@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import "../assets/styles/style.css";
 
 export const Header: React.FC = () => {
   const [navOpen, setNavOpen] = useState(false);
