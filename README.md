@@ -48,25 +48,8 @@ This portfolio site began in 2022 as a **static HTML/CSS/JS site** hosted on **G
 
 ## Features
 
--  **Terminal-style CLI** interface (`/portfolio`) with mock commands such as (`help`, `run`, `info`, `gui`)
 -  **GUI Project Cards** with interactive flipping effects
 -  Responsive design optimized for all devices
 -  Fast-loading, compiled via Vite and deployed to CDN
 -  External links to GitHub, LinkedIn, and hosted project demos
-
----
-
-## Local Development
-
-To run the project locally:
-
-```bash
-# 1. Clone the repository
-git clone https://github.com/yourusername/your-repo-name.git
-
-# 2. Install dependencies
-npm install
-
-# 3. Run development server
-npm run dev # or yarn build && yarn start
 
