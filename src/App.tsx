@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Header } from "./components/Header";
 import { Footer } from "./components/Footer";
 import { Home } from "./pages/Home";
-import { Portfolio } from "./pages/Port";
 import { Gui } from "./pages/Gui";
 import { Flacer } from "./pages/Flacer";
 import { Pms } from "./pages/Pms";
@@ -17,7 +16,6 @@ export const App: React.FC = () => {
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/portfolio" element={<Portfolio />} />
 	<Route path="/gui" element={<Gui />} />
 	<Route path="/flacer" element={<Flacer />} />
 	<Route path="/pms" element={<Pms />} />

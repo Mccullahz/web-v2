@@ -28,7 +28,7 @@ export const Header: React.FC = () => {
           <nav className={`navbar ${navOpen ? "active" : ""}`} data-navbar>
             <ul className="navbar-list">
               <li><a href="/#home" className="navbar-link" onClick={() => setNavOpen(false)}>Home</a></li>
-	      <li><Link to="/portfolio" className="navbar-link" onClick={() => setNavOpen(false)}>Portfolio</Link></li>
+	      <li><Link to="/gui" className="navbar-link" onClick={() => setNavOpen(false)}>Portfolio</Link></li>
               <li><a href="/#workexp" className="navbar-link" onClick={() => setNavOpen(false)}>Experience</a></li>
               <li><a href="/#contact" className="navbar-link" onClick={() => setNavOpen(false)}>Contact</a></li>
             </ul>

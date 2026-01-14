@@ -19,7 +19,7 @@ export const Hero: React.FC = () => (
 
           <ul className="headshot-list">
             <li>
-              <Link to="/portfolio" className="list-link">
+              <Link to="/gui" className="list-link">
                 <span className="span">Portfolio Page</span>
                 <IoArrowForwardOutline aria-hidden="true" />
               </Link>
