@@ -17,7 +17,7 @@ Welcome to my interactive portfolio website, a hybrid between a terminal interfa
 | Category     | Tools Used                                               |
 |--------------|----------------------------------------------------------|
 | **Frontend** | React, TypeScript, Vite                                  |
-| **Styling**  | CSS3 Modules, Custom Variables, Responsive Design        |
+| **Styling**  | TailwindCSS.                                             |
 | **Routing**  | React Router DOM                                         |
 | **Deployment** | Netlify (with continuous deployment from GitHub)       |
 
@@ -33,16 +33,18 @@ This portfolio site began in 2022 as a **static HTML/CSS/JS site** hosted on **G
   - Deployed via GitHub Pages  
   - Static layout with basic sections
 
-- **v2 (React + TypeScript):**  
+- **v2 (React + TypeScript + Tailwind):**  
   - Refactored into a modern React SPA  
   - Split into reusable `.tsx` components  
-  - Added terminal-style CLI experience via `/portfolio`  
+  - Integrated Tailwind CSS for rapid styling  
+  - Ingerated Three.js Scenes for Portfolio pieces
   - Created dynamic routing with `react-router-dom`
 
 - **Deployment Migration:**  
   - Switched from GitHub Pages (due to SPA routing limitations)  
   - Now deployed via **Netlify** with proper SPA support  
   - Custom domain support enabled at `zylarmccullah.tech`
+  - Let's Encrypt SSL for HTTPS support
 
 ---
 
