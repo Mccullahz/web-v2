@@ -1,5 +1,5 @@
 # Refactoring
-## Structure:
+## Structure -- Essentially the same as before, but with tailwind we are working inline instead of css files for most things.:
 web-v2/
 ├── public/
 │   ├── favicon/
@@ -7,9 +7,7 @@ web-v2/
 │   └── index.html          # Main HTML entry point (Vite handles this)
 ├── src/
 │   ├── assets/
-│   │   └── styles/
-│   │       ├── style.css
-│   │       └── port.css
+│   │   └── styles -- AXED
 │   ├── components/
 │   │   ├── Header.ts
 │   │   ├── Footer.ts

@@ -2,58 +2,65 @@ import React from "react";
 
 export const Skills: React.FC = () => (
   <section
-    className="section-skills has-before"
     id="skills"
     aria-label="skills"
-    style={{ backgroundImage: "url('../images/skills-bg.png')" }}
+    className="relative bg-cover bg-center py-32 min-h-screen"
+    style={{ backgroundImage: "url('/images/skills-bg.png')" }}
   >
-    <div className="container">
-      <div className="skills-content">
-        <p className="section-subtitle">Skills</p>
+    {/* Overlay */}
+    <div className="absolute inset-0 bg-black/40" />
 
-        <ul className="skills-list">
-          <li className="skills-item">
-            <div className="wrapper">
-              <h3 className="discipline">Front-End Development:</h3>
-              <h2 className="items">HTML / CSS / JavaScript / React / NextJS / NPM</h2>
-            </div>
-          </li>
-          <li className="skills-item">
-            <div className="wrapper">
-              <h3 className="discipline">Programming Languages:</h3>
-              <h2 className="items">C++ / Java / Go / Python / Ansible / Bash / Powershell / Zsh</h2>
-            </div>
-          </li>
-          <li className="skills-item">
-            <div className="wrapper">
-              <h3 className="discipline">Information Systems:</h3>
-              <h2 className="items">Windows Servers / Linux Servers / MySQL / MariaDB / Cisco / Extreme</h2>
-            </div>
-          </li>
-          <li className="skills-item">
-            <div className="wrapper">
-              <h3 className="discipline">Operating Systems:</h3>
-              <h2 className="items">Windows 10/11 / MacOS / Ubuntu, RHEL, Arch</h2>
-            </div>
-          </li>
-          <li className="skills-item">
-            <div className="wrapper">
-              <h3 className="discipline">Misc. Items:</h3>
-              <br />
-              <h2 className="items">
-                Containerization (Docker) / OOP / CI/CD Pipelines
-              </h2>
-            </div>
-          </li>
-        </ul>
+    <div className="relative mx-auto max-w-6xl px-6">
+      <div className="grid gap-20 md:grid-cols-2">
+
+        {/* Content */}
+        <div>
+          <p className="mb-12 font-poppins text-sm font-semibold uppercase tracking-widest text-sky-400">
+            Skills
+          </p>
+
+          <ul className="space-y-8">
+            {[
+              {
+                label: "Front-End Development",
+                items: "HTML / CSS / JavaScript / TypeScript / React",
+              },
+              {
+                label: "Programming Languages",
+                items: "C++ / Java / Go / Python / Bash",
+              },
+              {
+                label: "Information Systems",
+                items: "Windows Servers / Linux Servers / PostgreSQL / MariaDB / MongoDB / Cisco",
+              },
+              {
+                label: "Misc. Items",
+                items: "Docker / OOP / CI/CD Pipelines",
+              },
+            ].map((skill, i) => (
+              <li key={i}>
+                <h3 className="font-poppins text-sm font-semibold uppercase tracking-wide text-sky-300">
+                  {skill.label}
+                </h3>
+                <p className="mt-2 font-poppins text-lg font-medium text-white">
+                  {skill.items}
+                </p>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
-
-      <div className="skills-banner has-before"></div>
     </div>
 
-    <div className="custom-shape-divider-top-1704684987">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
-        <path className="shape-fill" d="..." />
+    {/* divider */}
+    <div className="absolute top-0 left-0 w-full overflow-hidden leading-none">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 1200 120"
+        preserveAspectRatio="none"
+        className="h-20 w-full fill-[#D2DBDD]"
+      >
+        <path d="..." />
       </svg>
     </div>
   </section>

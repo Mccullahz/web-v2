@@ -1,66 +1,97 @@
 import { Link } from "react-router-dom";
 import { IoArrowForwardOutline, IoArrowDown } from "react-icons/io5";
 
-export const Hero: React.FC = () => (
-  <section className="section headshot" id="home" aria-label="headshot">
-    <div className="container">
-      <div className="headshot-container">
-        <figure className="headshot-banner">
-          <img
-            src="/images/headshot.jpg"
-            alt="Zylar McCullah"
-            className="img-cover"
-          />
-        </figure>
+export const Hero: React.FC = () => {
+  return (
+    <section
+      id="home"
+      aria-label="headshot"
+      className="bg-[#D2DBDD] min-h-screen pt-50"
+    >
+      <div className="mx-auto max-w-6xl px-6">
+        <div className="grid gap-16 md:grid-cols-2 md:items-center">
 
-        <div className="headshot-content">
-          <p className="text-3xl">Zylar McCullah</p>
-          <h1 className="headshot-title">Student / Developer</h1>
+          {/* image */}
+          <figure className="overflow-hidden rounded-xl max-w-[440px] max-h-[500px]">
+            <img
+              src="/images/headshot.jpg"
+              alt="Headshot"
+              className="h-full w-full object-cover"
+            />
+          </figure>
 
-          <ul className="headshot-list">
-            <li>
-              <Link to="/gui" className="list-link">
-                <span className="span">Portfolio Page</span>
-                <IoArrowForwardOutline aria-hidden="true" />
-              </Link>
-            </li>
-            <li>
-              <a
-                href="https://techcyberwarriors.org/"
-                className="list-link"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <span className="span">Collegiate Cyber Security Experience</span>
-                <IoArrowForwardOutline aria-hidden="true" />
-              </a>
-            </li>
-            <li>
-              <a
-                href="https://academics.indianatech.edu/programs/cs-bs/"
-                className="list-link"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <span className="span">Collegiate Programming Experience</span>
-                <IoArrowForwardOutline aria-hidden="true" />
-              </a>
-            </li>
-          </ul>
+          {/* content */}
+          <div className="relative">
 
-          <ul className="exp-list">
-            <li className="list-item">
-              <strong className="strong">Third Year</strong>
-              <span className="span">Comp-Sci Major</span>
-            </li>
-          </ul>
+            <p className="mb-2 font-poppins text-lg font-bold text-sky-500">
+              Zylar McCullah
+            </p>
 
-          <a href="#workexp" className="slide-down-btn" aria-label="scroll-down">
-            <IoArrowDown aria-hidden="true" />
-          </a>
+            <h1 className="mb-8 font-poppins text-3xl font-extrabold uppercase leading-tight text-black">
+              Developer & Student
+            </h1>
+            
+	    <ul className="space-y-4">
+              <li>
+                <Link
+                  to="/gui"
+                  className="flex items-center gap-2 font-poppins font-medium text-black transition-colors hover:text-sky-500"
+                >
+                  <span>Portfolio Page</span>
+                  <IoArrowForwardOutline className="text-xl transition-transform duration-500 hover:rotate-[-45deg]" />
+                </Link>
+              </li>
+
+              <li>
+                <a
+                  href="https://techcyberwarriors.org/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 font-poppins font-medium text-black transition-colors hover:text-sky-500"
+                >
+                  <span>Collegiate Cyber Security Experience</span>
+		  <IoArrowForwardOutline className="text-xl transition-transform duration-500 hover:rotate-[-45deg]" />
+
+                </a>
+              </li>
+
+              <li>
+                <a
+                  href="https://github.com/Mccullahz"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 font-poppins font-medium text-black transition-colors hover:text-sky-500"
+                >
+                  <span>Other Projects</span>
+		  <IoArrowForwardOutline className="text-xl transition-transform duration-500 hover:rotate-[-45deg]" />
+                </a>
+              </li>
+            </ul>
+
+            
+            <ul className="mt-10">
+              <li className="flex flex-col">
+                <strong className="font-poppins text-lg font-extrabold text-black">
+                  Third Year
+                </strong>
+                <span className="font-poppins text-sm text-gray-600">
+                  Comp-Sci Major
+                </span>
+              </li>
+            </ul>
+
+            {/* down arrow */}
+            <a
+              href="#workexp"
+              aria-label="scroll-down"
+              className="absolute -bottom-20 left-0 md:flex items-center justify-center text-5xl text-black animate-bounce hover:text-sky-500 transition-transform"
+            >
+              <IoArrowDown />
+            </a>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
-);
+    </section>
+  );
+};
 

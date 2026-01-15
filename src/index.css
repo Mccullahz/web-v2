@@ -1,4 +1,4 @@
-/* tailwind setup instead */
+/* mostly using tailwind now so very little root css for overscroll etc */
 
 @import "tailwindcss";
 
@@ -9,7 +9,7 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  background-color: #D2DBDD;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
