@@ -3,6 +3,8 @@
 
 - The following table breaks down the all the tasks I believe are necessary to complete this project and where I will be completing each task. Keeping this approach will keep me organized and avoid scope creep as well as overcomplicating Three.js implementation.
 
+- Blender background with hdri lighting to match (close enough atleast) the tailwind bg color is: #D9FDFFFF
+
 
 -----------------------------
 |  Task         | 	Where   |
