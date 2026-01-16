@@ -72,10 +72,10 @@ export const Hero: React.FC = () => {
             <ul className="mt-10">
               <li className="flex flex-col">
                 <strong className="font-poppins text-lg font-extrabold text-black">
-                  Third Year
+                  Fourth Year
                 </strong>
                 <span className="font-poppins text-sm text-gray-600">
-                  Comp-Sci Major
+                  Computer Science Major
                 </span>
               </li>
             </ul>

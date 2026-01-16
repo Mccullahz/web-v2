@@ -47,13 +47,16 @@ export const Contact: React.FC = () => (
         </ul>
       </div>
 
-      {/* form -- fix this at some point. mailto breaks all the time */}
+      {/* form -- switched to netlify's form detection. given this gets built into the html on deployment, this should work */}
       <form
-        action="mailto:zylardmccullah@gmail.com"
-        method="POST"
-        className="space-y-6"
+        name="contact"
+	method="POST"
+	data-netlify="true"
+	className="grid gap-6 text-black font-poppins"
       >
-        <input
+	<input type="hidden" name="form-name" value="contact" />
+
+	<input
           type="text"
           name="name"
           placeholder="Name"
@@ -76,7 +79,6 @@ export const Contact: React.FC = () => (
           rows={5}
           className="w-full rounded-md border border-black/20 text-black px-4 py-3 font-poppins focus:border-sky-500 focus:outline-none"
         />
-
         <button
           type="submit"
           className="inline-flex items-center justify-center rounded-md bg-sky-500 px-8 py-3 font-poppins font-semibold text-white transition-colors hover:bg-sky-600"
@@ -87,4 +89,3 @@ export const Contact: React.FC = () => (
     </div>
   </section>
 );
-
