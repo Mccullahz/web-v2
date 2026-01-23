@@ -2,32 +2,24 @@
 
 // current state should be doing nothing yet, just getting the background colors in blender properly mapped 
 
-import React from "react";
 import { Canvas } from "@react-three/fiber";
-//import { PointerLockControls } from "@react-three/drei";
 import { Environment } from "@react-three/drei";
-import { PlayerControls } from "./components/PlayerControls";
+import { SeedScene } from "./components/SeedScene";
+import { Camera } from "./components/Camera";
 
 export const ThreeScene: React.FC = () => {
   return (
-    <div
-      className="relative h-screen w-full bg-[#D2DBDD]"
-      style={{
-        backgroundImage: "url('/src/three/data/init.png')",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-      }}
+    <Canvas
+      camera={{ fov: 75 }}
+      style={{ width: "100%", height: "100vh" }}
     >
-      <Canvas
-        shadows
-        camera={{ position: [0, 2.6, 5.5], fov: 100 }}
-        className="absolute inset-0"
-      >
-        <Environment preset="city" />
-        <PlayerControls />
+      <color attach="background" args={["#d2dbdd"]} />
 
-      </Canvas>
-    </div>
+      <Environment preset="city" />
+
+      <Camera />
+      <SeedScene />
+    </Canvas>
   );
 };
 

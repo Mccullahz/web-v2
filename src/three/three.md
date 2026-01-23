@@ -17,5 +17,5 @@
 |  Interact     |   Three   |
 |  effects      |	Three   |
 |  Camera focus |	Three   |
-|  metadata     |	React   |
+| metadata(proj)|	React   |
 -----------------------------
