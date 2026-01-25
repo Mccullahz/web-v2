@@ -45,7 +45,7 @@ export const ProjectPage: React.FC<ProjectPageProps> = ({
       <p dangerouslySetInnerHTML={{ __html: description }} />
       <p>
         For additional details or to view the source code, check out the{" "}
-        <a href={repoLink} target="_blank" rel="noopener noreferrer">
+        <a className="underline hover:text-sky-600"href={repoLink} target="_blank" rel="noopener noreferrer">
           GitHub repository: Here
         </a>
         .
