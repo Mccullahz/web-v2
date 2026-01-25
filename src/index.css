@@ -17,3 +17,6 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+::selection {
+  background-color: #f7e3db; /* custom selected / highlight color */
+}
