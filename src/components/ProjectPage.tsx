@@ -22,16 +22,20 @@ export const ProjectPage: React.FC<ProjectPageProps> = ({
   description,
   repoLink,
 }) => (
-  <section className="process-sim">
-    <div className="sim-container">
-      <h2>{title}</h2>
-      <div className="pms-prev">
+  <section className="relative bg-[#D2DBDD] py-24 min-h-screen">
+    <div className="mx-auto max-w-4xl px-6">
+      <h2 className="font-poppins text-2xl font-bold text-sky-500 mb-3">
+      {title}
+      </h2>
+
+      <div className="overflow-hidden rounded-xl max-w-[800px] max-h-[800px]">
         <img src={gifSrc} alt={gifAlt} className="sim-gif" />
       </div>
 
-      <p className="sim-lead">{lead}</p>
+      <p className="mb-8 font-poppins text-l font-bold leading-tight text-black">{lead}</p>
 
-      <h2>Overview</h2>
+      <h2 className="mb-2 font-poppins text-sm font-semibold uppercase tracking-widest text-sky-500">Overview</h2>
+      <div className="my-6 font-poppins text-slate-900">
       <p>{overview}</p>
       <ul>
         {features.map((feature, idx) => (
@@ -46,6 +50,7 @@ export const ProjectPage: React.FC<ProjectPageProps> = ({
         </a>
         .
       </p>
+     </div>
     </div>
   </section>
 );
