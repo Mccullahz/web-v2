@@ -13,24 +13,30 @@ export function SeedScene() {
   useEffect(() => {
 	  if (!actions || animations.length === 0) return;
 
-	  const clips = animations
-	  .map(a => actions[a.name])
-	  .filter(Boolean);
+	  const clips = animations.map(a => actions[a.name]).filter(Boolean);
 
-	clips.forEach(action => {
-		action!
-      		.reset()
-      		.setLoop(LoopOnce, 1)
-      		.play(); // this should make all anim play immediately
-		action!.clampWhenFinished = true;
-	});
-	return () => {
-		mixer.stopAllAction();
-	};
-  }, [actions, animations, mixer]);
-  
+	  clips.forEach(action => {
+		  action!.reset().setLoop(LoopOnce, 1).play();
+		  action!.clampWhenFinished = true;
+	  });
+	  
+	  const onFinished = () => {
+		  (window as any).__cameraAPI?.zoomIn();
+	  };
+	  
+	  mixer.addEventListener("finished", onFinished);
+	  
+	  return () => {
+		  mixer.removeEventListener("finished", onFinished);
+		  mixer.stopAllAction();
+	  };
+  }, []);
+
   // mark shards for interaction, we are getting the individual mesh objects by name prefix successfully
+  const shardMeshes = useRef<THREE.Mesh[]>([]);
   useEffect(() => {
+    shardMeshes.current = [];
+
     scene.traverse(obj => {
       if (obj instanceof THREE.Mesh && obj.name.startsWith("shard_")) {
         obj.userData.isShard = true;
@@ -39,6 +45,12 @@ export function SeedScene() {
       }
     });
   }, [scene]);
+
+  // expose shard meshes globally
+  useEffect(() => {
+  (window as any).__shards = shardMeshes.current;
+}, []);
+
 
   return (
     <group
@@ -49,7 +61,12 @@ export function SeedScene() {
         const obj = e.object as THREE.Mesh;
 
         if (obj.userData.isShard) {
-          console.log("Clicked shard:", obj.name);
+          const pos = new THREE.Vector3();
+	  obj.getWorldPosition(pos);
+
+	  (window as any).__cameraAPI?.focusOn(pos);
+
+	  console.log("Active Shard:", obj.name);
         }
       }}
     >

@@ -1,48 +1,56 @@
-import { PointerLockControls } from "@react-three/drei";
-import { useFrame } from "@react-three/fiber";
-import { useThree } from "@react-three/fiber";
-import React, { useEffect, useRef} from "react";
+import { useEffect, useRef } from "react";
 import * as THREE from "three";
 
 export const PlayerControls: React.FC = () => {
-  const { camera } = useThree();
-  const velocity = useRef(new THREE.Vector3(0, 0, 0));
-  const direction = new THREE.Vector3();
-  const speed = 0.05;
-
-  const keys = useRef<{ [key: string]: boolean }>({});
+  const indexRef = useRef(0);
 
   useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => (keys.current[e.code] = true);
-    const handleKeyUp = (e: KeyboardEvent) => (keys.current[e.code] = false);
+    const onKeyDown = (e: KeyboardEvent) => {
+      const shards: THREE.Mesh[] = (window as any).__shards;
+      if (!shards || shards.length === 0) return;
 
-    window.addEventListener("keydown", handleKeyDown);
-    window.addEventListener("keyup", handleKeyUp);
-    return () => {
-      window.removeEventListener("keydown", handleKeyDown);
-      window.removeEventListener("keyup", handleKeyUp);
+      let next = indexRef.current;
+
+      switch (e.key) {
+        // vim bindings
+        case "j":
+        case "ArrowRight":
+          next++;
+          break;
+
+        case "k":
+        case "ArrowLeft":
+          next--;
+          break;
+
+        // WASD equivalents
+        case "d":
+          next++;
+          break;
+
+        case "a":
+          next--;
+          break;
+
+        default:
+          return;
+      }
+
+      next = (next + shards.length) % shards.length;
+      indexRef.current = next;
+
+      const shard = shards[next];
+      const pos = new THREE.Vector3();
+      shard.getWorldPosition(pos);
+
+      (window as any).__cameraAPI?.focusOn(pos);
+
+      console.log("Active shard:", shard.name);
     };
+
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
   }, []);
 
-  useFrame(() => {
-    velocity.current.set(0, 0, 0);
-
-    if (keys.current["KeyW"]) velocity.current.z += speed;
-    if (keys.current["KeyS"]) velocity.current.z -= speed;
-    if (keys.current["KeyA"]) velocity.current.x += speed;
-    if (keys.current["KeyD"]) velocity.current.x -= speed;
-
-    camera.getWorldDirection(direction);
-    direction.y = 0;
-    direction.normalize();
-
-    const right = new THREE.Vector3();
-    right.crossVectors(camera.up, direction).normalize();
-
-    camera.position.addScaledVector(direction, velocity.current.z);
-    camera.position.addScaledVector(right, velocity.current.x);
-  });
-
-  return <PointerLockControls />;
+  return null;
 };
-
