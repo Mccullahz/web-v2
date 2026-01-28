@@ -1,62 +1,61 @@
 import { useEffect, useRef } from "react";
 import { useGLTF, useAnimations } from "@react-three/drei";
 import { Group, LoopOnce } from "three";
+import * as THREE from "three";
 
 export function SeedScene() {
   const group = useRef<Group>(null!);
 
   const { scene, animations } = useGLTF("/src/three/data/seed.glb");
   const { actions, mixer } = useAnimations(animations, group);
-  animations.map(a => a.name)
-// ["Drop", "Break"]
 
-
+  // animation playback (essentially unchanged from what gippity wrote)
   useEffect(() => {
-    if (!actions || animations.length === 0) return;
+	  if (!actions || animations.length === 0) return;
 
-    const clips = animations.map(a => actions[a.name]).filter(Boolean);
+	  const clips = animations
+	  .map(a => actions[a.name])
+	  .filter(Boolean);
 
-    // Configure all clips to play once
-    clips.forEach(action => {
-      action!
-        .reset()
-        .setLoop(LoopOnce, 1)
-        .clampWhenFinished = true;
-    });
-
-    // Play them sequentially
-    let index = 0;
-
-    const playNext = () => {
-      const action = clips[index];
-      if (!action) return;
-
-      action.play();
-
-      mixer.addEventListener("finished", () => {
-        index++;
-        if (index < clips.length) {
-          playNext();
-        }
-      });
-    };
-
-    playNext();
-
-    return () => {
-      mixer.stopAllAction();
-    };
+	clips.forEach(action => {
+		action!
+      		.reset()
+      		.setLoop(LoopOnce, 1)
+      		.play(); // this should make all anim play immediately
+		action!.clampWhenFinished = true;
+	});
+	return () => {
+		mixer.stopAllAction();
+	};
   }, [actions, animations, mixer]);
+  
+  // mark shards for interaction, we are getting the individual mesh objects by name prefix successfully
+  useEffect(() => {
+    scene.traverse(obj => {
+      if (obj instanceof THREE.Mesh && obj.name.startsWith("shard_")) {
+        obj.userData.isShard = true;
+        obj.castShadow = true;
+        obj.receiveShadow = true;
+      }
+    });
+  }, [scene]);
 
-  console.log(
-  animations.map(a => ({
-    name: a.name,
-    duration: a.duration,
-  }))
-);
+  return (
+    <group
+      ref={group}
+      onPointerDown={(e) => {
+        e.stopPropagation();
 
+        const obj = e.object as THREE.Mesh;
 
-  return <primitive ref={group} object={scene} />;
+        if (obj.userData.isShard) {
+          console.log("Clicked shard:", obj.name);
+        }
+      }}
+    >
+      <primitive object={scene} />
+    </group>
+  );
 }
 
 useGLTF.preload("/src/three/data/seed.glb");

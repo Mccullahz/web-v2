@@ -9,7 +9,7 @@ export function Camera() {
 
   useEffect(() => {
     // pos: slightly above and behind the init mug (x, y, z)
-    camera.position.set(0, 30, 5);
+    camera.position.set(0, 40, 5);
 
     // angle: slight downward toward where the mug will drop
     camera.lookAt(new THREE.Vector3(0, 1.2, 0));
