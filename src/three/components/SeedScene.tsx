@@ -38,18 +38,27 @@ export function SeedScene() {
     shardMeshes.current = [];
 
     scene.traverse(obj => {
-      if (obj instanceof THREE.Mesh && obj.name.startsWith("shard_")) {
-        obj.userData.isShard = true;
-        obj.castShadow = true;
-        obj.receiveShadow = true;
-      }
+	    if (obj instanceof THREE.Mesh && obj.name.startsWith("shard_")) {
+		    obj.userData.isShard = true;
+		    obj.castShadow = true;
+		    obj.receiveShadow = true;
+		    shardMeshes.current.push(obj);
+	    }
     });
   }, [scene]);
 
   // expose shard meshes globally
-  useEffect(() => {
+useEffect(() => {
+  shardMeshes.current = [];
+
+  scene.traverse(obj => {
+    if (obj instanceof THREE.Mesh && obj.name.startsWith("shard_")) {
+      shardMeshes.current.push(obj);
+    }
+  });
+
   (window as any).__shards = shardMeshes.current;
-}, []);
+}, [scene]);
 
 
   return (

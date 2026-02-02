@@ -18,23 +18,36 @@ export function CameraController() {
   }, [camera]);
 
   // slerpy af
+  const SMOOTHNESS = 0.8;
+  const currentLook = useRef(new THREE.Vector3(0, 1.2, 0));
+
   useFrame((_, delta) => {
-    camera.position.lerp(targetPos.current, 1 - Math.exp(-delta * 4));
-    camera.lookAt(targetLook.current);
+	  const t = 1 - Math.exp(-delta * SMOOTHNESS);
+	  // smooth pos
+	  camera.position.lerp(targetPos.current, t);
+
+	  // smooth dir
+	  currentLook.current.lerp(targetLook.current, t);
+	  camera.lookAt(currentLook.current);
   });
 
   // expose helpers globally, potentially bad practice? TODO: research this a bit
   useEffect(() => {
-    (window as any).__cameraAPI = {
-      zoomIn() {
-        targetPos.current.set(0, 22, 8);
-      },
-      focusOn(vec: THREE.Vector3) {
-        targetLook.current.copy(vec);
-      },
-    };
-  }, []);
+	  const api = {
+		  zoomIn() {
+			  targetPos.current.set(0, 15, 8);
+		  },
+		  focusOn(vec: THREE.Vector3) {
+			  targetLook.current.copy(vec);
+		  },
+	  };
 
+	  (window as any).__cameraAPI = api;
+	  
+	return () => {
+		delete (window as any).__cameraAPI;
+	};
+  }, []);
   return null;
 }
 
