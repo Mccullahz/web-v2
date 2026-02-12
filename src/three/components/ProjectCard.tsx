@@ -21,7 +21,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
   const cardRef = useRef<THREE.Group>(null);
   const [hovered, setHovered] = useState(false);
 
-  // Make card face camera
+  // make card face camera
   useFrame(({ camera }) => {
     if (cardRef.current) {
       cardRef.current.lookAt(camera.position);
@@ -45,7 +45,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
         onPointerOut={() => setHovered(false)}
         onClick={onSelect}
       >
-        {/* Holographic card background */}
+        {/* bg */}
         <mesh>
           <planeGeometry args={[1.2, 1.6]} />
           <meshStandardMaterial
@@ -59,12 +59,12 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
           />
         </mesh>
 
-        {/* Border glow */}
+        {/* border */}
         <mesh>
           <ringGeometry args={[0.6, 0.65, 32]} />
           <meshStandardMaterial
-            color="#8b4513"
-            emissive="#8b4513"
+            color="#FFFF00"
+            emissive="#FFFF00"
             emissiveIntensity={glowIntensity}
             transparent
             opacity={0.6}
@@ -72,11 +72,11 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
           />
         </mesh>
 
-        {/* Project title */}
+        {/* title */}
         <Text
           position={[0, 0.5, 0.01]}
           fontSize={0.15}
-          color={isSelected ? "#ffd700" : "#ffffff"}
+          color={isSelected ? "#00c2e0" : "#00a0b0"}
           anchorX="center"
           anchorY="middle"
           outlineWidth={0.02}
@@ -85,7 +85,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
           {project.title}
         </Text>
 
-        {/* Category */}
+        {/* category */}
         <Text
           position={[0, 0.1, 0.01]}
           fontSize={0.08}
@@ -97,7 +97,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
           {project.category}
         </Text>
 
-        {/* Tech stack */}
+        {/* stack */}
         <Text
           position={[0, -0.3, 0.01]}
           fontSize={0.07}
@@ -109,16 +109,6 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
           {project.tech}
         </Text>
 
-        {/* Holographic scan lines effect */}
-        <mesh position={[0, 0, 0.02]}>
-          <planeGeometry args={[1.2, 1.6]} />
-          <meshBasicMaterial
-            color="#00ffff"
-            transparent
-            opacity={0.05}
-            side={THREE.DoubleSide}
-          />
-        </mesh>
       </group>
     </Float>
   );
