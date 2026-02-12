@@ -16,7 +16,7 @@ export const Experience: React.FC = () => (
         {[
           {
             period: "Contract 2024-2025",
-            title: "Software Developer",
+            title: "Contract Developer",
             address: "Firewatch Design Studio, Dayton, Ohio",
           },
           {
