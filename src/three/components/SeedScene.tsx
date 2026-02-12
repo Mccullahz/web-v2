@@ -19,7 +19,7 @@ interface SeedSceneProps {
 export function SeedScene({ onShardHover, onActiveShardChange, onNavigateToProject }: SeedSceneProps) {
   const group = useRef<Group>(null!);
 
-  const { scene, animations } = useGLTF("/public/models/seed.glb");
+  const { scene, animations } = useGLTF("/models/seed.glb");
   const { actions, mixer } = useAnimations(animations, group);
 
   // animation playback (essentially unchanged from what gippity wrote)
