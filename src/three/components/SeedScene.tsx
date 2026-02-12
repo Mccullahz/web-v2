@@ -2,7 +2,6 @@ import { useEffect, useRef } from "react";
 import { useGLTF, useAnimations } from "@react-three/drei";
 import { Group, LoopOnce } from "three";
 import * as THREE from "three";
-//import type { Project } from "../data/projects"; shouldn't need anymoer
 import { shardNameToProject } from "../shardMapping";
 import type { CardPayload } from "../shardMapping";
 
@@ -10,8 +9,6 @@ export { shardNameToProject };
 export type { CardPayload };
 
 export type SeedSceneHoverPayload = CardPayload;
-
-let activeShard: THREE.Mesh | null = null;
 
 interface SeedSceneProps {
   onShardHover?: (payload: SeedSceneHoverPayload | null) => void;
@@ -113,7 +110,6 @@ useEffect(() => {
             }
           }
 
-          activeShard = obj;
           const pos = new THREE.Vector3();
           obj.getWorldPosition(pos);
 

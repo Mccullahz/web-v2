@@ -1,8 +1,9 @@
-// instead of hardcoding data in the ticket components, we can define it here and map through it
-//
-import type { TicketProps } from "../components/Ticket";
-
-export interface Project extends TicketProps {
+// Project data used by the three scene (shards, cards) and elsewhere
+export interface Project {
+  position: [number, number, number];
+  title: string;
+  category: string;
+  tech: string;
   path: string;
 }
 
