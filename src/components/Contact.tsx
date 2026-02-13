@@ -47,14 +47,22 @@ export const Contact: React.FC = () => (
         </ul>
       </div>
 
-      {/* form -- switched to netlify's form detection. given this gets built into the html on deployment, this should work */}
+      {/* form: submits to /contact.html so Netlify receives the POST; static form in public/contact.html is used for build-time form detection */}
       <form
         name="contact"
-	method="POST"
-	data-netlify="true"
-	className="grid gap-6 text-black font-poppins"
+        method="POST"
+        data-netlify="true"
+        data-netlify-honeypot="bot-field"
+        action="/contact.html"
+        className="grid gap-6 text-black font-poppins"
       >
-	<input type="hidden" name="form-name" value="contact" />
+        <input type="hidden" name="form-name" value="contact" />
+        <input type="hidden" name="_redirect" value="/#contact" />
+        <p className="absolute -left-[9999px]" aria-hidden="true">
+          <label>
+            Don't fill this out: <input name="bot-field" tabIndex={-1} autoComplete="off" />
+          </label>
+        </p>
 
 	<input
           type="text"
