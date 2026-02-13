@@ -24,4 +24,3 @@ export const Pms: React.FC = () => (
     repoLink="https://www.github.com/Mccullahz/process-management-simulator"
   />
 );
-

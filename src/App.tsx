@@ -8,6 +8,7 @@ import { Flacer } from "./pages/Flacer";
 import { Pms } from "./pages/Pms";
 import { Lms } from "./pages/Lms";
 import { Ysa } from "./pages/Ysa";
+import { Ggj } from "./pages/Ggj";
 import { NotFound } from "./pages/NotFound";
 import "./index.css";
 
@@ -22,6 +23,7 @@ export const App: React.FC = () => {
 	<Route path="/pms" element={<Pms />} />
 	<Route path="/lms" element={<Lms />} />
 	<Route path="/ysa" element={<Ysa />} />
+	<Route path="/ggj" element={<Ggj />} />
 	<Route path="*" element={<NotFound />} />
       </Routes>
       <div>

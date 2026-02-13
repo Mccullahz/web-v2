@@ -36,5 +36,12 @@ export const projects: Project[] = [
     tech: "Using Java + JavaFX",
     path: "/lms",
   },
+  {
+    position: [1.6, 0.01, -1.6],
+    title: "Go Getta Job",
+    category: "Cross Platform CLI Application",
+    tech: "Using Go + BubbleTea + Lipgloss",
+    path: "/ggj",
+	},
 ];
 
