@@ -20,3 +20,15 @@
 ::selection {
   background-color: #f7e3db; /* custom selected / highlight color */
 }
+
+/*custom anim for 404*/
+@keyframes fadeSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(0.75rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

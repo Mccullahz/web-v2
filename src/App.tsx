@@ -9,7 +9,7 @@ import { Pms } from "./pages/Pms";
 import { Lms } from "./pages/Lms";
 import { Ysa } from "./pages/Ysa";
 import { Ggj } from "./pages/Ggj";
-import { NotFound } from "./pages/NotFound";
+import { Fourohfour } from "./pages/Fourohfour";
 import "./index.css";
 
 export const App: React.FC = () => {
@@ -24,7 +24,7 @@ export const App: React.FC = () => {
 	<Route path="/lms" element={<Lms />} />
 	<Route path="/ysa" element={<Ysa />} />
 	<Route path="/ggj" element={<Ggj />} />
-	<Route path="*" element={<NotFound />} />
+	<Route path="*" element={<Fourohfour />} />
       </Routes>
       <div>
       <Footer />
