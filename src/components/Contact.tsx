@@ -22,6 +22,9 @@ export const Contact: React.FC = () => (
         <p className="mb-10 font-poppins text-gray-700">
           To get in contact with me, please fill out the form or reach out directly
           using the contact details below.
+	</p>
+	<p>
+	  And yes, this form is functional!
         </p>
 
         <ul className="space-y-6">
