@@ -17,7 +17,7 @@ export function FocusedShardPositionSync({ onUpdate }: FocusedShardPositionSyncP
   useFrame(() => {
     const shard = (window as any).__activeShard as THREE.Mesh | undefined;
     if (!shard) {
-      lastPixel.current = { x: -1e9, y: -1e9 };
+      lastPixel.current = { x: -1e9, y: -1e9 }; // if a gigapixel, -1 billion pixels, isnt offscreen.. nothing is
       return;
     }
     const project = shardNameToProject(shard.name);
