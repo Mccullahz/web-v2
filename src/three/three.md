@@ -1,3 +1,5 @@
+## Three.js Plan
+
 - As I have begun to switch mental models on what I want this portfolio to look like I think I have settled upon a singular idea.
 - I want to create a 3D interactive mug that is dropped on initial view. The pieces will break apart on the ground and the user can rotate around the scene to view the broken mug from different angles. On each piece of the mug there will be metadata about a project I have done in the past. The user can click on each piece to view more information about that project.
 
