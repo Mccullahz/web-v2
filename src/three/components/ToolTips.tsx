@@ -50,7 +50,7 @@ export function ToolTips(props: ToolTipsProps = {}) {
   );
 }
 
-/** returns jsx to mount inside <Canvas> // kbm-lp.glb animations. */
+/** returns jsx to mount inside <Canvas> // kbm-lp.glb animations.*/
 export function createToolTips(props?: ToolTipsProps): ReactElement {
   return <ToolTips {...props} />;
 }

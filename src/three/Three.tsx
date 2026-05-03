@@ -9,6 +9,7 @@ import { CameraController } from "./components/CameraController";
 import { PlayerControls } from "./components/PlayerControls";
 import { KeyboardFocusCardSync } from "./components/KeyboardFocusCardSync";
 import { createToolTips } from "./components/ToolTips";
+import { ToolTipsCard } from "./components/ToolTipsCard";
 import type { CardPayload } from "./components/SeedScene";
 import { shardNameToProject } from "./shardMapping";
 //import { ShardHighlight } from "./components/ShardHighlight";
@@ -75,6 +76,7 @@ export const ThreeScene: React.FC = () => {
         <PlayerControls onKeyboardShardChange={setKeyboardFocus} />
         <KeyboardFocusCardSync active={keyboardCardActive} onUpdate={setKeyboardFocus} />
         {createToolTips()}
+	{ToolTipsCard()}
         {/*<ShardHighlight />*/}
       </Canvas>
       {cardPayload && (
