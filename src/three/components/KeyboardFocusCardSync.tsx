@@ -1,25 +1,29 @@
-// track the position of the currently focused shard in the 3D scene and call onUpdate callback with the shard's project and screen coordinates whenever it changes. needed useFrame loop for pos allows for double click shard logic
 import { useFrame, useThree } from "@react-three/fiber";
 import { useRef } from "react";
 import * as THREE from "three";
 import { shardNameToProject } from "../shardMapping";
 import type { CardPayload } from "../shardMapping";
 
-interface FocusedShardPositionSyncProps {
-  onUpdate: (payload: CardPayload | null) => void;
+interface KeyboardFocusCardSyncProps {
+  /** if true, project active shard to screen for the kb overlay. */
+  active: boolean;
+  onUpdate: (payload: CardPayload) => void;
 }
 
-export function FocusedShardPositionSync({ onUpdate }: FocusedShardPositionSyncProps) {
+export function KeyboardFocusCardSync({ active, onUpdate }: KeyboardFocusCardSyncProps) {
   const { camera, size } = useThree();
   const pos = useRef(new THREE.Vector3());
   const lastPixel = useRef({ x: -1e9, y: -1e9 });
 
   useFrame(() => {
-    const shard = (window as any).__activeShard as THREE.Mesh | undefined;
-    if (!shard) {
-      lastPixel.current = { x: -1e9, y: -1e9 }; // if a gigapixel, -1 billion pixels, isnt offscreen.. nothing is
+    if (!active) {
+      lastPixel.current = { x: -1e9, y: -1e9 };
       return;
     }
+
+    const shard = (window as any).__activeShard as THREE.Mesh | undefined;
+    if (!shard) return;
+
     const project = shardNameToProject(shard.name);
     if (!project) return;
 
