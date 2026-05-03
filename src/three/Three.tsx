@@ -8,6 +8,7 @@ import { ShardHoverCard } from "./components/ShardHoverCard";
 import { CameraController } from "./components/CameraController";
 import { PlayerControls } from "./components/PlayerControls";
 import { FocusedShardPositionSync } from "./components/FocusedShardPositionSync";
+import { createToolTips } from "./components/ToolTips";
 import type { CardPayload } from "./components/SeedScene";
 //import { ShardHighlight } from "./components/ShardHighlight";
 
@@ -31,6 +32,7 @@ export const ThreeScene: React.FC = () => {
         />
         <PlayerControls onActiveShardChange={setFocusedShard} />
         <FocusedShardPositionSync onUpdate={setFocusedShard} />
+        {createToolTips()}
         {/*<ShardHighlight />*/}
       </Canvas>
       {cardTarget && (
