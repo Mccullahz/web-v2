@@ -8,12 +8,15 @@ interface ShardHoverCardProps {
   project: Project;
   x: number;
   y: number;
+  /** better hint line under the tech row keyboard vs mouse UX. changes between enter and click */
+  hint?: string;
 }
 
 export const ShardHoverCard: React.FC<ShardHoverCardProps> = ({
   project,
   x,
   y,
+  hint = "Click for more!",
 }) => {
   return (
     <div
@@ -50,7 +53,7 @@ export const ShardHoverCard: React.FC<ShardHoverCardProps> = ({
       </div>
       <div style={{ color: "#b0b0b0", marginBottom: 4 }}>{project.category}</div>
       <div style={{ color: "#888", fontSize: 12 }}>{project.tech}</div>
-      <div style={{ color: "#777", fontSize: 12, marginTop: 8 }}>{"Click for more!"}</div>
+      <div style={{ color: "#777", fontSize: 12, marginTop: 8 }}>{hint}</div>
     </div>
   );
 };

@@ -1,3 +1,4 @@
+/* "tool tip" used as a keyboard and mouse animated model. should provide a little more hinting towards what to do in the portfolio page */
 import { useEffect, useRef } from "react";
 import type { ReactElement } from "react";
 import { useGLTF, useAnimations, ScreenSpace } from "@react-three/drei";
@@ -9,7 +10,7 @@ export type ToolTipsProps = {
   depth?: number;
   scale?: number;
   position?: [number, number, number];
-  /** rotation in radians applied to the model: [x, y, z] — same as three default */
+  /** rotation in radians applied to the model: [x, y, z] // same as three default */
   rotation?: [number, number, number];
 };
 
