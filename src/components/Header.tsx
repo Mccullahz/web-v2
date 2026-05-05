@@ -13,7 +13,7 @@ export const Header: React.FC = () => {
           to="/"
           className="font-poppins text-3xl font-bold leading-none text-black"
         >
-	McCullahz
+	mccullahz
         </Link>
 
         {/* actions */}
