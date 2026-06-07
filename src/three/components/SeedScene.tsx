@@ -12,11 +12,12 @@ export type SeedSceneHoverPayload = CardPayload;
 
 interface SeedSceneProps {
   onShardHover?: (payload: SeedSceneHoverPayload | null) => void;
-  onActiveShardChange?: (payload: CardPayload) => void;
+  /** Called when the user focuses a shard with the mouse so keyboard-only UI can reset. */
+  onMouseShardFocus?: () => void;
   onNavigateToProject?: (path: string) => void;
 }
 
-export function SeedScene({ onShardHover, onActiveShardChange, onNavigateToProject }: SeedSceneProps) {
+export function SeedScene({ onShardHover, onMouseShardFocus, onNavigateToProject }: SeedSceneProps) {
   const group = useRef<Group>(null!);
 
   const { scene, animations } = useGLTF("/models/seed.glb");
@@ -110,17 +111,22 @@ useEffect(() => {
             }
           }
 
+          onMouseShardFocus?.();
+
           const pos = new THREE.Vector3();
           obj.getWorldPosition(pos);
 
           (window as any).__cameraAPI?.focusOn(pos);
           (window as any).__activeShard = obj;
 
-          const project = shardNameToProject(obj.name);
-          if (project && onActiveShardChange) {
-            const { clientX, clientY } = e.nativeEvent;
-            onActiveShardChange({ project, x: clientX, y: clientY });
+          const shards: THREE.Mesh[] = (window as any).__shards ?? [];
+          const idx = shards.indexOf(obj);
+          if (idx >= 0) {
+            window.dispatchEvent(
+              new CustomEvent("three-shard-index", { detail: { index: idx } })
+            );
           }
+
           console.log("Active Shard:", obj.name);
         }
       }}

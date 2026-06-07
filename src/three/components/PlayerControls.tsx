@@ -5,11 +5,12 @@ import { shardNameToProject } from "../shardMapping";
 import type { CardPayload } from "../shardMapping";
 
 interface PlayerControlsProps {
-  onActiveShardChange?: (payload: CardPayload | null) => void;
+  /** active only when moving selection with j/k, arrows, or a/d — drives the keyboard shard card. makes it so that on hover we dont have sticky cards. */
+  onKeyboardShardChange?: (payload: CardPayload | null) => void;
 }
 
 export const PlayerControls: React.FC<PlayerControlsProps> = ({
-  onActiveShardChange,
+  onKeyboardShardChange,
 }) => {
   const indexRef = useRef(0);
   const { camera, size } = useThree();
@@ -60,7 +61,7 @@ export const PlayerControls: React.FC<PlayerControlsProps> = ({
       (window as any).__cameraAPI?.focusOn(pos);
       (window as any).__activeShard = shard;
 
-      if (onActiveShardChange) {
+      if (onKeyboardShardChange) {
         const project = shardNameToProject(shard.name);
         if (project) {
           const cam = cameraRef.current;
@@ -68,7 +69,7 @@ export const PlayerControls: React.FC<PlayerControlsProps> = ({
           const ndc = pos.clone().project(cam);
           const x = (ndc.x + 1) * 0.5 * sz.width;
           const y = (1 - (ndc.y + 1) * 0.5) * sz.height;
-          onActiveShardChange({ project, x, y });
+          onKeyboardShardChange({ project, x, y });
         }
       }
 
@@ -77,7 +78,18 @@ export const PlayerControls: React.FC<PlayerControlsProps> = ({
 
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
-  }, [onActiveShardChange]);
+  }, [onKeyboardShardChange]);
+
+  useEffect(() => {
+    const syncIndex = (ev: Event) => {
+      const e = ev as CustomEvent<{ index: number }>;
+      if (typeof e.detail?.index === "number") {
+        indexRef.current = e.detail.index;
+      }
+    };
+    window.addEventListener("three-shard-index", syncIndex);
+    return () => window.removeEventListener("three-shard-index", syncIndex);
+  }, []);
 
   return null;
 };

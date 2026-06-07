@@ -1,4 +1,5 @@
-// Project data used by the three scene (shards, cards) and elsewhere
+// Project data used by the three scene (shards, cards) and elsewhere. NOTE: position is no longer relavent to the three scene
+
 export interface Project {
   position: [number, number, number];
   title: string;
