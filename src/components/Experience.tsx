@@ -14,6 +14,11 @@ export const Experience: React.FC = () => (
 
       <ul className="space-y-10 border-l border-black/20 pl-8">
         {[
+	  {
+            period: "June, 2026 – Present",
+            title: "Integration Engineer",
+            address: "iDonate, Remote",
+          },
           {
             period: "Contract 2024-2025",
             title: "Contract Developer",
