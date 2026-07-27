@@ -76,9 +76,10 @@ export const ThreeScene: React.FC = () => {
         <PlayerControls onKeyboardShardChange={setKeyboardFocus} />
         <KeyboardFocusCardSync active={keyboardCardActive} onUpdate={setKeyboardFocus} />
         {createToolTips()}
-	{ToolTipsCard()}
         {/*<ShardHighlight />*/}
       </Canvas>
+      {/* DOM overlay — must live OUTSIDE <Canvas>; R3F's reconciler rejects HTML children */}
+      {ToolTipsCard()}
       {cardPayload && (
         <ShardHoverCard
           project={cardPayload.project}
