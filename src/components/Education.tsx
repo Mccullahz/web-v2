@@ -1,50 +1,32 @@
 import React from "react";
 
+const schools = [
+  { name: "Indiana Tech, Fort Wayne, Indiana", detail: "B.S. Computer Science · 2020 – Present" },
+  { name: "Goshen High School, Goshen, Ohio", detail: "High School Diploma · 2016 – 2020" },
+];
+
 export const Education: React.FC = () => (
-  <section
-    id="education"
-    aria-label="education"
-    className="relative bg-[#D2DBDD] py-24 min-h-screen"
-  >
-    <div className="mx-auto max-w-4xl px-6">
-      <p className="mb-12 font-poppins text-sm font-semibold uppercase tracking-widest text-sky-500">
-        Education
-      </p>
-
-      <div className="space-y-10">
-        <div>
-          <h2 className="font-poppins text-xl font-bold text-black">
-            Indiana Tech, Fort Wayne, Indiana
-          </h2>
-          <p className="mt-1 font-poppins text-sm text-gray-700">
-            B.S. Computer Science · 2020 – Present
-          </p>
-        </div>
-
-        <div>
-          <h2 className="font-poppins text-xl font-bold text-black">
-            Goshen High School, Goshen, Ohio
-          </h2>
-          <p className="mt-1 font-poppins text-sm text-gray-700">
-            High School Diploma · 2016 – 2020
-          </p>
-        </div>
+  <section id="education" aria-label="education" className="px-6 py-20">
+    <div className="mx-auto max-w-4xl">
+      <div data-reveal className="mb-10 flex items-baseline gap-3">
+        <span className="font-mono text-sm text-acc">03</span>
+        <h2 className="font-poppins text-2xl font-bold tracking-tight text-ink">Education</h2>
+        <span className="h-px flex-1 bg-line" />
       </div>
-    </div>
 
-    {/* svg divide -- broken, not currently doing anything */}
-    <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-none">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 1200 120"
-        preserveAspectRatio="none"
-        className="h-24 w-full fill-white"
-      >
-        <path d="..." opacity=".25" />
-        <path d="..." opacity=".5" />
-        <path d="..." />
-      </svg>
+      <div className="space-y-6">
+        {schools.map((school, i) => (
+          <div
+            key={school.name}
+            data-reveal
+            style={{ transitionDelay: `${i * 55}ms` }}
+            className="border-t border-line pt-6 first:border-t-0 first:pt-0"
+          >
+            <h3 className="font-poppins text-lg font-bold text-ink">{school.name}</h3>
+            <p className="mt-1 font-poppins text-sm text-mut">{school.detail}</p>
+          </div>
+        ))}
+      </div>
     </div>
   </section>
 );
-

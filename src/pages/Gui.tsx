@@ -1,11 +1,6 @@
 import React from "react";
-import { ThreeScene } from "../three/Three";
+import { PourScene } from "../three/PourScene";
 
 export const Gui: React.FC = () => {
-  return (
-    <div style={{ height: "100vh", width: "100vw" }}>
-      <ThreeScene />
-    </div>
-  );
+  return <PourScene />;
 };
-

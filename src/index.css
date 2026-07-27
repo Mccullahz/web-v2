@@ -1,27 +1,143 @@
-/* mostly using tailwind now so very little root css for overscroll etc */
+/* Tailwind v4 + design tokens for the redesigned landing ("Aperture / Warm"). */
 
 @import "tailwindcss";
 
+/* ---- Design tokens (dark-first) ---- */
+@theme {
+  --font-poppins: "Poppins", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono: ui-monospace, "JetBrains Mono", "SF Mono", "Cascadia Code", Menlo, monospace;
+
+  --color-bg: #050904;
+  --color-surf: #0e120d;
+  --color-surf2: #161b14;
+  --color-line: #262b22;
+  --color-ink: #ece5de;
+  --color-mut: #9d968d;
+  --color-faint: #64605a;
+  --color-acc: #d3a99f;
+  --color-acc2: #e2bdb4;
+  --color-onacc: #0a0d07;
+  --color-glow: rgba(211, 169, 159, 0.11);
+}
+
+/* ---- Light theme: follow the OS unless the user has forced a choice ---- */
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --color-bg: #dfdbd9;
+    --color-surf: #f3f1ee;
+    --color-surf2: #e8e4e0;
+    --color-line: #cbc4bd;
+    --color-ink: #241f1c;
+    --color-mut: #6a635c;
+    --color-faint: #9c948b;
+    --color-acc: #a8705f;
+    --color-acc2: #8f5b4b;
+    --color-onacc: #f7f3f0;
+    --color-glow: rgba(168, 112, 95, 0.12);
+  }
+}
+
+/* ---- Explicit user choice (via the header toggle) wins over the OS ---- */
+:root[data-theme="light"] {
+  --color-bg: #dfdbd9;
+  --color-surf: #f3f1ee;
+  --color-surf2: #e8e4e0;
+  --color-line: #cbc4bd;
+  --color-ink: #241f1c;
+  --color-mut: #6a635c;
+  --color-faint: #9c948b;
+  --color-acc: #a8705f;
+  --color-acc2: #8f5b4b;
+  --color-onacc: #f7f3f0;
+  --color-glow: rgba(168, 112, 95, 0.12);
+}
+:root[data-theme="dark"] {
+  --color-bg: #050904;
+  --color-surf: #0e120d;
+  --color-surf2: #161b14;
+  --color-line: #262b22;
+  --color-ink: #ece5de;
+  --color-mut: #9d968d;
+  --color-faint: #64605a;
+  --color-acc: #d3a99f;
+  --color-acc2: #e2bdb4;
+  --color-onacc: #0a0d07;
+  --color-glow: rgba(211, 169, 159, 0.11);
+}
+
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
   color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #D2DBDD;
-
+  line-height: 1.5;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-::selection {
-  background-color: #f7e3db; /* custom selected / highlight color */
+body {
+  margin: 0;
+  background-color: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-poppins);
 }
 
-/*custom anim for 404*/
+/* Landing background: layered ambient light — a warm key light from the
+   top-right and a dimmer fill from the bottom-left for depth. */
+.landing-bg {
+  background:
+    radial-gradient(120% 70% at 82% -8%, var(--color-glow), transparent 55%),
+    radial-gradient(90% 60% at -5% 108%, color-mix(in oklab, var(--color-acc) 7%, transparent), transparent 60%),
+    var(--color-bg);
+}
+
+/* Whisper-light film grain over the whole viewport for warmth/texture. */
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  pointer-events: none;
+  opacity: 0.022;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 140px 140px;
+}
+
+::selection {
+  background-color: color-mix(in oklab, var(--color-acc) 35%, transparent);
+}
+
+/* Anchored sections clear the fixed header when jumped to. */
+section[id] {
+  scroll-margin-top: 6rem;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Soft "breathing" glow behind the headshot. */
+  .breathe {
+    animation: breathe 9s ease-in-out infinite;
+  }
+  @keyframes breathe {
+    0%, 100% { opacity: 0.55; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.06); }
+  }
+
+  /* Scroll-reveal: hidden until observed, then eased into place.
+     Elements stay visible if JS/observer never runs. */
+  [data-reveal] {
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.22, 0.61, 0.36, 1);
+  }
+  [data-reveal].in-view {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* custom anim for 404 */
 @keyframes fadeSlideIn {
   from {
     opacity: 0;
