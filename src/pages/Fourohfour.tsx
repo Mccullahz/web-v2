@@ -25,7 +25,7 @@ export const Fourohfour: React.FC = () => (
           not found
         </h1>
         <p className="mb-10 font-poppins text-mut opacity-0 animate-[fadeSlideIn_0.5s_ease-out_0.25s_forwards]">
-          The page you're looking for doesn't seem to exist. Please check the links below to navigate back to safety!
+          These are not the pages you are looking for
         </p>
 
         <div className="flex flex-col items-center justify-center gap-4 opacity-0 animate-[fadeSlideIn_0.5s_ease-out_0.4s_forwards] sm:flex-row">
@@ -42,7 +42,7 @@ export const Fourohfour: React.FC = () => (
             className="inline-flex items-center gap-2 rounded-lg border border-line bg-surf px-6 py-3 font-mono text-ink transition-colors duration-300 hover:border-acc hover:text-acc focus:outline-none focus-visible:ring-2 focus-visible:ring-acc"
           >
             <IoArrowBackOutline className="text-xl" />
-            Run it back
+            this is the way
           </button>
         </div>
       </div>

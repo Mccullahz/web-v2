@@ -12,7 +12,7 @@ export const Skills: React.FC = () => (
     <div className="mx-auto max-w-4xl">
       <div data-reveal className="mb-10 flex items-baseline gap-3">
         <span className="font-mono text-sm text-acc">02</span>
-        <h2 className="font-poppins text-2xl font-bold tracking-tight text-ink">Toolkit</h2>
+        <h2 className="font-poppins text-2xl font-bold tracking-tight text-ink">Stack(s)</h2>
         <span className="h-px flex-1 bg-line" />
       </div>
 

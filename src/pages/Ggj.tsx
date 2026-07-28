@@ -9,8 +9,8 @@ export const Ggj: React.FC = () => (
     lead="A command line application to help job seekers find local job opportunities by scraping nearby business websites for career pages. Built with Go, it provides a sleek terminal interface and leverages web scraping and geolocation to surface hidden job listings in small business websites."
     overview="This command line application features:"
     features={[
-	    "- Sleek terminal interface using Bubbletea+ Lipgloss",
-	    "- Scraping + Geo locational via ZIP built with Go Standard Libraries + Overpass API + Zippopotam.us"
+	    "Sleek terminal interface using Bubbletea+ Lipgloss",
+	    "Scraping + Geo locational via ZIP built with Go Standard Libraries + Overpass API + Zippopotam.us"
     ]}
     description={`<br/>
 	    This application finds nearby business websites and searches them for career or job listing pages. The goal is to automate localized job

@@ -6,7 +6,8 @@ export const Lms: React.FC = () => (
     title="Library Managemnet System"
     gifSrc="/images/lmsfp.jpg"
     gifAlt="Library Management System Demo Not Found"
-    lead="A GUI application that provides a user-friendly interface for managing library operations such as: addition, deletion, and searching of books, as well as managing user accounts. <br> Built using Java + FX + MySQL."
+    lead="A GUI application that provides a user-friendly interface for managing library operations such as: addition, deletion, and searching of books, as well as managing user accounts.
+	Built using Java + FX + MySQL."
     overview="This application demonstrates how a simple, user friendly library management system can be implemented using Java and MySQL. Using this application, there are options to:"
     features={[
     "Add new books to the library",
