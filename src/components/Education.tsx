@@ -7,7 +7,7 @@ const schools = [
 
 export const Education: React.FC = () => (
   <section id="education" aria-label="education" className="px-6 py-20">
-    <div className="mx-auto max-w-4xl">
+    <div className="mx-auto max-w-5xl">
       <div data-reveal className="mb-10 flex items-baseline gap-3">
         <span className="font-mono text-sm text-acc">03</span>
         <h2 className="font-poppins text-2xl font-bold tracking-tight text-ink">Education</h2>

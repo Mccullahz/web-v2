@@ -1,38 +1,35 @@
 import { useEffect, useRef, useState } from "react";
 import { DepthPortrait } from "./DepthPortrait";
 
-const GO_SNIPPET = `// ship.go — turn ideas into things that actually run
-package main
-import ("context"; "log"; "runtime"; "sync")
-type Idea struct { Name string; Tags []string; Score float64 }
-func (i Idea) Refine() Idea { i.Score = score(i.Tags); return i }
-func main() {
-  ctx, cancel := context.WithCancel(context.Background())
-  defer cancel()
-  ideas := make(chan Idea, runtime.NumCPU())
-  var wg sync.WaitGroup
-  for w := 0; w < runtime.NumCPU(); w++ {
-    wg.Add(1)
-    go func(worker int) {
-      defer wg.Done()
-      for idea := range ideas {
-        if err := ship(ctx, idea); err != nil {
-          log.Printf("worker %d dropped %s: %v", worker, idea.Name, err)
-          continue
-        }
-        log.Printf("worker %d shipped %s", worker, idea.Name)
-      }
-    }(w)
-  }
-  for _, idea := range brain.Wander(ctx) {
-    select {
-    case ideas <- idea.Refine():
-    case <-ctx.Done():
-      return
-    }
-  }
-  close(ideas)
-  wg.Wait()
+const GO_SNIPPET = `
+// startSession folds any guest cart into the account, rotates the session id,
+// and sets the cookie. Shared by signin and post-verification sign-in.
+func (h *Handler) startSession(w http.ResponseWriter, r *http.Request, user *User) bool {
+	// if the caller was shopping as a guest, fold their guest cart into this account, then invalidate the guest session (also prevents session fixation).
+	if old, cerr := r.Cookie("session"); cerr == nil {
+		if guestID, gerr := h.Service.UserIDFromSession(r.Context(), old.Value); gerr == nil && guestID != user.ID {
+			if gu, uerr := h.Service.UserByID(r.Context(), guestID); uerr == nil && gu != nil && gu.IsGuest {
+				_ = h.Service.MergeGuestCart(r.Context(), guestID, user.ID)
+			}
+		}
+		_ = h.Service.SignOut(r.Context(), old.Value)
+	}
+
+	sessionID, err := h.Service.CreateSession(r.Context(), user.ID)
+	if err != nil {
+		http.Error(w, "failed to create session", http.StatusInternalServerError)
+		return false
+	}
+
+	http.SetCookie(w, &http.Cookie{
+		Name:     "session",
+		Value:    sessionID,
+		Path:     "/",
+		HttpOnly: true,
+		SameSite: http.SameSiteLaxMode,
+		Secure:   h.SecureCookie, // configurable based on environment
+	})
+	return true
 }`;
 
 const TOKENS =
@@ -57,7 +54,10 @@ function highlightGo(src: string) {
   return out;
 }
 
-const LENS_CHASE = 0.085;
+const TRAIL = 10; // lens points: 1 head + 5 tail
+const TRAIL_DELAY = 5; // frames of lag between each trailing point
+const HEAD_CHASE = 0.16; // how hard the head eases toward the cursor
+const HIST = TRAIL * TRAIL_DELAY + 2; // ring-buffer length
 
 export const HeroPortrait: React.FC = () => {
   const rootRef = useRef<HTMLDivElement>(null);
@@ -65,8 +65,13 @@ export const HeroPortrait: React.FC = () => {
   const [active, setActive] = useState(false);
 
   const target = useRef({ x: 50, y: 50 });
-  const current = useRef({ x: 50, y: 50 });
+  const head = useRef({ x: 50, y: 50 });
+  // ring buffer of recent head positions; the tail lenses sample it at a lag
+  const histX = useRef<number[]>(new Array(HIST).fill(50));
+  const histY = useRef<number[]>(new Array(HIST).fill(50));
+  const write = useRef(0);
   const raf = useRef(0);
+  const settling = useRef(false);
 
   const readCursor = (e: React.PointerEvent) => {
     const el = rootRef.current;
@@ -75,15 +80,44 @@ export const HeroPortrait: React.FC = () => {
     return { x: ((e.clientX - r.left) / r.width) * 100, y: ((e.clientY - r.top) / r.height) * 100 };
   };
 
+  const reset = (x: number, y: number) => {
+    head.current = { x, y };
+    histX.current.fill(x);
+    histY.current.fill(y);
+    write.current = 0;
+  };
+
   const startChase = () => {
     if (raf.current) return;
     const step = () => {
       const splash = splashRef.current;
-      if (!splash) return;
-      current.current.x += (target.current.x - current.current.x) * LENS_CHASE;
-      current.current.y += (target.current.y - current.current.y) * LENS_CHASE;
-      splash.style.setProperty("--sx", `${current.current.x}%`);
-      splash.style.setProperty("--sy", `${current.current.y}%`);
+      if (!splash) {
+        raf.current = 0;
+        return;
+      }
+      head.current.x += (target.current.x - head.current.x) * HEAD_CHASE;
+      head.current.y += (target.current.y - head.current.y) * HEAD_CHASE;
+      histX.current[write.current] = head.current.x;
+      histY.current[write.current] = head.current.y;
+      let far = 0; 
+      for (let i = 0; i < TRAIL; i++) {
+        const idx = ((write.current - i * TRAIL_DELAY) % HIST + HIST) % HIST;
+        const x = histX.current[idx];
+        const y = histY.current[idx];
+        splash.style.setProperty(`--sx${i}`, `${x}%`);
+        splash.style.setProperty(`--sy${i}`, `${y}%`);
+        const dx = x - target.current.x;
+        const dy = y - target.current.y;
+        far = Math.max(far, dx * dx + dy * dy);
+      }
+      write.current = (write.current + 1) % HIST;
+
+      if (settling.current && far < 0.1) {
+        settling.current = false;
+        setActive(false);
+        raf.current = 0;
+        return;
+      }
       raf.current = requestAnimationFrame(step);
     };
     raf.current = requestAnimationFrame(step);
@@ -107,8 +141,9 @@ export const HeroPortrait: React.FC = () => {
         if (p) {
           // open where the cursor entered instead of sliding in from the last spot
           target.current = p;
-          current.current = { ...p };
+          reset(p.x, p.y);
         }
+        settling.current = false;
         setActive(true);
         startChase();
       }}
@@ -117,8 +152,8 @@ export const HeroPortrait: React.FC = () => {
         if (p) target.current = p;
       }}
       onPointerLeave={() => {
-        setActive(false);
-        stopChase();
+        settling.current = true;
+        startChase();
       }}
     >
       <div

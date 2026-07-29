@@ -37,14 +37,14 @@ export const Experience: React.FC = () => (
     {/* bloom so the section sits on a pool of light */}
     <div
       aria-hidden="true"
-      className="pointer-events-none absolute inset-x-0 top-8 -z-0 mx-auto h-64 max-w-4xl blur-2xl"
+      className="pointer-events-none absolute inset-x-0 top-8 -z-0 mx-auto h-64 max-w-5xl blur-2xl"
       style={{ background: "radial-gradient(60% 60% at 20% 0%, var(--color-glow), transparent 70%)" }}
     />
 
-    <div className="relative mx-auto max-w-4xl">
+    <div className="relative mx-auto max-w-5xl">
       <div data-reveal className="mb-10 flex items-baseline gap-3">
         <span className="rounded border border-line bg-surf/60 px-1.5 py-0.5 font-mono text-xs text-acc">01</span>
-        <h2 className="bg-linear-to-r from-ink via-acc to-acc2 bg-clip-text font-poppins text-2xl font-bold tracking-tight text-transparent">
+        <h2 className="bg-ink bg-clip-text font-poppins text-2xl font-bold tracking-tight text-transparent">
           Experience
         </h2>
         <span className="h-px flex-1 bg-linear-to-r from-line via-line to-transparent" />

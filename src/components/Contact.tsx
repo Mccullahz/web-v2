@@ -3,7 +3,7 @@ import { IoCallOutline, IoMailOpenOutline } from "react-icons/io5";
 
 export const Contact: React.FC = () => (
   <section id="contact" aria-label="contact" className="px-6 py-20">
-    <div className="mx-auto max-w-4xl">
+    <div className="mx-auto max-w-5xl">
       <div data-reveal className="mb-10 flex items-baseline gap-3">
         <span className="font-mono text-sm text-acc">04</span>
         <h2 className="font-poppins text-2xl font-bold tracking-tight text-ink">Contact</h2>

@@ -19,27 +19,28 @@ import {
   SiTypescript,
 } from "react-icons/si";
 
-// arch ascii as neofetch/fastfetch draws it
+// stylized "Z" drawn in the same graded character palette the arch fastfetch
+// art used: light ` . : / + o edges around a dense z-fill core
 const ART = [
-  "                   -`                 ",
-  "                  .o+`                ",
-  "                 `ooo/                ",
-  "                `+oooo:               ",
-  "               `+oooooo:              ",
-  "               -+oooooo+:             ",
-  "             `/:-:++oooo+:            ",
-  "            `/++++/+++++++:           ",
-  "           `/++++++++++++++:          ",
-  "          `/+++ooooooooooooo/`        ",
-  "         ./ooosssso++osssssso+`       ",
-  "        .oossssso-````/ossssss+`      ",
-  "       -osssssso.      :ssssssso.     ",
-  "      :osssssss/        osssso+++.    ",
-  "     /ossssssss/        +ssssooo/-    ",
-  "   `/ossssso+/:-        -:/+osssso+-  ",
-  "  `+sso+:-`                 `.-/+oso: ",
-  " `++:.                           `-/+/",
-  " .`                                 `/"
+  "    `.:/+ooozzzzzzzzzzzzzzooo+/:.`    ",
+  "    /+oozzzzzzzzzzzzzzzzzzzzzzoo+/    ",
+  "    +ozzzzzzzzzzzzzzzzzzzzzzzzzzo+    ",
+  "    oozzzzzzzzzzzzzzzzzzzzzzzzzzoo    ",
+  "                        /ozzzzzo/     ",
+  "                      +ozozzzo+       ",
+  "                    :+zzzzz+:         ",
+  "                  /oozzzoo/           ",
+  "                +ozzzzzo+             ",
+  "              /:zzozz:/               ",
+  "            o+zzzzz+o                 ",
+  "          /ozzzozo/                   ",
+  "        +ozzzzzo+                     ",
+  "      :+ozzzz+:                       ",
+  "    /ozzzzzo/                         ",
+  "    oozzzzzzzzzzzzzzzzzzzzzzzzzzoo    ",
+  "    +ozzzzzzzzzzzzzzzzzzzzzzzzzzo+    ",
+  "    /+oozzzzzzzzzzzzzzzzzzzzzzoo+/    ",
+  "    `.:/+ooozzzzzzzzzzzzzzooo+/:.`    "
 ].join("\n");
 
 const FACTS: [string, string][] = [
@@ -94,7 +95,10 @@ const GROUPS: { label: string; tone: string; tools: Tool[] }[] = [
   },
 ];
 
+// Palette chips: neutrals darkest -> lightest, then the accent family
+// darkest -> lightest. Ordered by luminance in the (primary) dark theme.
 const SWATCHES = [
+  // neutrals
   "var(--color-bg)",
   "var(--color-surf)",
   "var(--color-surf2)",
@@ -102,14 +106,15 @@ const SWATCHES = [
   "var(--color-faint)",
   "var(--color-mut)",
   "var(--color-ink)",
-  "var(--color-acc)",
-  "var(--color-acc2)",
-  "var(--stack-c3)",
-  "var(--stack-c4)",
+  // accent family
   "color-mix(in oklab, var(--color-acc) 22%, var(--color-bg))",
   "color-mix(in oklab, var(--color-acc) 45%, var(--color-bg))",
   "color-mix(in oklab, var(--color-acc) 68%, var(--color-bg))",
+  "var(--stack-c4)",
   "color-mix(in oklab, var(--color-acc) 88%, var(--color-bg))",
+  "var(--stack-c3)",
+  "var(--color-acc)",
+  "var(--color-acc2)",
 ];
 
 const Segment: React.FC<{ bg: string; fg: string; className?: string; children: React.ReactNode }> = ({
@@ -137,7 +142,7 @@ export const Skills: React.FC = () => (
     <div className="relative mx-auto max-w-5xl">
       <div data-reveal className="mb-8 flex items-baseline gap-3">
         <span className="rounded border border-line bg-surf/60 px-1.5 py-0.5 font-mono text-xs text-acc">02</span>
-        <h2 className="bg-linear-to-r from-ink via-acc to-acc2 bg-clip-text font-poppins text-2xl font-bold tracking-tight text-transparent">
+        <h2 className="bg-ink bg-clip-text font-poppins text-2xl font-bold tracking-tight text-transparent">
           Stack
         </h2>
         <span className="h-px flex-1 bg-linear-to-r from-line via-line to-transparent" />

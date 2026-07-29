@@ -151,18 +151,24 @@ section[id] {
    At radius 0 the gradient is fully transparent, which is what hides it. */
 .code-splash {
   --splash-r: 0px;
-  --sx: 50%;
-  --sy: 50%;
-  mask-image: radial-gradient(
-    circle at var(--sx) var(--sy),
-    #000 calc(var(--splash-r) * 0.58),
-    transparent var(--splash-r)
-  );
-  -webkit-mask-image: radial-gradient(
-    circle at var(--sx) var(--sy),
-    #000 calc(var(--splash-r) * 0.58),
-    transparent var(--splash-r)
-  );
+  --sx0: 50%; --sy0: 50%;
+  --sx1: 50%; --sy1: 50%;
+  --sx2: 50%; --sy2: 50%;
+  --sx3: 50%; --sy3: 50%;
+  --sx4: 50%; --sy4: 50%;
+  --sx5: 50%; --sy5: 50%;
+  /* Union of six lens circles strung along the pointer's recent path: the head
+     is full-size and each trailing circle a little smaller, so a fast swipe
+     reads as a tapering streak and a resting pointer collapses to one blob.
+     Comma-separated mask layers composite as a union (mask-composite: add). */
+  --lens0: radial-gradient(circle at var(--sx0) var(--sy0), #000 calc(var(--splash-r) * 0.55), transparent var(--splash-r));
+  --lens1: radial-gradient(circle at var(--sx1) var(--sy1), #000 calc(var(--splash-r) * 0.47), transparent calc(var(--splash-r) * 0.9));
+  --lens2: radial-gradient(circle at var(--sx2) var(--sy2), #000 calc(var(--splash-r) * 0.40), transparent calc(var(--splash-r) * 0.8));
+  --lens3: radial-gradient(circle at var(--sx3) var(--sy3), #000 calc(var(--splash-r) * 0.33), transparent calc(var(--splash-r) * 0.7));
+  --lens4: radial-gradient(circle at var(--sx4) var(--sy4), #000 calc(var(--splash-r) * 0.26), transparent calc(var(--splash-r) * 0.6));
+  --lens5: radial-gradient(circle at var(--sx5) var(--sy5), #000 calc(var(--splash-r) * 0.20), transparent calc(var(--splash-r) * 0.5));
+  mask-image: var(--lens0), var(--lens1), var(--lens2), var(--lens3), var(--lens4), var(--lens5);
+  -webkit-mask-image: var(--lens0), var(--lens1), var(--lens2), var(--lens3), var(--lens4), var(--lens5);
   transition: --splash-r 380ms cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 .code-splash[data-active="true"] {
