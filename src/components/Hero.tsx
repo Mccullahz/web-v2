@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { IoArrowForwardOutline, IoLogoGithub, IoLogoLinkedin, IoMailOutline } from "react-icons/io5";
+import { HeroPortrait } from "./HeroPortrait";
 
 const quickLinks = [
   { label: "github", href: "https://github.com/Mccullahz", Icon: IoLogoGithub, external: true },
@@ -8,12 +9,21 @@ const quickLinks = [
 ];
 
 export const Hero: React.FC = () => {
+  // full viewport height with no bottom padding, so the portrait's lower edge
+  // lands on the bottom of the screen and fades out into it
   return (
-    <section id="home" aria-label="intro" className="px-6 pt-32 pb-16 md:pt-40">
-      <div className="mx-auto max-w-6xl">
-        <div className="grid items-center gap-10 md:grid-cols-[1.25fr_.9fr] md:gap-16">
+    <section
+      id="home"
+      aria-label="intro"
+      className="px-6 pt-32 pb-16 md:flex md:min-h-screen md:items-end md:pt-40 md:pb-0"
+    >
+      <div className="mx-auto w-full max-w-6xl">
+        {/* text column sizes to its own content, which makes its right edge
+            viewport-independent — the portrait is then pulled back by the
+            constant slack between that edge and the end of "stuff." */}
+        <div className="grid items-center gap-10 md:grid-cols-[minmax(0,max-content)_1fr] md:items-end md:gap-x-0 md:gap-y-10">
           {/* content */}
-          <div>
+          <div className="md:self-center">
             <h1
               data-reveal
               className="mt-5 mb-4 max-w-[15ch] font-poppins text-4xl font-extrabold leading-[1.02] tracking-tight text-balance text-ink md:text-6xl"
@@ -67,19 +77,7 @@ export const Hero: React.FC = () => {
           </div>
 
           {/* headshot */}
-          <div data-reveal style={{ transitionDelay: "120ms" }} className="group relative mx-auto w-full max-w-[340px] md:order-last">
-            <div
-              className="breathe absolute -inset-x-6 -top-[14%] bottom-0 -z-0 rounded-full blur-lg"
-              style={{ background: "radial-gradient(60% 60% at 60% 30%, var(--color-glow), transparent 70%)" }}
-            />
-            <figure className="relative z-10 aspect-[4/5] overflow-hidden rounded-2xl border border-line shadow-[0_30px_60px_-30px_rgba(0,0,0,0.6)] transition-transform duration-500 group-hover:-translate-y-1">
-              <img
-                src="/images/headshot.jpg"
-                alt="Zylar McCullah"
-                className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.04] group-hover:brightness-105"
-              />
-            </figure>
-          </div>
+          <HeroPortrait />
         </div>
       </div>
     </section>

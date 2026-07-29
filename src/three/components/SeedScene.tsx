@@ -136,5 +136,6 @@ useEffect(() => {
   );
 }
 
-useGLTF.preload("/src/three/data/seed.glb");
+// must match the useGLTF path above; the old /src/... form 404s in a build
+useGLTF.preload("/models/seed.glb");
 

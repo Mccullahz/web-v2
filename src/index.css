@@ -137,6 +137,131 @@ section[id] {
   }
 }
 
+/* Registered so the radius can be transitioned; without @property the custom
+   property still swaps, it just snaps open instead of easing. */
+@property --splash-r {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 0px;
+}
+
+/* Code splash over the headshot: the snippet is full-bleed underneath and only
+   a lens around the cursor is unmasked, so moving across the portrait reads
+   different parts of it. --sx/--sy are written by HeroPortrait on pointermove.
+   At radius 0 the gradient is fully transparent, which is what hides it. */
+.code-splash {
+  --splash-r: 0px;
+  --sx: 50%;
+  --sy: 50%;
+  mask-image: radial-gradient(
+    circle at var(--sx) var(--sy),
+    #000 calc(var(--splash-r) * 0.58),
+    transparent var(--splash-r)
+  );
+  -webkit-mask-image: radial-gradient(
+    circle at var(--sx) var(--sy),
+    #000 calc(var(--splash-r) * 0.58),
+    transparent var(--splash-r)
+  );
+  transition: --splash-r 380ms cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+.code-splash[data-active="true"] {
+  --splash-r: 92px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .code-splash {
+    transition: none;
+  }
+}
+
+/* Gloss sweep across the experience cards on hover. Guarded by the
+   reduced-motion block below so it only ever runs when motion is welcome. */
+@keyframes sweep {
+  0% {
+    transform: translateX(-140%) skewX(-14deg);
+    opacity: 0;
+  }
+  30% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(320%) skewX(-14deg);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .group:hover .sweep {
+    animation: sweep 900ms cubic-bezier(0.22, 0.61, 0.36, 1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* the "now" pill's pulse would otherwise loop forever */
+  .animate-ping {
+    animation: none;
+  }
+}
+
+/* ---- Stack(s): the fastfetch block ---------------------------------- */
+
+/* Four module tones, all derived from the two accents so the section needs no
+   new palette. Custom properties resolve lazily, so these follow the theme
+   toggle for free. */
+:root {
+  --stack-c1: var(--color-acc);
+  --stack-c2: color-mix(in oklab, var(--color-acc2) 82%, var(--color-ink));
+  --stack-c3: color-mix(in oklab, var(--color-acc) 62%, var(--color-mut));
+  --stack-c4: var(--color-mut);
+}
+
+/* Powerline chevron trailing each status-bar segment. --seg-bg is set inline
+   per segment; a Nerd Font glyph would not render for most visitors. */
+.ff-seg {
+  position: relative;
+  background: var(--seg-bg);
+  color: var(--seg-fg);
+}
+.ff-seg::after {
+  content: "";
+  position: absolute;
+  right: -0.5rem;
+  top: 0;
+  bottom: 0;
+  width: 0.5rem;
+  background: var(--seg-bg);
+  clip-path: polygon(0 0, 100% 50%, 0 100%);
+  z-index: 1;
+}
+
+/* Artifacted marks: two accent-tinted copies of the glyph tear away from the
+   base, then snap back. steps() keeps it digital rather than smooth. */
+@keyframes markTearA {
+  0%   { opacity: .9; transform: translate(-2px, 1px); clip-path: inset(12% 0 46% 0); }
+  35%  { opacity: .8; transform: translate(2px, -1px); clip-path: inset(58% 0 18% 0); }
+  70%  { opacity: .5; transform: translate(-1px, 0);   clip-path: inset(30% 0 60% 0); }
+  100% { opacity: 0;  transform: none;                 clip-path: inset(0); }
+}
+@keyframes markTearB {
+  0%   { opacity: .8; transform: translate(2px, -1px); clip-path: inset(52% 0 22% 0); }
+  40%  { opacity: .7; transform: translate(-2px, 1px); clip-path: inset(8% 0 68% 0); }
+  75%  { opacity: .4; transform: translate(1px, 0);    clip-path: inset(70% 0 12% 0); }
+  100% { opacity: 0;  transform: none;                 clip-path: inset(0); }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* focus-within so the tear fires from the keyboard too */
+  .ff-row:hover .mark-a,
+  .ff-row:focus-within .mark-a {
+    animation: markTearA 500ms steps(2) 1;
+  }
+  .ff-row:hover .mark-b,
+  .ff-row:focus-within .mark-b {
+    animation: markTearB 500ms steps(2) 1;
+  }
+}
+
 /* custom anim for 404 */
 @keyframes fadeSlideIn {
   from {

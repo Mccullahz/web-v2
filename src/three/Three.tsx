@@ -65,7 +65,9 @@ export const ThreeScene: React.FC = () => {
   return (
     <div style={{ position: "relative", width: "100%", height: "100%" }}>
       <Canvas camera={{ fov: 75 }}>
-        <Environment preset="city" />
+        {/* self-hosted: drei's `preset` pulls this from raw.githack.com at
+            runtime, which rate-limits (403s) and leaves the scene unlit */}
+        <Environment files="/hdri/potsdamer_platz_1k.hdr" />
 
         <CameraController />
         <SeedScene

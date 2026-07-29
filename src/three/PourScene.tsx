@@ -14,6 +14,9 @@ import mugUrl from "./data/mug.obj?url";
 
 type Vec3 = [number, number, number];
 
+// Same file drei's "apartment" preset uses, served from our own origin.
+const HDRI_URL = "/hdri/lebombo_1k.hdr";
+
 // --- Tunables --------------------------------------------------------------
 const MUG_HEIGHT = 1.3;
 // Spin the loaded OBJ so the handle sits on the LEFT (nudge the Y value if the
@@ -120,8 +123,9 @@ function readTheme(): "light" | "dark" {
   return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
 }
 
-// Pull the page's real background token so the scene bg + table match the
-// landing page exactly (and switch with the header's theme toggle).
+// Pull the page's real background token so fog fades toward the landing page's
+// colour (and follows the header's theme toggle). The canvas itself is
+// transparent, so the page supplies the actual background.
 function computeScenePalette(): Palette {
   const base = PALETTES[readTheme()];
   const bg = getComputedStyle(document.documentElement).getPropertyValue("--color-bg").trim();
@@ -619,11 +623,15 @@ export const PourScene: React.FC = () => {
         gl={{ antialias: true, toneMapping: THREE.ACESFilmicToneMapping, toneMappingExposure: 1.05 }}
         camera={{ position: CAMERA_START_POS, fov: CAMERA_FOV }}
       >
-        <color attach="background" args={[palette.bg]} />
+        {/* No scene background: the canvas stays transparent so the page's own
+            bg-bg shows through untouched. A three.js background colour goes
+            through ACES tone mapping and so never matches the CSS token. */}
         <fog attach="fog" args={[palette.bg, 15, 34]} />
 
         <Suspense fallback={null}>
-          <Environment preset="apartment" environmentIntensity={0.55} />
+          {/* self-hosted: drei's `preset` pulls this from raw.githack.com at
+              runtime, which rate-limits (403s) and leaves the scene unlit */}
+          <Environment files={HDRI_URL} environmentIntensity={0.55} />
         </Suspense>
 
         <hemisphereLight args={[palette.skyHemi, palette.groundHemi, 0.25]} />
@@ -648,7 +656,12 @@ export const PourScene: React.FC = () => {
 
         <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, 0]} receiveShadow>
           <planeGeometry args={[40, 40]} />
-          <meshStandardMaterial color={palette.table} roughness={0.92} metalness={0} />
+          {/* Shadow catcher rather than a lit surface. Tinting this plane with
+              the page bg only worked while the HDRI was failing to load — once
+              it resolves, ambient light washes the "background" warm and it
+              stops matching the page. Contributing no albedo makes that
+              impossible. */}
+          <shadowMaterial opacity={0.34} />
         </mesh>
         <ContactShadows position={[0, 0.012, -0.9]} scale={11} blur={2.8} opacity={0.35} far={4} />
 
@@ -692,10 +705,6 @@ export const PourScene: React.FC = () => {
             ))}
           </ul>
         </div>
-      </div>
-
-      <div className="pointer-events-none absolute left-6 top-24 font-mono text-xs text-faint">
-        portfolio · tip &amp; pour <span className="text-acc">(greybox)</span>
       </div>
     </div>
   );
