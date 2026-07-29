@@ -156,8 +156,8 @@ export const Skills: React.FC = () => (
           <Segment bg="var(--color-acc2)" fg="var(--color-bg)" className="font-bold">
             visitor@zylarmccullah.tech
           </Segment>
-          <Segment bg="var(--color-surf2)" fg="var(--color-acc)" className="pl-4.5 font-bold">
-            fastfetch
+          <Segment bg="clear" fg="var(--text-faint)" className="pl-4.5 font-bold">
+           &gt; fastfetch
           </Segment>
           <span className="flex-1" />
         </div>
@@ -173,12 +173,6 @@ export const Skills: React.FC = () => (
           </pre>
 
           <div className="min-w-0">
-            <div className="font-bold text-acc">
-              visitor<span className="font-normal text-faint">@</span>zylarmccullah.tech
-            </div>
-            <div className="truncate tracking-[-0.05em] text-line" aria-hidden="true">
-              {"\u2500".repeat(60)}
-            </div>
 
             <dl className="mt-1 grid grid-cols-1 items-baseline gap-x-2 sm:grid-cols-[6rem_auto_1fr]">
               {FACTS.map(([k, v]) => (
