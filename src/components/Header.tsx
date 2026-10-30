@@ -23,26 +23,27 @@ export const Header: React.FC = () => {
 
   const toggleTheme = () => setTheme((t) => (t === "dark" ? "light" : "dark"));
 
+  // four letters each: in a monospace face that makes every item exactly the same width
   const navLinks = (
     <>
       <li>
-        <a href="/#home" onClick={() => setNavOpen(false)} className="relative font-poppins font-medium text-mut transition-colors after:absolute after:-bottom-1 after:left-0 after:h-px after:w-0 after:bg-acc after:transition-[width] after:duration-300 hover:text-acc hover:after:w-full">
-          Home
+        <a href="/#home" onClick={() => setNavOpen(false)} className="relative font-body font-medium text-mut transition-colors after:absolute after:-bottom-1 after:left-0 after:h-px after:w-0 after:bg-acc after:transition-[width] after:duration-300 hover:text-acc hover:after:w-full">
+          home
         </a>
       </li>
       <li>
-        <Link to="/gui" onClick={() => setNavOpen(false)} className="relative font-poppins font-medium text-mut transition-colors after:absolute after:-bottom-1 after:left-0 after:h-px after:w-0 after:bg-acc after:transition-[width] after:duration-300 hover:text-acc hover:after:w-full">
-          Portfolio
+        <Link to="/gui" onClick={() => setNavOpen(false)} className="relative font-body font-medium text-mut transition-colors after:absolute after:-bottom-1 after:left-0 after:h-px after:w-0 after:bg-acc after:transition-[width] after:duration-300 hover:text-acc hover:after:w-full">
+          work
         </Link>
       </li>
       <li>
-        <a href="/#workexp" onClick={() => setNavOpen(false)} className="relative font-poppins font-medium text-mut transition-colors after:absolute after:-bottom-1 after:left-0 after:h-px after:w-0 after:bg-acc after:transition-[width] after:duration-300 hover:text-acc hover:after:w-full">
-          Experience
+        <a href="/#workexp" onClick={() => setNavOpen(false)} className="relative font-body font-medium text-mut transition-colors after:absolute after:-bottom-1 after:left-0 after:h-px after:w-0 after:bg-acc after:transition-[width] after:duration-300 hover:text-acc hover:after:w-full">
+          jobs
         </a>
       </li>
       <li>
-        <a href="/#contact" onClick={() => setNavOpen(false)} className="relative font-poppins font-medium text-mut transition-colors after:absolute after:-bottom-1 after:left-0 after:h-px after:w-0 after:bg-acc after:transition-[width] after:duration-300 hover:text-acc hover:after:w-full">
-          Contact
+        <a href="/#contact" onClick={() => setNavOpen(false)} className="relative font-body font-medium text-mut transition-colors after:absolute after:-bottom-1 after:left-0 after:h-px after:w-0 after:bg-acc after:transition-[width] after:duration-300 hover:text-acc hover:after:w-full">
+          ping
         </a>
       </li>
     </>
@@ -52,7 +53,7 @@ export const Header: React.FC = () => {
     <header className="fixed top-0 left-0 z-50 w-full border-b border-line bg-bg/80 backdrop-blur">
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-6 px-6 py-4">
         {/* logo */}
-        <Link to="/" className="font-poppins text-2xl font-bold leading-none text-ink">
+        <Link to="/" className="font-display text-2xl font-bold leading-none text-ink">
           mccullah<span className="text-acc">.</span>z
         </Link>
 

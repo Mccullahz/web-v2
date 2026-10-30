@@ -26,18 +26,18 @@ export const Hero: React.FC = () => {
           <div className="md:self-center">
             <h1
               data-reveal
-              className="mt-5 mb-4 max-w-[15ch] font-poppins text-4xl font-extrabold leading-[1.02] tracking-tight text-balance text-ink md:text-6xl"
+              className="mt-5 mb-4 max-w-[15ch] font-display text-4xl font-extrabold leading-[1.02] tracking-tight text-balance text-ink md:text-6xl"
             >
-              Hi, I'm Zylar and I like building <em className="not-italic text-acc">stuff</em>.
+              hi, i'm zylar and i like building <em className="not-italic text-acc">stuff</em>.
             </h1>
 
             <p
               data-reveal
               style={{ transitionDelay: "80ms" }}
-              className="mb-7 max-w-[48ch] font-poppins text-lg leading-relaxed text-mut"
+              className="mb-7 max-w-[48ch] font-body text-lg leading-relaxed text-mut"
             >
-              Integrations Engineer@iDonate,
-              <b className="font-semibold text-ink"> Go &amp; Linux enthusiast</b>, Tool builder
+              integrations engineer@iDonate,
+              <b className="font-semibold text-ink"> go &amp; linux enthusiast</b>, tool builder
             </p>
 
             <div data-reveal style={{ transitionDelay: "160ms" }} className="flex flex-wrap gap-3">

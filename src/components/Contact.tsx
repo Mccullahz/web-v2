@@ -5,19 +5,19 @@ export const Contact: React.FC = () => (
   <section id="contact" aria-label="contact" className="px-6 py-20">
     <div className="mx-auto max-w-5xl">
       <div data-reveal className="mb-10 flex items-baseline gap-3">
-        <span className="font-mono text-sm text-acc">04</span>
-        <h2 className="font-poppins text-2xl font-bold tracking-tight text-ink">Contact</h2>
+        <span className="font-mono text-sm text-acc">03</span>
+        <h2 className="font-display text-2xl font-bold tracking-tight text-ink">contact</h2>
         <span className="h-px flex-1 bg-line" />
       </div>
 
       <div data-reveal className="grid gap-10 rounded-2xl border border-line bg-surf p-6 md:grid-cols-2 md:p-10">
         {/* content */}
         <div>
-          <h3 className="mb-4 font-poppins text-2xl font-extrabold tracking-tight text-ink">Get in touch</h3>
+          <h3 className="mb-4 font-display text-2xl font-extrabold tracking-tight text-ink">ping me</h3>
 
-          <p className="mb-8 font-poppins leading-relaxed text-mut">
-            To get in contact with me, please fill out the form or reach out directly using the contact
-            details below. And yes, this form is functional!
+          <p className="mb-8 font-body leading-relaxed text-mut">
+            to get in contact, please fill out the form or reach out directly using the contact
+            details below. yes, this form is functional!
           </p>
 
           <ul className="space-y-5">
@@ -43,7 +43,7 @@ export const Contact: React.FC = () => (
           data-netlify="true"
           data-netlify-honeypot="bot-field"
           action="/contact.html"
-          className="grid gap-5 font-poppins"
+          className="grid gap-5 font-body"
         >
           <input type="hidden" name="form-name" value="contact" />
           <input type="hidden" name="_redirect" value="/#contact" />
@@ -58,21 +58,21 @@ export const Contact: React.FC = () => (
             name="name"
             placeholder="Name"
             required
-            className="w-full rounded-md border border-line bg-bg px-4 py-3 font-poppins text-ink placeholder:text-faint focus:border-acc focus:outline-none"
+            className="w-full rounded-md border border-line bg-bg px-4 py-3 font-body text-ink placeholder:text-faint focus:border-acc focus:outline-none"
           />
           <input
             type="email"
             name="email_address"
             placeholder="Email"
             required
-            className="w-full rounded-md border border-line bg-bg px-4 py-3 font-poppins text-ink placeholder:text-faint focus:border-acc focus:outline-none"
+            className="w-full rounded-md border border-line bg-bg px-4 py-3 font-body text-ink placeholder:text-faint focus:border-acc focus:outline-none"
           />
           <textarea
             name="message"
             placeholder="Message"
             required
             rows={5}
-            className="w-full rounded-md border border-line bg-bg px-4 py-3 font-poppins text-ink placeholder:text-faint focus:border-acc focus:outline-none"
+            className="w-full rounded-md border border-line bg-bg px-4 py-3 font-body text-ink placeholder:text-faint focus:border-acc focus:outline-none"
           />
           <button
             type="submit"

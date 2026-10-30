@@ -4,8 +4,10 @@
 
 /* ---- Design tokens (dark-first) ---- */
 @theme {
-  --font-poppins: "Poppins", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  --font-mono: ui-monospace, "JetBrains Mono", "SF Mono", "Cascadia Code", Menlo, monospace;
+  /* headings in Reddit Mono, everything else in DM Mono; loaded in index.html */
+  --font-display: "Reddit Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --font-body: "DM Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --font-mono: "DM Mono", ui-monospace, "SF Mono", Menlo, monospace;
 
   --color-bg: #050904;
   --color-surf: #0e120d;
@@ -17,7 +19,6 @@
   --color-acc: #d3a99f;
   --color-acc2: #e2bdb4;
   --color-onacc: #0a0d07;
-  --color-glow: rgba(211, 169, 159, 0.11);
 }
 
 /* ---- Light theme: follow the OS unless the user has forced a choice ---- */
@@ -33,7 +34,6 @@
     --color-acc: #a8705f;
     --color-acc2: #8f5b4b;
     --color-onacc: #f7f3f0;
-    --color-glow: rgba(168, 112, 95, 0.12);
   }
 }
 
@@ -49,7 +49,6 @@
   --color-acc: #a8705f;
   --color-acc2: #8f5b4b;
   --color-onacc: #f7f3f0;
-  --color-glow: rgba(168, 112, 95, 0.12);
 }
 :root[data-theme="dark"] {
   --color-bg: #050904;
@@ -62,13 +61,13 @@
   --color-acc: #d3a99f;
   --color-acc2: #e2bdb4;
   --color-onacc: #0a0d07;
-  --color-glow: rgba(211, 169, 159, 0.11);
 }
 
 :root {
   color-scheme: light dark;
   line-height: 1.5;
-  font-synthesis: none;
+  /* DM Mono stops at 500, so let bold labels and buttons synthesise their weight */
+  font-synthesis: weight;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -78,16 +77,13 @@ body {
   margin: 0;
   background-color: var(--color-bg);
   color: var(--color-ink);
-  font-family: var(--font-poppins);
+  font-family: var(--font-body);
 }
 
-/* Landing background: layered ambient light — a warm key light from the
-   top-right and a dimmer fill from the bottom-left for depth. */
+/* Landing background: flat for now; the hook stays so page-wide treatments
+   can land here without touching every page. */
 .landing-bg {
-  background:
-    radial-gradient(120% 70% at 82% -8%, var(--color-glow), transparent 55%),
-    radial-gradient(90% 60% at -5% 108%, color-mix(in oklab, var(--color-acc) 7%, transparent), transparent 60%),
-    var(--color-bg);
+  background: var(--color-bg);
 }
 
 /* Whisper-light film grain over the whole viewport for warmth/texture. */
@@ -115,15 +111,6 @@ section[id] {
     scroll-behavior: smooth;
   }
 
-  /* Soft "breathing" glow behind the headshot. */
-  .breathe {
-    animation: breathe 9s ease-in-out infinite;
-  }
-  @keyframes breathe {
-    0%, 100% { opacity: 0.55; transform: scale(1); }
-    50% { opacity: 1; transform: scale(1.06); }
-  }
-
   /* Scroll-reveal: hidden until observed, then eased into place.
      Elements stay visible if JS/observer never runs. */
   [data-reveal] {
@@ -134,50 +121,6 @@ section[id] {
   [data-reveal].in-view {
     opacity: 1;
     transform: none;
-  }
-}
-
-/* Registered so the radius can be transitioned; without @property the custom
-   property still swaps, it just snaps open instead of easing. */
-@property --splash-r {
-  syntax: "<length>";
-  inherits: false;
-  initial-value: 0px;
-}
-
-/* Code splash over the headshot: the snippet is full-bleed underneath and only
-   a lens around the cursor is unmasked, so moving across the portrait reads
-   different parts of it. --sx/--sy are written by HeroPortrait on pointermove.
-   At radius 0 the gradient is fully transparent, which is what hides it. */
-.code-splash {
-  --splash-r: 0px;
-  --sx0: 50%; --sy0: 50%;
-  --sx1: 50%; --sy1: 50%;
-  --sx2: 50%; --sy2: 50%;
-  --sx3: 50%; --sy3: 50%;
-  --sx4: 50%; --sy4: 50%;
-  --sx5: 50%; --sy5: 50%;
-  /* Union of six lens circles strung along the pointer's recent path: the head
-     is full-size and each trailing circle a little smaller, so a fast swipe
-     reads as a tapering streak and a resting pointer collapses to one blob.
-     Comma-separated mask layers composite as a union (mask-composite: add). */
-  --lens0: radial-gradient(circle at var(--sx0) var(--sy0), #000 calc(var(--splash-r) * 0.55), transparent var(--splash-r));
-  --lens1: radial-gradient(circle at var(--sx1) var(--sy1), #000 calc(var(--splash-r) * 0.47), transparent calc(var(--splash-r) * 0.9));
-  --lens2: radial-gradient(circle at var(--sx2) var(--sy2), #000 calc(var(--splash-r) * 0.40), transparent calc(var(--splash-r) * 0.8));
-  --lens3: radial-gradient(circle at var(--sx3) var(--sy3), #000 calc(var(--splash-r) * 0.33), transparent calc(var(--splash-r) * 0.7));
-  --lens4: radial-gradient(circle at var(--sx4) var(--sy4), #000 calc(var(--splash-r) * 0.26), transparent calc(var(--splash-r) * 0.6));
-  --lens5: radial-gradient(circle at var(--sx5) var(--sy5), #000 calc(var(--splash-r) * 0.20), transparent calc(var(--splash-r) * 0.5));
-  mask-image: var(--lens0), var(--lens1), var(--lens2), var(--lens3), var(--lens4), var(--lens5);
-  -webkit-mask-image: var(--lens0), var(--lens1), var(--lens2), var(--lens3), var(--lens4), var(--lens5);
-  transition: --splash-r 380ms cubic-bezier(0.22, 0.61, 0.36, 1);
-}
-.code-splash[data-active="true"] {
-  --splash-r: 92px;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .code-splash {
-    transition: none;
   }
 }
 
@@ -265,6 +208,45 @@ section[id] {
   .ff-row:hover .mark-b,
   .ff-row:focus-within .mark-b {
     animation: markTearB 500ms steps(2) 1;
+  }
+}
+
+/* Output stays in layout while the command is typed (no jump). */
+.ff-output[data-shown="false"] {
+  visibility: hidden;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Prints top to bottom in hard row-sized steps, the way fastfetch writes the
+     logo and info columns out together one terminal line at a time. Step count
+     roughly matches the 19-line logo plus padding. */
+  .ff-print {
+    animation: ffPrint 700ms steps(22, end) both;
+  }
+  @keyframes ffPrint {
+    from { clip-path: inset(0 0 100% 0); }
+    to { clip-path: inset(0 0 0 0); }
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* hard on/off like a terminal cursor, not a soft fade */
+  .ff-cursor {
+    animation: ffBlink 1.05s steps(1, end) infinite;
+  }
+  @keyframes ffBlink {
+    50% { opacity: 0; }
+  }
+
+  /* One-off wave across every icon on first render. --i is the icon's index;
+     the class is removed afterwards so the hover rule above takes over. */
+  .ff-wave .mark-a {
+    animation: markTearA 500ms steps(2) 1;
+    animation-delay: calc(var(--i) * 45ms);
+  }
+  .ff-wave .mark-b {
+    animation: markTearB 500ms steps(2) 1;
+    animation-delay: calc(var(--i) * 45ms + 60ms);
   }
 }
 

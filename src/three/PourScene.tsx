@@ -674,7 +674,7 @@ export const PourScene: React.FC = () => {
           <Html position={[tipPos[0], tipPos[1] + 0.45, tipPos[2]]} center style={{ pointerEvents: "none" }} zIndexRange={[10, 0]}>
             <div className="w-40 -translate-y-2 rounded-md border border-line bg-surf/95 px-2.5 py-1.5 shadow-lg backdrop-blur">
               <div className="font-mono text-[9px] uppercase tracking-widest text-acc">{hoveredProject.category}</div>
-              <div className="font-poppins text-xs font-bold leading-tight text-ink">{hoveredProject.title}</div>
+              <div className="font-display text-xs font-bold leading-tight text-ink">{hoveredProject.title}</div>
               <div className="mt-0.5 font-mono text-[9px] text-mut">{hoveredProject.tech}</div>
             </div>
           </Html>

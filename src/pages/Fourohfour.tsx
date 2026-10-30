@@ -7,24 +7,24 @@ export const Fourohfour: React.FC = () => (
     <section className="min-h-[calc(100vh-theme(spacing.20))] px-6 pt-32 pb-16" aria-label="404 not found">
       <div className="mx-auto max-w-2xl text-center">
         <div className="mb-6 flex justify-center gap-1 sm:gap-2">
-          <span className="font-poppins text-7xl font-extrabold text-ink opacity-90 animate-pulse sm:text-8xl md:text-9xl">
+          <span className="font-display text-7xl font-extrabold text-ink opacity-90 animate-pulse sm:text-8xl md:text-9xl">
             4
           </span>
           <span
-            className="font-poppins text-7xl font-extrabold text-acc animate-bounce sm:text-8xl md:text-9xl"
+            className="font-display text-7xl font-extrabold text-acc animate-bounce sm:text-8xl md:text-9xl"
             style={{ animationDuration: "2s" }}
           >
             0
           </span>
-          <span className="font-poppins text-7xl font-extrabold text-ink opacity-90 animate-pulse [animation-delay:150ms] sm:text-8xl md:text-9xl">
+          <span className="font-display text-7xl font-extrabold text-ink opacity-90 animate-pulse [animation-delay:150ms] sm:text-8xl md:text-9xl">
             4
           </span>
         </div>
 
-        <h1 className="mb-3 font-poppins text-2xl font-bold uppercase tracking-tight text-ink opacity-0 animate-[fadeSlideIn_0.5s_ease-out_0.1s_forwards] sm:text-3xl">
+        <h1 className="mb-3 font-display text-2xl font-bold uppercase tracking-tight text-ink opacity-0 animate-[fadeSlideIn_0.5s_ease-out_0.1s_forwards] sm:text-3xl">
           not found
         </h1>
-        <p className="mb-10 font-poppins text-mut opacity-0 animate-[fadeSlideIn_0.5s_ease-out_0.25s_forwards]">
+        <p className="mb-10 font-body text-mut opacity-0 animate-[fadeSlideIn_0.5s_ease-out_0.25s_forwards]">
           These are not the pages you are looking for
         </p>
 

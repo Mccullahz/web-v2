@@ -11,7 +11,7 @@ export const Footer: React.FC = () => (
         className="font-mono text-sm text-mut transition-colors hover:text-acc"
         aria-label="Source Code"
       >
-        © 2026 · Powered by ZyGuy
+        © 2026 · powered by zyguy
       </a>
 
       <ul className="flex items-center gap-6">
