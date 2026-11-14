@@ -8,6 +8,8 @@
   --font-display: "Reddit Mono", ui-monospace, "SF Mono", Menlo, monospace;
   --font-body: "DM Mono", ui-monospace, "SF Mono", Menlo, monospace;
   --font-mono: "DM Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  /* long-form reading text; everything else stays mono */
+  --font-prose: "DM Sans", ui-sans-serif, system-ui, sans-serif;
 
   --color-bg: #050904;
   --color-surf: #0e120d;
@@ -260,4 +262,20 @@ section[id] {
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+/* ---- Experience rail: fills top to bottom as the timeline scrolls through ---- */
+.rail-fill { transform-origin: top; transform: scaleY(1); }
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .rail-fill {
+      animation: railFill linear both;
+      animation-timeline: view();
+      animation-range: entry 20% cover 60%;
+    }
+  }
+}
+@keyframes railFill {
+  from { transform: scaleY(0); }
+  to { transform: scaleY(1); }
 }

@@ -19,15 +19,9 @@ export interface SceneVersion {
 
 export const SCENE_VERSIONS: SceneVersion[] = [
   {
-    id: "pour",
-    label: "tip & pour",
-    note: "(greybox)",
-    Component: lazy(() => import("./PourScene").then((m) => ({ default: m.PourScene }))),
-  },
-  {
-    id: "drop",
-    label: "drop & break",
-    note: "(whitebox)",
-    Component: lazy(() => import("./Three").then((m) => ({ default: m.ThreeScene }))),
+    id: "cafe",
+    label: "night café",
+    note: "(prototype)",
+    Component: lazy(() => import("./cafe/CafeScene")),
   },
 ];

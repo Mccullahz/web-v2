@@ -334,7 +334,7 @@ export const HeroPortrait: React.FC = () => {
       ref={rootRef}
       data-reveal
       style={{ transitionDelay: "120ms" }}
-      className="relative mx-auto w-full max-w-[420px] cursor-crosshair md:order-last md:mx-0 md:-ml-14 md:mb-10"
+      className="relative mx-auto w-full max-w-[420px] cursor-crosshair md:order-last md:mx-0 md:mb-10"
     >
       {/* pan-y keeps page scrolling on touch; the bottom fade dissolves the cropped torso */}
       <canvas

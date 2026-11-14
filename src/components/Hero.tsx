@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { IoArrowForwardOutline, IoLogoGithub, IoLogoLinkedin, IoMailOutline } from "react-icons/io5";
+import { IoArrowForwardOutline, IoDocumentTextOutline, IoLogoGithub, IoLogoLinkedin, IoMailOutline } from "react-icons/io5";
 import { HeroPortrait } from "./HeroPortrait";
 
 const quickLinks = [
@@ -15,18 +15,21 @@ export const Hero: React.FC = () => {
     <section
       id="home"
       aria-label="intro"
-      className="px-6 pt-32 pb-16 md:flex md:min-h-screen md:items-end md:pt-40 md:pb-0"
+      className="pt-28 pb-16 md:flex md:min-h-[min(100vh,860px)] md:items-center md:pt-24 md:pb-10"
     >
-      <div className="mx-auto w-full max-w-6xl">
+      <div className="mx-auto w-full max-w-6xl px-6">
         {/* text column sizes to its own content, which makes its right edge
             viewport-independent — the portrait is then pulled back by the
             constant slack between that edge and the end of "stuff." */}
-        <div className="grid items-center gap-10 md:grid-cols-[minmax(0,max-content)_1fr] md:items-end md:gap-x-0 md:gap-y-10">
+        <div className="grid items-center gap-10 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] md:items-end md:gap-x-6 md:gap-y-10 lg:grid-cols-[minmax(0,max-content)_1fr] lg:gap-x-8">
           {/* content */}
           <div className="md:self-center">
+            <p data-reveal className="mt-5 font-mono text-xs uppercase tracking-[0.18em] text-acc">
+              software developer · backend, integrations &amp; security
+            </p>
             <h1
               data-reveal
-              className="mt-5 mb-4 max-w-[15ch] font-display text-4xl font-extrabold leading-[1.02] tracking-tight text-balance text-ink md:text-6xl"
+              className="mt-3 mb-4 max-w-[15ch] font-display text-4xl font-extrabold leading-[1.02] tracking-tight text-balance text-ink md:text-5xl lg:text-6xl"
             >
               hi, i'm zylar and i like building <em className="not-italic text-acc">stuff</em>.
             </h1>
@@ -34,23 +37,32 @@ export const Hero: React.FC = () => {
             <p
               data-reveal
               style={{ transitionDelay: "80ms" }}
-              className="mb-7 max-w-[48ch] font-body text-lg leading-relaxed text-mut"
+              className="mb-7 max-w-[36ch] font-prose text-xl leading-relaxed text-mut"
             >
-              integrations engineer@iDonate,
-              <b className="font-semibold text-ink"> go &amp; linux enthusiast</b>, tool builder
+              integration engineer @ iDonate, connecting nonprofit crms on prismatic. i build backend
+              tools &amp; automation in <b className="font-semibold text-ink">go, typescript &amp; python</b>.
             </p>
 
-            <div data-reveal style={{ transitionDelay: "160ms" }} className="flex flex-wrap gap-3">
+            <div data-reveal style={{ transitionDelay: "160ms" }} className="grid grid-cols-2 gap-2.5 sm:flex sm:flex-wrap sm:gap-3">
+              <a
+                href="/zylar-mccullah-resume.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group col-span-2 inline-flex items-center justify-center gap-2 rounded-lg bg-linear-to-b from-acc2 to-acc px-5 py-3 font-mono text-sm font-bold text-onacc shadow-[0_10px_30px_-12px_color-mix(in_oklab,var(--color-acc)_60%,transparent)] transition-transform hover:-translate-y-0.5"
+              >
+                résumé
+                <IoDocumentTextOutline className="transition-transform duration-300 group-hover:-translate-y-0.5" />
+              </a>
               <Link
                 to="/gui"
-                className="group inline-flex items-center gap-2 rounded-lg bg-linear-to-b from-acc2 to-acc px-5 py-3 font-mono text-sm font-bold text-onacc shadow-[0_10px_30px_-12px_color-mix(in_oklab,var(--color-acc)_60%,transparent)] transition-transform hover:-translate-y-0.5"
+                className="group inline-flex items-center justify-center gap-2 rounded-lg border border-line bg-surf px-5 py-3 font-mono text-sm text-ink transition-colors hover:border-acc"
               >
                 portfolio
-                <IoArrowForwardOutline className="transition-transform duration-300 group-hover:translate-x-1" />
+                <IoArrowForwardOutline className="text-acc transition-transform duration-300 group-hover:translate-x-1" />
               </Link>
               <a
                 href="#contact"
-                className="inline-flex items-center gap-2 rounded-lg border border-line bg-surf px-5 py-3 font-mono text-sm text-ink transition-colors hover:border-acc"
+                className="inline-flex items-center justify-center gap-2 rounded-lg border border-line bg-surf px-5 py-3 font-mono text-sm text-ink transition-colors hover:border-acc"
               >
                 contact
               </a>

@@ -1,16 +1,16 @@
 import React from "react";
-import { IoCallOutline, IoMailOpenOutline } from "react-icons/io5";
+import { IoCallOutline, IoDocumentTextOutline, IoMailOpenOutline } from "react-icons/io5";
 
 export const Contact: React.FC = () => (
   <section id="contact" aria-label="contact" className="px-6 py-20">
     <div className="mx-auto max-w-5xl">
-      <div data-reveal className="mb-10 flex items-baseline gap-3">
+      <div data-reveal="with-next" className="mb-10 flex items-baseline gap-3">
         <span className="font-mono text-sm text-acc">03</span>
         <h2 className="font-display text-2xl font-bold tracking-tight text-ink">contact</h2>
         <span className="h-px flex-1 bg-line" />
       </div>
 
-      <div data-reveal className="grid gap-10 rounded-2xl border border-line bg-surf p-6 md:grid-cols-2 md:p-10">
+      <div data-reveal="late" className="grid gap-10 rounded-2xl border border-line bg-surf p-6 md:grid-cols-2 md:p-10">
         {/* content */}
         <div>
           <h3 className="mb-4 font-display text-2xl font-extrabold tracking-tight text-ink">ping me</h3>
@@ -31,6 +31,17 @@ export const Contact: React.FC = () => (
               <IoCallOutline className="text-2xl text-acc" />
               <a href="tel:9372052799" className="font-mono text-sm text-ink transition-colors hover:text-acc">
                 (937) 205-2799
+              </a>
+            </li>
+            <li className="flex items-center gap-4">
+              <IoDocumentTextOutline className="text-2xl text-acc" />
+              <a
+                href="/zylar-mccullah-resume.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-mono text-sm text-ink transition-colors hover:text-acc"
+              >
+                résumé (pdf) ↗
               </a>
             </li>
           </ul>
