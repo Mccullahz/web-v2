@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zylar Mccullah - Portfolio</title>
+
+  <!--- favicons --->
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <!--- css link --->
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="term.css">
+
+  <!--- google fonts --->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Mulish&family=Poppins:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
+
+  <!--- preload images --->
+
+
+</head>
+
+<body>
+
+  <!--- #HEADER --->
+
+  <header class="header" data-header>
+    <div class="container">
+
+      <a href="/index.html" class="logo">McCullah</a>
+
+      <nav class="navbar" data-navbar>
+        <ul class="navbar-list">
+
+          <li>
+            <a href="/index.html" class="navbar-link" data-nav-link>Home</a>
+          </li>
+            
+          <li>
+            <a href="/port.html" class="navbar-link" data-nav-link>Portfolio</a>
+          </li>
+
+          <li>
+            <a href="/index.html/#contact" class="navbar-link" data-nav-link>Contact</a>
+          </li>
+
+        </ul>
+      </nav>
+
+      <button class="nav-toggle-btn" aria-label="toggle menu" data-nav-toggler>
+        <span class="line line-1"></span>
+        <span class="line line-2"></span>
+        <span class="line line-3"></span>
+      </button>
+
+    </div>
+  </header>
+<br>
+<br>
+<br>
+
+  <main>
+      <!--- lms --->
+ 
+	  <section class="section dataman" id="home" aria-label="dataman">
+        <div class="container">
+          <div class="dataman-content"> 
+            <p class="section-subtitle">Introduction to Computer Systems</p>
+
+            <h1 class="h1 dataman-title">Binary and Data Manipulation </h1>
+
+            <ul class="dataman-list">
+
+<!--- descripton --->
+
+<section class="section description" id="description" aria-label="description">
+    <div class="container">
+
+      <p class="section-subtitle">Description</p>
+
+      <h2 class="h3 section-title">This project was completed in CS2100 - Introduction to Computer Systems</h3>
+        <p class="p section-title"> 
+			<pre>
+            This project serves to showcase working knowledge of lower level computer systems, 
+		though we are utilizing GoLang for this project, the working ideas here showcase the ability
+		to work with binary and hexadecimal values, and how we can use these values in the real world.
+</pre></p>
+      </div>
+
+	  <section class="section description" id="description" aria-label="description">
+		<div class="container">
+	
+		  <p class="section-subtitle">Work</p>
+	
+		  <h2 class="h3 section-title">And here is the aforementioned code:</h3>
+			<p class="p section-title"> 	
+    <pre>
+package main
+
+import (
+	"fmt"
+	"strconv"
+	"strings"
+)
+
+// main function, will print out menu and go through switch case
+func main() {
+	var dec float64 // in GO there is no double, float64 instead
+	fmt.Println("Please enter your decimal value: ")
+	fmt.Scan(&dec)
+
+	menu(dec)
+
+}
+
+// menu function to handle the menu and switch case
+func menu(dec float64) {
+	for { // creating an infinite loop to simulate do while loop
+		var input int
+		fmt.Print("1.) Convert Decimal to Binary\n")
+		fmt.Print("2.) Normalize the binary number\n")
+		fmt.Print("3.) Convert the exponent number to its corresponding number in Excess-3.\n")
+		fmt.Print("4.) Determine the sign, significant, and exponent binary bits.\n")
+		fmt.Print("5.) Exit\n")
+
+		fmt.Print("What function would you like to run?\n")
+		fmt.Scan(&input)
+		//switch case
+		switch {
+		case input == 1:
+			fmt.Println("Converting your input to binary...")
+			fmt.Printf("Your number converted to binary is: ")
+			fmt.Println(dec2bin(float64(dec))) // yucky go func call
+			fmt.Println()
+
+		case input == 2:
+			fmt.Println("Normalizing your binary... ")
+			binaryStr := dec2bin(dec)                       // convert decimal to binary first
+			normalized, exponent := normalizeBin(binaryStr) // normalize the binary string
+			fmt.Printf("Your normalized binary is: %s with exponent: %d\n", normalized, exponent)
+			fmt.Println()
+
+		case input == 3: // all the excess three logic is done here rather than in a separate function. easier this way
+			fmt.Println("Converting your normalized exponent into excess 3...")
+			// directly use the exponent from the normalization function to get the excess-3 representation in binary.
+			_, exponent := normalizeBin(dec2bin(dec))
+			excessBinary := dec2bin(float64(exponent + 3))
+			fmt.Printf("Your exponent converted to excess 3 in binary is: %s\n\n", excessBinary)
+
+		case input == 4:
+			fmt.Println("Determining your sign, significand and exponent...")
+			significantBits(dec)
+			fmt.Println()
+
+		case input == 5:
+			fmt.Println("Exiting...")
+			return // return to exit for loop
+
+		default:
+			fmt.Println("Input invalid, please try again..")
+			fmt.Println()
+
+		}
+	}
+
+}
+
+// logic for "converting" decimal values to binary -- pretty sure this is working properly, perhaps my normalization is just poor
+func dec2bin(dec float64) string {
+	// okay, with float64 values, we will have to split the string into two different parts.
+	var integerPart int = int(dec)
+	var fractPart float64 = dec - float64(integerPart)
+
+	// convert the integer part to binary, ezpz uisng fmt. pulling straight out of compilation
+	var intBin string = fmt.Sprintf("%b", int(integerPart))
+
+	// convert the fractional part to binary, must use for loop here unfortunately cant get to format straight of of compilation
+	var fractBin string
+	for i := 0; i < 4; i++ { // only looping 4 times
+		fractPart = fractPart * 2 // using basic conversion here
+		if fractPart >= 1 {
+			fractBin += "1"
+			fractPart = fractPart - 1
+		} else {
+			fractBin += "0"
+		}
+	}
+
+	return fmt.Sprintf(intBin + "." + fractBin) // in GO you must explicitly cast to string return type, otherwise it will not print properly
+}
+
+// logic to normalize binary
+func normalizeBin(binaryStr string) (normalized string, exponent int) {
+	// ensure there's a decimal point in the binary string
+	if !strings.Contains(binaryStr, ".") {
+		binaryStr += ".0"
+	}
+
+	// find the index of the first '1'
+	firstOneIndex := strings.Index(binaryStr, "1")
+
+	if firstOneIndex != -1 {
+		// extract the part after the first '1'
+		afterFirstOne := binaryStr[firstOneIndex+1:]
+		// remove any decimal point from afterFirstOne for correct normalization
+		afterFirstOne = strings.Replace(afterFirstOne, ".", "", -1)
+		// normalize the binary string
+		normalized = "1." + afterFirstOne
+		// calculate the exponent
+		decimalPointIndex := strings.Index(binaryStr, ".")
+
+		if firstOneIndex < decimalPointIndex {
+			// if the first '1' is before the decimal point in the integer part
+			exponent = decimalPointIndex - firstOneIndex - 1
+		} else {
+			// if the first '1' is after the decimal point in the fractional part
+			exponent = decimalPointIndex - firstOneIndex
+		}
+	} else {
+		// if no '1' is found, the number is 0
+		normalized = "0.0"
+		exponent = 0
+	}
+	return normalized, exponent
+}
+
+// logic to find all sig bits
+func significantBits(dec float64) {
+	// this will have similar string parsing to normalization, just longer parsing lol
+	// parse for sign bit
+	signBit := "0"
+	if dec < 0 {
+		signBit = "1"
+		dec = -dec // make num positive for further parsing
+	}
+	// convert dec to bin and normalize
+	binaryStr := dec2bin(dec)
+	normalized, exponent := normalizeBin(binaryStr)
+
+	// remove leading 1 from the normalization
+	significand := normalized[2:]
+
+	//pull out the exponent from normalization
+	excessExponent := exponent
+
+	fmt.Println("The normalized binary is:", signBit+normalized+" * 2^"+strconv.Itoa(exponent))
+	fmt.Println("a.) Sign: " + signBit)
+	fmt.Println("b.) Significand: " + significand)
+	fmt.Println("c.) Exponent (E3): " + strconv.Itoa(excessExponent)) // convert string
+
+}
+      </pre>
+	</div>
+    </section>
+    
+	<section class="section output" id="output" aria-label="output">
+		<div class="container">
+	
+		  <p class="section-subtitle">Example Outputs</p>
+	
+		  <h2 class="h3 section-title">And finally, here is an example output with the fun terminal from the YT Shorts automation:</h3>
+			<p class="p section-title"> 
+
+				<div class=fakeMenu>
+					<div class="fakeButtons fakeClose"></div>
+					<div class="fakeButtons fakeMinimize"></div>
+					<div class="fakeButtons fakeZoom"></div>
+				  </div>
+				  <div class="fakeScreen">
+					<p class="line1">user@root:$ go run DataMan.go<span class="cursor1">_</span></p>
+					<p class="line2">> Please enter your decimal value:
+						10 <span class="cursor2">_</span></p>
+					<p class="line3">> #INSERT MENU,
+						 What funtion would you like to run?</span></p>
+					<p class="line4">> 1 <span class="cursor4">_</span></p>
+					<p class="line5">> Your number converted to binary is: 1010.0000<span class="cursor5">_</span></p>
+				
+				  </div>
+			</section>
+
+  </main>
+
+
+</body>
+<br>
+
+
+
+  <!--- JS LINK FOR NAV --->
+  <script src="script.js" defer></script>
+
+  <!--- ionicon link --->
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+
+</body>
+
+
+<!--- #FOOTER --->
+
+  <footer class="footer">
+    <div class="container">
+
+      <ul class="social-list">
+
+
+
+        <li>
+          <a href="https://www.linkedin.com/in/zylar-mccullah-b4654420a/" class="social-link">
+            <ion-icon name="logo-linkedin"></ion-icon>
+          </a>
+        </li>
+        <li>
+          <a href="https://github.com/Mccullahz" class="social-link">
+            <ion-icon name="logo-github"></ion-icon>
+          </a>
+        </li>
+
+      </ul>
+
+    </div>
+  </footer>
+
+
+
+</html>

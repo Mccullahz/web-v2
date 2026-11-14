@@ -1,0 +1,98 @@
+import React from "react";
+import { IoCallOutline, IoDocumentTextOutline, IoMailOpenOutline } from "react-icons/io5";
+
+export const Contact: React.FC = () => (
+  <section id="contact" aria-label="contact" className="px-6 py-20">
+    <div className="mx-auto max-w-5xl">
+      <div data-reveal="with-next" className="mb-10 flex items-baseline gap-3">
+        <span className="font-mono text-sm text-acc">03</span>
+        <h2 className="font-display text-2xl font-bold tracking-tight text-ink">contact</h2>
+        <span className="h-px flex-1 bg-line" />
+      </div>
+
+      <div data-reveal="late" className="grid gap-10 rounded-2xl border border-line bg-surf p-6 md:grid-cols-2 md:p-10">
+        {/* content */}
+        <div>
+          <h3 className="mb-4 font-display text-2xl font-extrabold tracking-tight text-ink">ping me</h3>
+
+          <p className="mb-8 font-body leading-relaxed text-mut">
+            to get in contact, please fill out the form or reach out directly using the contact
+            details below. yes, this form is functional!
+          </p>
+
+          <ul className="space-y-5">
+            <li className="flex items-center gap-4">
+              <IoMailOpenOutline className="text-2xl text-acc" />
+              <a href="mailto:zylardmccullah@gmail.com" className="font-mono text-sm text-ink transition-colors hover:text-acc">
+                zylardmccullah@gmail.com
+              </a>
+            </li>
+            <li className="flex items-center gap-4">
+              <IoCallOutline className="text-2xl text-acc" />
+              <a href="tel:9372052799" className="font-mono text-sm text-ink transition-colors hover:text-acc">
+                (937) 205-2799
+              </a>
+            </li>
+            <li className="flex items-center gap-4">
+              <IoDocumentTextOutline className="text-2xl text-acc" />
+              <a
+                href="/zylar-mccullah-resume.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-mono text-sm text-ink transition-colors hover:text-acc"
+              >
+                résumé (pdf) ↗
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        {/* form: submits to /contact.html so Netlify receives the POST; static form in public/contact.html is used for build-time form detection */}
+        <form
+          name="contact"
+          method="POST"
+          data-netlify="true"
+          data-netlify-honeypot="bot-field"
+          action="/contact.html"
+          className="grid gap-5 font-body"
+        >
+          <input type="hidden" name="form-name" value="contact" />
+          <input type="hidden" name="_redirect" value="/#contact" />
+          <p className="absolute -left-[9999px]" aria-hidden="true">
+            <label>
+              Don't fill this out: <input name="bot-field" tabIndex={-1} autoComplete="off" />
+            </label>
+          </p>
+
+          <input
+            type="text"
+            name="name"
+            placeholder="Name"
+            required
+            className="w-full rounded-md border border-line bg-bg px-4 py-3 font-body text-ink placeholder:text-faint focus:border-acc focus:outline-none"
+          />
+          <input
+            type="email"
+            name="email_address"
+            placeholder="Email"
+            required
+            className="w-full rounded-md border border-line bg-bg px-4 py-3 font-body text-ink placeholder:text-faint focus:border-acc focus:outline-none"
+          />
+          <textarea
+            name="message"
+            placeholder="Message"
+            required
+            rows={5}
+            className="w-full rounded-md border border-line bg-bg px-4 py-3 font-body text-ink placeholder:text-faint focus:border-acc focus:outline-none"
+          />
+          <button
+            type="submit"
+            className="inline-flex items-center justify-center rounded-md bg-linear-to-b from-acc2 to-acc px-8 py-3 font-mono text-sm font-bold text-onacc transition-transform hover:-translate-y-0.5"
+          >
+            Submit
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+);

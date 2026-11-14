@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact</title>
+</head>
+<body>
+  <!-- hidden form for Netlify form detection at build time. no initial HTML in react, so Netlify needs static form. react form in Contact.tsx submits to this page. -->
+  <form name="contact" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" hidden>
+    <input type="hidden" name="form-name" value="contact" />
+    <input type="text" name="name" />
+    <input type="email" name="email_address" />
+    <textarea name="message"></textarea>
+    <p class="hidden">
+      <label>Don't fill this out if you're human: <input name="bot-field" /></label>
+    </p>
+  </form>
+</body>
+</html>

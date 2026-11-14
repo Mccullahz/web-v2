@@ -1,0 +1,35 @@
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Header } from "./components/Header";
+import { Footer } from "./components/Footer";
+import { Home } from "./pages/Home";
+import { Gui } from "./pages/Gui";
+import { Flacer } from "./pages/Flacer";
+import { Pms } from "./pages/Pms";
+import { Lms } from "./pages/Lms";
+import { Pzy } from "./pages/Pzy";
+import { Ggj } from "./pages/Ggj";
+import { Fourohfour } from "./pages/Fourohfour";
+import "./index.css";
+
+export const App: React.FC = () => {
+  return (
+    <Router>
+      <Header />
+      <Routes>
+        <Route path="/" element={<Home />} />
+	<Route path="/gui" element={<Gui />} />
+	<Route path="/flacer" element={<Flacer />} />
+	<Route path="/pms" element={<Pms />} />
+	<Route path="/lms" element={<Lms />} />
+	<Route path="/pzy" element={<Pzy />} />
+	<Route path="/ggj" element={<Ggj />} />
+	<Route path="*" element={<Fourohfour />} />
+      </Routes>
+      <div>
+      <Footer />
+      </div>
+    </Router>
+  );
+};
+

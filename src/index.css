@@ -1,0 +1,281 @@
+/* Tailwind v4 + design tokens for the redesigned landing ("Aperture / Warm"). */
+
+@import "tailwindcss";
+
+/* ---- Design tokens (dark-first) ---- */
+@theme {
+  /* headings in Reddit Mono, everything else in DM Mono; loaded in index.html */
+  --font-display: "Reddit Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --font-body: "DM Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --font-mono: "DM Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  /* long-form reading text; everything else stays mono */
+  --font-prose: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+
+  --color-bg: #050904;
+  --color-surf: #0e120d;
+  --color-surf2: #161b14;
+  --color-line: #262b22;
+  --color-ink: #ece5de;
+  --color-mut: #9d968d;
+  --color-faint: #64605a;
+  --color-acc: #d3a99f;
+  --color-acc2: #e2bdb4;
+  --color-onacc: #0a0d07;
+}
+
+/* ---- Light theme: follow the OS unless the user has forced a choice ---- */
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --color-bg: #dfdbd9;
+    --color-surf: #f3f1ee;
+    --color-surf2: #e8e4e0;
+    --color-line: #cbc4bd;
+    --color-ink: #241f1c;
+    --color-mut: #6a635c;
+    --color-faint: #9c948b;
+    --color-acc: #a8705f;
+    --color-acc2: #8f5b4b;
+    --color-onacc: #f7f3f0;
+  }
+}
+
+/* ---- Explicit user choice (via the header toggle) wins over the OS ---- */
+:root[data-theme="light"] {
+  --color-bg: #dfdbd9;
+  --color-surf: #f3f1ee;
+  --color-surf2: #e8e4e0;
+  --color-line: #cbc4bd;
+  --color-ink: #241f1c;
+  --color-mut: #6a635c;
+  --color-faint: #9c948b;
+  --color-acc: #a8705f;
+  --color-acc2: #8f5b4b;
+  --color-onacc: #f7f3f0;
+}
+:root[data-theme="dark"] {
+  --color-bg: #050904;
+  --color-surf: #0e120d;
+  --color-surf2: #161b14;
+  --color-line: #262b22;
+  --color-ink: #ece5de;
+  --color-mut: #9d968d;
+  --color-faint: #64605a;
+  --color-acc: #d3a99f;
+  --color-acc2: #e2bdb4;
+  --color-onacc: #0a0d07;
+}
+
+:root {
+  color-scheme: light dark;
+  line-height: 1.5;
+  /* DM Mono stops at 500, so let bold labels and buttons synthesise their weight */
+  font-synthesis: weight;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  background-color: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+}
+
+/* Landing background: flat for now; the hook stays so page-wide treatments
+   can land here without touching every page. */
+.landing-bg {
+  background: var(--color-bg);
+}
+
+/* Whisper-light film grain over the whole viewport for warmth/texture. */
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  pointer-events: none;
+  opacity: 0.022;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 140px 140px;
+}
+
+::selection {
+  background-color: color-mix(in oklab, var(--color-acc) 35%, transparent);
+}
+
+/* Anchored sections clear the fixed header when jumped to. */
+section[id] {
+  scroll-margin-top: 6rem;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Scroll-reveal: hidden until observed, then eased into place.
+     Elements stay visible if JS/observer never runs. */
+  [data-reveal] {
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.22, 0.61, 0.36, 1);
+  }
+  [data-reveal].in-view {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Gloss sweep across the experience cards on hover. Guarded by the
+   reduced-motion block below so it only ever runs when motion is welcome. */
+@keyframes sweep {
+  0% {
+    transform: translateX(-140%) skewX(-14deg);
+    opacity: 0;
+  }
+  30% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(320%) skewX(-14deg);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .group:hover .sweep {
+    animation: sweep 900ms cubic-bezier(0.22, 0.61, 0.36, 1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* the "now" pill's pulse would otherwise loop forever */
+  .animate-ping {
+    animation: none;
+  }
+}
+
+/* ---- Stack(s): the fastfetch block ---------------------------------- */
+
+/* Four module tones, all derived from the two accents so the section needs no
+   new palette. Custom properties resolve lazily, so these follow the theme
+   toggle for free. */
+:root {
+  --stack-c1: var(--color-acc);
+  --stack-c2: color-mix(in oklab, var(--color-acc2) 82%, var(--color-ink));
+  --stack-c3: color-mix(in oklab, var(--color-acc) 62%, var(--color-mut));
+  --stack-c4: var(--color-mut);
+}
+
+/* Powerline chevron trailing each status-bar segment. --seg-bg is set inline
+   per segment; a Nerd Font glyph would not render for most visitors. */
+.ff-seg {
+  position: relative;
+  background: var(--seg-bg);
+  color: var(--seg-fg);
+}
+.ff-seg::after {
+  content: "";
+  position: absolute;
+  right: -0.5rem;
+  top: 0;
+  bottom: 0;
+  width: 0.5rem;
+  background: var(--seg-bg);
+  clip-path: polygon(0 0, 100% 50%, 0 100%);
+  z-index: 1;
+}
+
+/* Artifacted marks: two accent-tinted copies of the glyph tear away from the
+   base, then snap back. steps() keeps it digital rather than smooth. */
+@keyframes markTearA {
+  0%   { opacity: .9; transform: translate(-2px, 1px); clip-path: inset(12% 0 46% 0); }
+  35%  { opacity: .8; transform: translate(2px, -1px); clip-path: inset(58% 0 18% 0); }
+  70%  { opacity: .5; transform: translate(-1px, 0);   clip-path: inset(30% 0 60% 0); }
+  100% { opacity: 0;  transform: none;                 clip-path: inset(0); }
+}
+@keyframes markTearB {
+  0%   { opacity: .8; transform: translate(2px, -1px); clip-path: inset(52% 0 22% 0); }
+  40%  { opacity: .7; transform: translate(-2px, 1px); clip-path: inset(8% 0 68% 0); }
+  75%  { opacity: .4; transform: translate(1px, 0);    clip-path: inset(70% 0 12% 0); }
+  100% { opacity: 0;  transform: none;                 clip-path: inset(0); }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* focus-within so the tear fires from the keyboard too */
+  .ff-row:hover .mark-a,
+  .ff-row:focus-within .mark-a {
+    animation: markTearA 500ms steps(2) 1;
+  }
+  .ff-row:hover .mark-b,
+  .ff-row:focus-within .mark-b {
+    animation: markTearB 500ms steps(2) 1;
+  }
+}
+
+/* Output stays in layout while the command is typed (no jump). */
+.ff-output[data-shown="false"] {
+  visibility: hidden;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Prints top to bottom in hard row-sized steps, the way fastfetch writes the
+     logo and info columns out together one terminal line at a time. Step count
+     roughly matches the 19-line logo plus padding. */
+  .ff-print {
+    animation: ffPrint 700ms steps(22, end) both;
+  }
+  @keyframes ffPrint {
+    from { clip-path: inset(0 0 100% 0); }
+    to { clip-path: inset(0 0 0 0); }
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* hard on/off like a terminal cursor, not a soft fade */
+  .ff-cursor {
+    animation: ffBlink 1.05s steps(1, end) infinite;
+  }
+  @keyframes ffBlink {
+    50% { opacity: 0; }
+  }
+
+  /* One-off wave across every icon on first render. --i is the icon's index;
+     the class is removed afterwards so the hover rule above takes over. */
+  .ff-wave .mark-a {
+    animation: markTearA 500ms steps(2) 1;
+    animation-delay: calc(var(--i) * 45ms);
+  }
+  .ff-wave .mark-b {
+    animation: markTearB 500ms steps(2) 1;
+    animation-delay: calc(var(--i) * 45ms + 60ms);
+  }
+}
+
+/* custom anim for 404 */
+@keyframes fadeSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(0.75rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ---- Experience rail: fills top to bottom as the timeline scrolls through ---- */
+.rail-fill { transform-origin: top; transform: scaleY(1); }
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .rail-fill {
+      animation: railFill linear both;
+      animation-timeline: view();
+      animation-range: entry 20% cover 60%;
+    }
+  }
+}
+@keyframes railFill {
+  from { transform: scaleY(0); }
+  to { transform: scaleY(1); }
+}
