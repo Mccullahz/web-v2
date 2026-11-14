@@ -58,13 +58,18 @@ export const LoadingScreen: React.FC<{ duration?: number; timeout?: number }> = 
       style={{ opacity: fading ? 0 : 1, pointerEvents: fading ? "none" : "auto" }}
     >
       <div className="flex w-56 flex-col items-center gap-3 font-mono text-xs text-faint">
-        <span className="font-display text-2xl font-bold text-ink">
-          mccullah<span className="text-acc">.</span>z
-        </span>
+        {/* same file as the tab icon, so it's usually already in the browser cache */}
+        {/* wrapper is the anchor for animation layers: absolutely position rings/glows inside it */}
+        <div className="relative mb-4 grid h-40 w-40 place-items-center">
+          <img src="/favicon/favicon.ico" alt="" className="relative h-full w-full object-contain" />
+        </div>
         <div className="h-px w-full bg-line">
           <div className="h-px bg-acc" style={{ width: `${progress * 100}%` }} />
         </div>
-        <span>loading portfolio… {Math.round(progress * 100)}%</span>
+        <span>baking… {Math.round(progress * 100)}%</span>
+      </div>
+      <div>
+      <p>- tip: drag to look around · click a coffee ring to open a project </p>
       </div>
     </div>
   );
