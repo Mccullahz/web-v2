@@ -11,7 +11,7 @@ import type { ComponentType, LazyExoticComponent } from "react";
 export interface SceneVersion {
   /** stable key; also used to force a clean remount (and GL teardown) on switch */
   id: string;
-  label: string;
+  label?: string;
   /** optional trailing note, rendered in the accent colour */
   note?: string;
   Component: LazyExoticComponent<ComponentType>;
@@ -20,8 +20,7 @@ export interface SceneVersion {
 export const SCENE_VERSIONS: SceneVersion[] = [
   {
     id: "cafe",
-    label: "night café",
-    note: "(prototype)",
+    note: "(baked, low)",
     Component: lazy(() => import("./cafe/CafeScene")),
   },
 ];

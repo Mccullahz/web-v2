@@ -650,7 +650,7 @@ export default function CafeScene() {
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") riseRef.current();
+      if (e.key === "Escape" || "q") riseRef.current();
       const n = Number(e.key);
       if (n >= 1 && n <= RINGS.length) pickRef.current(n - 1);
     };
