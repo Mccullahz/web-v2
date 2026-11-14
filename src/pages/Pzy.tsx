@@ -13,9 +13,9 @@ export const Pzy: React.FC = () => (
     ]}
     description={`<br/>
       <br /><br />
-      For additional details or to view the source code, check out the GitHub repository: Here. Details on how to run the script are included in the README, please refer to it for instructions on how to run the script.
+      For additional details or to view the source code, check out the GitHub repository: Here.
     `}
-    repoLink="https://www.github.com/Mccullahz/pzy-coffee"
+    repoLink="https://www.github.com/Mccullahz/coffeeco"
   />
 );
 
