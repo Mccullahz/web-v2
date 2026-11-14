@@ -1,11 +1,18 @@
-import React, { Suspense, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
+import { useSceneReady } from "../three/sceneReady";
 import { SCENE_VERSIONS } from "../three/versions";
 import { SceneSwitcher } from "../three/components/SceneSwitcher";
+import { LoadingScreen } from "../components/LoadingScreen";
 
 export const Gui: React.FC = () => {
   const [index, setIndex] = useState(0);
   const version = SCENE_VERSIONS[index];
   const Scene = version.Component;
+
+  // every (re)mount of a scene starts un-ready, including coming back to this page
+  useEffect(() => {
+    useSceneReady.getState().reset();
+  }, [version.id]);
 
   return (
     <div className="relative h-screen w-screen bg-bg">
@@ -20,6 +27,7 @@ export const Gui: React.FC = () => {
         <Scene key={version.id} />
       </Suspense>
       <SceneSwitcher versions={SCENE_VERSIONS} index={index} onChange={setIndex} />
+      <LoadingScreen />
     </div>
   );
 };

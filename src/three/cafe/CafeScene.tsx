@@ -15,6 +15,7 @@ import * as THREE from "three";
 import { PALETTE as C, PROJECTS, RINGS } from "./data";
 import { BEAM_LAYER, Room } from "./Room";
 import { useCafeMarkers } from "./markers";
+import { SceneReady } from "../sceneReady";
 import { RECEIPT, Receipts, ringAxes, type ReceiptAction } from "./Receipts";
 
 type Phase = "overview" | "carry" | "dive" | "reading" | "rise" | "bottom";
@@ -703,6 +704,7 @@ export default function CafeScene() {
           <EffectComposer>
             <Bloom mipmapBlur intensity={0.7} luminanceThreshold={0.85} luminanceSmoothing={0.2} />
           </EffectComposer>
+          <SceneReady />
         </Suspense>
       </Canvas>
     </div>

@@ -25,7 +25,7 @@ export const Hero: React.FC = () => {
           {/* content */}
           <div className="md:self-center">
             <p data-reveal className="mt-5 font-mono text-xs uppercase tracking-[0.18em] text-acc">
-              software developer · backend, integrations &amp; security
+              software developer · backend · integrations
             </p>
             <h1
               data-reveal
@@ -39,7 +39,7 @@ export const Hero: React.FC = () => {
               style={{ transitionDelay: "80ms" }}
               className="mb-7 max-w-[36ch] font-prose text-xl leading-relaxed text-mut"
             >
-              integration engineer @ iDonate, connecting nonprofit crms on prismatic. i build backend
+              integration engineer@iDonate, connecting nonprofit crms on prismatic. i build
               tools &amp; automation in <b className="font-semibold text-ink">go, typescript &amp; python</b>.
             </p>
 

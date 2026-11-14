@@ -14,11 +14,11 @@ interface Job {
 
 const jobs: Job[] = [
   {
-    period: "2026 →",
+    period: "2026 - ",
     title: "integration engineer",
     address: "iDonate, remote",
     now: true,
-    summary: "development of component and code native crm + application integrations on the cloud based prismatic platform",
+    summary: "development and deployment of integrations on the cloud based prismatic platform",
     highlights: ["salesforce npsp, virtuous, blackbaud"],
     tools: ["Typescript", "React", "Prismatic"],
   },
@@ -26,9 +26,8 @@ const jobs: Job[] = [
     period: "2024 – 25",
     title: "contract developer",
     address: "Firewatch Design Studio, Dayton, Ohio",
-    summary: "development of front and back-end components of a 3d python computer vision system focusing on real-time ux",
+    summary: "development of front and back-end components of a 3d python computer vision systems",
     highlights: [
-      "automated internal windows tooling with batch + powershell, cutting deployment time by 40%",
       "computer vision, google-mediapipe, panda3D",
     ],
     tools: ["Python", "Powershell" , "Batch"],
@@ -38,10 +37,6 @@ const jobs: Job[] = [
     title: "debug technician",
     address: "Jabil Inc., Florence, Kentucky",
     summary: "debugging software and hardware related issues in linux based servers",
-    highlights: [
-      "70%+ debug accuracy across 4+ linux server models and 2+ distributions",
-      "supplied thousands of log files to a linux data-validation pipeline",
-    ],
     tools: ["Linux", "RHEL", "python"]
   },
   {
@@ -49,7 +44,7 @@ const jobs: Job[] = [
     title: "helpdesk engineer",
     address: "Forward Edge, Sharonville, Ohio",
     summary: "tier 1/2 support, managing 10,000+ devices and 7,000+ user accounts in a k–12 environment",
-    highlights: ["built 5+ internal systems: ftp servers, internal dns, vpn servers and internal wikis"],
+    tools: ["Windows", "Active Directory", "Networking"]
   },
   {
     period: "2021 – 23",
@@ -60,7 +55,7 @@ const jobs: Job[] = [
       "top 11% nationally in the national cyber league (449th of 3,926)",
       "99th percentile web exploitation, 93rd osint, 92nd enumeration",
     ],
-    href: "https://techcyberwarriors.org/",
+    tools: ["Linux", "Python", "Bash"]
   },
 ];
 
