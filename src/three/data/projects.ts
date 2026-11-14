@@ -11,9 +11,9 @@ export interface Project {
 export const projects: Project[] = [
   {
     position: [1.6, 0.01, 0],
-    title: "YouTube Short Automation",
-    category: "Linux Application",
-    tech: "Python + Youtube API + Davinci 3.5",
+    title: "PZY Suite",
+    category: "Web Application",
+    tech: "Go + Typescript + React",
     path: "/ysa",
   },
   {

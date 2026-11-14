@@ -7,7 +7,7 @@ import { Gui } from "./pages/Gui";
 import { Flacer } from "./pages/Flacer";
 import { Pms } from "./pages/Pms";
 import { Lms } from "./pages/Lms";
-import { Ysa } from "./pages/Ysa";
+import { Pzy } from "./pages/Pzy";
 import { Ggj } from "./pages/Ggj";
 import { Fourohfour } from "./pages/Fourohfour";
 import "./index.css";
@@ -22,7 +22,7 @@ export const App: React.FC = () => {
 	<Route path="/flacer" element={<Flacer />} />
 	<Route path="/pms" element={<Pms />} />
 	<Route path="/lms" element={<Lms />} />
-	<Route path="/ysa" element={<Ysa />} />
+	<Route path="/pzy" element={<Pzy />} />
 	<Route path="/ggj" element={<Ggj />} />
 	<Route path="*" element={<Fourohfour />} />
       </Routes>
