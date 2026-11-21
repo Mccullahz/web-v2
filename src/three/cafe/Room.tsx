@@ -8,10 +8,26 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 import { useGLTF, useTexture } from "@react-three/drei";
 import * as THREE from "three";
-import { BOARD, PALETTE as C, PROJECTS } from "./data";
+import { BOARD, MENU, PALETTE as C, SPOT_PROJECTS } from "./data";
 import { ROOM_URL, useCafeMarkers } from "./markers";
+import { propIdOf } from "./props";
+import { Props, type OnProp, type PropNode } from "./Props";
+import { posScreenTexture } from "./posScreen";
 
-export const LIGHTMAP_URL = "/models/cafe/room-lightmap-night.webp";
+export const LIGHTMAP_URL = "/models/cafe/room-lightmap-night.webp"; // up to 8192 px
+const LIGHTMAP_4K_URL = "/models/cafe/room-lightmap-night-4k.webp"; // ≤ 4096 px, same light
+
+/**
+ * The full lightmap is 8K (~256 MB of GPU memory once uploaded): use it only where it fits,
+ * otherwise the 4K copy. Phones, small screens and low-memory devices get the 4K one too.
+ */
+function lightmapUrl(gl: THREE.WebGLRenderer) {
+  const max = gl.capabilities.maxTextureSize;
+  const mem = (navigator as Navigator & { deviceMemory?: number }).deviceMemory;
+  const small = Math.min(window.screen.width, window.screen.height) < 820;
+  const coarse = window.matchMedia?.("(pointer: coarse)").matches;
+  return max >= 8192 && !small && !coarse && !(mem && mem <= 4) ? LIGHTMAP_URL : LIGHTMAP_4K_URL;
+}
 // must match SCALE in scripts/blender/bake_cafe.py (the lightmap stores light / SCALE)
 const LIGHTMAP_SCALE = 4;
 
@@ -75,13 +91,116 @@ function menuTexture() {
   x.fillRect(0, 0, c.width, c.height);
   x.fillStyle = C.acc;
   x.font = "500 64px 'DM Mono', ui-monospace, monospace";
-  x.fillText("~/menu", 64, 110);
+  x.fillText(MENU.title, 64, 110);
   x.fillStyle = "#d9d2c8";
   x.font = "400 46px 'DM Mono', ui-monospace, monospace";
-  ["espresso ......... 3", "cortado .......... 4", "flat white ....... 4", "pour over ........ 5"].forEach((l, i) => x.fillText(l, 64, 210 + i * 72));
+  // dot leaders fill the gap between name and price; rows tighten if the list grows
+  const row = Math.min(72, 300 / Math.max(1, MENU.items.length - 1));
+  MENU.items.forEach(([name, price], i) => {
+    const y = 210 + i * row;
+    x.fillText(name, 64, y);
+    const pw = x.measureText(price).width;
+    x.fillText(price, c.width - 64 - pw, y);
+    const from = 64 + x.measureText(name).width + 24;
+    const to = c.width - 64 - pw - 24;
+    const dot = x.measureText(".").width;
+    if (to > from) x.fillText(".".repeat(Math.floor((to - from) / dot)), from, y);
+  });
   const t = new THREE.CanvasTexture(c);
   t.colorSpace = THREE.SRGBColorSpace;
   return t;
+}
+
+/**
+ * The street through the window, out of focus: a night-sky gradient and a few big soft
+ * light blobs (a streetlamp, a neon sign, lit windows across the road). Blurred, so it
+ * reads as light coming in rather than as shapes on the glass.
+ */
+function streetTexture() {
+  const c = document.createElement("canvas");
+  c.width = 1024;
+  c.height = 660; // ~ the backdrop's 3.5 × 2.25 m
+  const x = c.getContext("2d")!;
+  const sky = x.createLinearGradient(0, 0, 0, c.height);
+  sky.addColorStop(0, "#070a14");
+  sky.addColorStop(0.55, "#121626");
+  sky.addColorStop(1, "#2a1f26"); // the street glows a little warmer near the ground
+  x.fillStyle = sky;
+  x.fillRect(0, 0, c.width, c.height);
+  x.filter = "blur(38px)";
+  const blob = (cx: number, cy: number, r: number, col: string, a: number) => {
+    const g = x.createRadialGradient(cx, cy, 0, cx, cy, r);
+    g.addColorStop(0, col);
+    g.addColorStop(1, "rgba(0,0,0,0)");
+    x.globalAlpha = a;
+    x.fillStyle = g;
+    x.fillRect(cx - r, cy - r, r * 2, r * 2);
+  };
+  // (u, v) in canvas pixels: u left → right along the window, v top → bottom
+  blob(170, 150, 260, "#ffd9a8", 0.85); // streetlamp, high on the left
+  blob(860, 400, 220, "#e59a92", 0.7); // neon, right
+  blob(290, 420, 120, "#f0b98a", 0.55); // lit window across the road
+  blob(520, 430, 110, "#c9d4e8", 0.4); // a cooler one
+  blob(660, 560, 240, "#3a2a2e", 0.8); // the wet street catching it all
+  blob(520, 120, 300, "#1c2540", 0.6); // a little sky glow
+  x.filter = "none";
+  x.globalAlpha = 1;
+  const t = new THREE.CanvasTexture(c);
+  t.colorSpace = THREE.SRGBColorSpace;
+  return t;
+}
+
+/** Give the backdrop the street texture, mapped from its own world bounds (the export's UVs aren't relied on). */
+function dressStreet(scene: THREE.Object3D) {
+  // the old glowing rectangles; the soft street replaces them
+  for (const n of ["street_window_a", "street_window_b", "street_lamp", "street_neon"]) {
+    const o = scene.getObjectByName(n);
+    if (o) o.visible = false;
+  }
+  const back = scene.getObjectByName("street_backdrop") as THREE.Mesh | undefined;
+  if (!back?.isMesh) return;
+  back.updateWorldMatrix(true, false);
+  const g = back.geometry.clone();
+  g.applyMatrix4(back.matrixWorld);
+  g.computeBoundingBox();
+  const b = g.boundingBox!;
+  const pos = g.getAttribute("position");
+  const uv = new Float32Array(pos.count * 2);
+  for (let k = 0; k < pos.count; k++) {
+    uv[k * 2] = (pos.getX(k) - b.min.x) / Math.max(1e-6, b.max.x - b.min.x);
+    uv[k * 2 + 1] = (pos.getY(k) - b.min.y) / Math.max(1e-6, b.max.y - b.min.y);
+  }
+  const local = back.geometry.clone();
+  local.setAttribute("uv", new THREE.BufferAttribute(uv, 2));
+  back.geometry = local;
+  g.dispose();
+  // a little over 1 so the brightest blobs feed the bloom
+  back.material = new THREE.MeshBasicMaterial({ map: streetTexture(), color: new THREE.Color(1.5, 1.5, 1.5), toneMapped: false });
+}
+
+/** Give the POS screen its live canvas (PosTerminal.tsx draws it; the export's material is a placeholder glow). */
+function dressPos(scene: THREE.Object3D) {
+  const screen = scene.getObjectByName("pos_screen") as THREE.Mesh | undefined;
+  if (!screen?.isMesh) return;
+  screen.material = new THREE.MeshBasicMaterial({ map: posScreenTexture, color: new THREE.Color(1.15, 1.15, 1.15), toneMapped: false });
+}
+
+/** Detach the props (`prop_<id>` nodes) so they can be rendered, and later moved, on their own. */
+function takeProps(scene: THREE.Object3D): PropNode[] {
+  const found: PropNode[] = [];
+  // outermost match only: a multi-material prop loads as a group "prop_x" of meshes "prop_x_1", "prop_x_2", …
+  const walk = (o: THREE.Object3D) => {
+    const id = propIdOf(o.name);
+    if (id) found.push({ id, obj: o });
+    else o.children.forEach(walk);
+  };
+  walk(scene);
+  for (const p of found) {
+    p.obj.updateWorldMatrix(true, false);
+    p.obj.matrixWorld.decompose(p.obj.position, p.obj.quaternion, p.obj.scale);
+    p.obj.removeFromParent();
+  }
+  return found;
 }
 
 /**
@@ -105,7 +224,8 @@ function bakeMaterials(scene: THREE.Object3D, lightMap: THREE.Texture) {
       if (glow) {
         out = new THREE.MeshBasicMaterial({ color: src.emissive.clone().multiplyScalar(src.emissiveIntensity), toneMapped: false });
       } else {
-        out = new THREE.MeshBasicMaterial({ color: src.color.clone(), transparent: src.transparent, opacity: src.opacity, depthWrite: !src.transparent });
+        // keep any texture (the PZY bag labels); everything else is flat colour × lightmap
+        out = new THREE.MeshBasicMaterial({ color: src.color.clone(), map: src.map ?? null, transparent: src.transparent, opacity: src.opacity, depthWrite: !src.transparent });
         if (hasLightmapUv) {
           out.lightMap = lightMap;
           // MeshBasicMaterial divides the lightmap by π; the bake stored light / SCALE
@@ -131,8 +251,7 @@ function LiveSurfaces({ boards, faceYaw }: { boards: THREE.Vector3[]; faceYaw: R
   useFrame(() => faces.current.forEach((g, i) => g && (g.rotation.y = faceYaw.current[i] ?? 0)));
   const ready = useFontsReady();
   // redrawn once the web fonts have loaded
-  const tex = useMemo(() => (ready ? PROJECTS : PROJECTS).map((p) => boardTexture(p.title, p.line)), [ready]);
-  const menu = useMemo(() => (ready ? menuTexture() : menuTexture()), [ready]);
+  const tex = useMemo(() => (ready ? SPOT_PROJECTS : SPOT_PROJECTS).map((p) => boardTexture(p.title, p.line)), [ready]);
   return (
     <group>
       {boards.map((b, i) => (
@@ -144,10 +263,6 @@ function LiveSurfaces({ boards, faceYaw }: { boards: THREE.Vector3[]; faceYaw: R
           </mesh>
         </group>
       ))}
-      <mesh position={[0.012, 2.55, 2.45]} rotation={[0, Math.PI / 2, 0]}>
-        <planeGeometry args={[1.6, 0.8]} />
-        <meshBasicMaterial map={menu} color="#8a8a86" />
-      </mesh>
     </group>
   );
 }
@@ -164,9 +279,19 @@ function BeamVisibility() {
   return null;
 }
 
-export function Room({ faceYaw }: { faceYaw: React.MutableRefObject<number[]> }) {
+/** The chalk menu on the back wall: drawn live from MENU (data.ts); clickable as "menu-board". */
+function makeMenu() {
+  const m = new THREE.Mesh(new THREE.PlaneGeometry(1.6, 0.8), new THREE.MeshBasicMaterial({ map: menuTexture(), color: "#8a8a86" }));
+  m.name = "menu-board";
+  m.position.set(0.012, 2.55, 2.45);
+  m.rotation.set(0, Math.PI / 2, 0);
+  return m;
+}
+
+export function Room({ faceYaw, propMode, onProp }: { faceYaw: React.MutableRefObject<number[]>; propMode: "overview" | "reading" | "busy"; onProp?: OnProp }) {
   const { scene } = useGLTF(ROOM_URL);
-  const lightMap = useTexture(LIGHTMAP_URL);
+  const gl = useThree((s) => s.gl);
+  const lightMap = useTexture(useMemo(() => lightmapUrl(gl), [gl]));
   const markers = useCafeMarkers();
   const room = useMemo(() => {
     lightMap.colorSpace = THREE.SRGBColorSpace;
@@ -175,17 +300,36 @@ export function Room({ faceYaw }: { faceYaw: React.MutableRefObject<number[]> })
     lightMap.anisotropy = 4;
     const r = scene.clone(true);
     bakeMaterials(r, lightMap);
+    dressStreet(r);
+    dressPos(r);
     // ceiling beams live on their own layer: the coffee's reflection always sees them, the
     // main camera only from below (BeamVisibility), so like the walls they vanish from outside
     r.traverse((o) => {
       if (o.name.startsWith("beam_")) o.traverse((c) => c.layers.set(BEAM_LAYER));
     });
-    return r;
+    const props = takeProps(r);
+    // the screen is exported on its own (it isn't baked); it turns with the POS head
+    const screen = r.getObjectByName("pos_screen");
+    const pos = props.find((p) => p.id === "pos-head");
+    if (screen && pos) pos.obj.attach(screen);
+    props.push({ id: "menu-board", obj: makeMenu() });
+    return { room: r, props };
   }, [scene, lightMap]);
+  // the menu's text, redrawn in the web fonts once they're in
+  const fontsReady = useFontsReady();
+  useEffect(() => {
+    const menu = room.props.find((p) => p.id === "menu-board")?.obj as THREE.Mesh | undefined;
+    const mat = menu?.material as THREE.MeshBasicMaterial | undefined;
+    if (!mat || !fontsReady) return;
+    mat.map?.dispose();
+    mat.map = menuTexture();
+    mat.needsUpdate = true;
+  }, [room, fontsReady]);
 
   return (
     <group>
-      <primitive object={room} />
+      <primitive object={room.room} />
+      <Props nodes={room.props} mode={propMode} onProp={onProp} />
       <BeamVisibility />
       <LiveSurfaces boards={markers.boards} faceYaw={faceYaw} />
       {/* only the live props (cup, rings) are lit in real time; the room ignores these */}

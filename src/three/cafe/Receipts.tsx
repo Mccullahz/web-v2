@@ -5,7 +5,7 @@
 import { useEffect, useMemo, useState } from "react";
 import type { ThreeEvent } from "@react-three/fiber";
 import * as THREE from "three";
-import { PALETTE as C, PROJECTS, RINGS } from "./data";
+import { PALETTE as C, SPOT_PROJECTS, SPOTS } from "./data";
 
 export const RECEIPT = { w: 0.1, h: 0.15, gap: 0.13 }; // metres; gap = cup centre → receipt centre
 const PX = { w: 600, h: 900 };
@@ -21,7 +21,7 @@ interface Region {
 
 /** Screen-up when reading at ring i, and the direction the receipt lies from the cup. */
 export function ringAxes(i: number) {
-  const [ux, uz] = RINGS[i].up;
+  const [ux, uz] = SPOTS[i].up;
   const up = new THREE.Vector3(ux, 0, uz).normalize();
   const right = new THREE.Vector3().crossVectors(new THREE.Vector3(0, -1, 0), up).normalize();
   return { up, right };
@@ -117,13 +117,13 @@ function drawReceipt(i: number, opts: { bottom: boolean; read: boolean; drained:
     regions.push({ action, x0: x0 - 8, y0: y - 30, x1: x0 + w + 8, y1: y + 10 });
   };
 
-  const project = PROJECTS[i];
+  const project = SPOT_PROJECTS[i];
   x.textBaseline = "alphabetic";
   x.font = "400 25px 'DM Mono', monospace";
   x.fillStyle = C.acc;
   x.fillText(opts.bottom ? "THE BOTTOM" : `ORDER ${String(i + 1).padStart(2, "0")}`, P, 78);
   x.fillStyle = "#847f78";
-  const where = opts.bottom ? "OF THE CUP" : RINGS[i].where.toUpperCase();
+  const where = opts.bottom ? "OF THE CUP" : SPOTS[i].where.toUpperCase();
   x.fillText(where, PX.w - P - x.measureText(where).width, 78);
   rule(104);
 
@@ -214,7 +214,7 @@ interface ReceiptsProps {
 export function Receipts({ spots, active, bottom, drained, visited, onAction }: ReceiptsProps) {
   const ready = useFontsReady();
   const drawn = useMemo(
-    () => RINGS.map((_, i) => drawReceipt(i, { bottom: bottom && i === active, read: visited.has(i), drained })),
+    () => SPOTS.map((_, i) => drawReceipt(i, { bottom: bottom && i === active, read: visited.has(i), drained })),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [ready, bottom, active, visited, drained],
   );
@@ -239,7 +239,7 @@ export function Receipts({ spots, active, bottom, drained, visited, onAction }: 
 
   return (
     <group>
-      {spots.slice(0, RINGS.length).map((s, i) => {
+      {spots.slice(0, SPOTS.length).map((s, i) => {
         const { up, right } = ringAxes(i);
         const p = s.clone().addScaledVector(right, RECEIPT.gap);
         return (

@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { useGLTF } from "@react-three/drei";
 import * as THREE from "three";
-import { RINGS } from "./data";
+import { SPOTS } from "./data";
 
 export const ROOM_URL = "/models/cafe/room.glb";
 
@@ -22,9 +22,9 @@ export function useCafeMarkers(): CafeMarkers {
       return o.getWorldPosition(new THREE.Vector3());
     };
     return {
-      rings: RINGS.map((_, i) => at(`ring_${i + 1}`)),
+      rings: SPOTS.map((s) => at(`ring_${s.marker}`)),
       cupHome: at("cup_home"),
-      boards: RINGS.map((_, i) => at(`board_${i + 1}`)),
+      boards: SPOTS.map((s) => at(`board_${s.marker}`)),
     };
   }, [scene]);
 }

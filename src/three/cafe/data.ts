@@ -77,17 +77,33 @@ export const PROJECTS: CafeProject[] = [
   },
 ];
 
-// Ring order = project order. Positions live in room.glb (markers ring_1…5, board_1…5,
-// cup_home), edited in src/three/data/cafe.blend.
-// `up` is screen-up (x, z) when looking down into the cup there; the order ticket lies to
-// the right of it, along the length of the surface.
-export const RINGS: { where: string; up: [number, number] }[] = [
-  { where: "bar", up: [-1, 0] },
-  { where: "bar", up: [-1, 0] },
-  { where: "window bar", up: [0, -1] },
-  { where: "window table", up: [-1, 0] },
-  { where: "corner table", up: [-1, 0] },
+// To move a project to another spot, change the `project` slugs below the board text, ticket and link all follow the slug.
+export const SPOTS: { marker: number; where: string; up: [number, number]; project: string }[] = [
+  { marker: 1, where: "bar", up: [-1, 0], project: "flacer" },
+  { marker: 2, where: "bar", up: [-1, 0], project: "process-sim" },
+  { marker: 3, where: "window bar", up: [0, -1], project: "pzy" },
+  { marker: 4, where: "window table", up: [-1, 0], project: "go-getta-job" },
+  { marker: 5, where: "corner table", up: [-1, 0], project: "library-mgmt" },
 ];
+
+/** The project at each spot, in spot order. Fails loudly on a typo'd or repeated slug. */
+export const SPOT_PROJECTS: CafeProject[] = SPOTS.map((s) => {
+  const p = PROJECTS.find((q) => q.slug === s.project);
+  if (!p) throw new Error(`data.ts: spot ${s.marker} names "${s.project}", which isn't a project slug`);
+  if (SPOTS.filter((t) => t.project === s.project).length > 1) throw new Error(`data.ts: "${s.project}" is on more than one spot`);
+  return p;
+});
+
+// The chalk menu on the wall. Drawn live, so edit freely; no rebake needed.
+export const MENU = {
+  title: "~/menu",
+  items: [
+    ["espresso", "3"],
+    ["cortado", "4"],
+    ["flat white", "4"],
+    ["pour over", "5"],
+  ] as [string, string][],
+};
 
 // Board size (metres): the live project face is drawn just under each board marker.
 export const BOARD = { w: 0.62, d: 0.44, t: 0.04 };

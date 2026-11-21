@@ -12,13 +12,18 @@ import type { OrbitControls as OrbitControlsImpl } from "three-stdlib";
 import { Reflector } from "three/examples/jsm/objects/Reflector.js";
 import { Bloom, EffectComposer } from "@react-three/postprocessing";
 import * as THREE from "three";
-import { PALETTE as C, PROJECTS, RINGS } from "./data";
+import { PALETTE as C, SPOT_PROJECTS, SPOTS } from "./data";
 import { BEAM_LAYER, Room } from "./Room";
+import { PosTerminal } from "./PosTerminal";
+import { propDriver } from "./props";
+import { ScreenGlass } from "./ScreenGlass";
+import { Steam } from "./Steam";
+import { focusPosInput, isTypingTarget } from "./posScreen";
 import { useCafeMarkers } from "./markers";
 import { SceneReady } from "../sceneReady";
 import { RECEIPT, Receipts, ringAxes, type ReceiptAction } from "./Receipts";
 
-type Phase = "overview" | "carry" | "dive" | "reading" | "rise" | "bottom";
+type Phase = "overview" | "carry" | "dive" | "reading" | "rise" | "bottom" | "to-terminal" | "terminal";
 
 // cup.glb measurements (metres): coffee surface height, radius, inner floor
 const COFFEE_Y = 0.0533;
@@ -88,6 +93,46 @@ function readingPose(cup: THREE.Vector3, up: THREE.Vector3, coffeeY: number): Po
   return pose(coffee.clone().add(new THREE.Vector3(0, READ.height, 0)), centre.setY(cup.y), up, READ.fov);
 }
 
+// the POS terminal: square on to the screen, filling most of the view
+const TERM = { fov: 30, fill: 0.78, fly: 1.1 }; // fill < 1 leaves room for the site nav over the canvas
+
+/** Looking straight at the POS screen's face, screen-up as up; `n` is the way the face points. */
+function screenPose(screen: THREE.Mesh, aspect: number): { pose: Pose; n: THREE.Vector3 } | null {
+  screen.updateWorldMatrix(true, false);
+  const g = screen.geometry;
+  const nrm = g.getAttribute("normal");
+  if (!nrm) return null;
+  g.computeBoundingBox();
+  const centre = g.boundingBox!.getCenter(new THREE.Vector3()).applyMatrix4(screen.matrixWorld);
+  const n = new THREE.Vector3().fromBufferAttribute(nrm, 0).applyNormalMatrix(new THREE.Matrix3().getNormalMatrix(screen.matrixWorld)).normalize();
+  // the screen's own size, measured along its up and across directions
+  const up = new THREE.Vector3(0, 1, 0).addScaledVector(n, -n.y).normalize();
+  const across = new THREE.Vector3().crossVectors(up, n).normalize();
+  const pos = g.getAttribute("position");
+  let w = 0, h = 0;
+  const p = new THREE.Vector3();
+  for (let k = 0; k < pos.count; k++) {
+    p.fromBufferAttribute(pos, k).applyMatrix4(screen.matrixWorld).sub(centre);
+    w = Math.max(w, Math.abs(p.dot(across)) * 2);
+    h = Math.max(h, Math.abs(p.dot(up)) * 2);
+  }
+  const t = 2 * Math.tan(THREE.MathUtils.degToRad(TERM.fov) / 2);
+  const d = Math.max(h / TERM.fill / t, w / TERM.fill / (t * aspect));
+  return { pose: pose(centre.clone().addScaledVector(n, d), centre, up, TERM.fov), n };
+}
+
+/**
+ * A curve that swings round in front of the screen before closing in, so coming from behind
+ * the POS circles it rather than passing through it. Reversed for the way back out.
+ */
+function screenPath(from: THREE.Vector3, to: THREE.Vector3, n: THREE.Vector3): [THREE.Vector3, THREE.Vector3, THREE.Vector3, THREE.Vector3] {
+  const d = Math.min(from.distanceTo(to), 3);
+  const behind = Math.max(0, -n.dot(from.clone().sub(to).normalize())); // 0 in front … 1 straight behind
+  const out = 0.35 + d * (0.25 + 0.35 * behind); // how far in front of the screen the swing passes
+  const lift = new THREE.Vector3(0, d * (0.15 + 0.25 * behind), 0);
+  return [from.clone(), from.clone().add(lift), to.clone().addScaledVector(n, out).add(lift.clone().multiplyScalar(0.5)), to.clone()];
+}
+
 function CameraRig({ anim }: { anim: React.MutableRefObject<Anim> }) {
   const camera = useThree((s) => s.camera) as THREE.PerspectiveCamera;
   const good = useRef<{ pos: THREE.Vector3; quat: THREE.Quaternion } | null>(null);
@@ -122,7 +167,7 @@ function CameraRig({ anim }: { anim: React.MutableRefObject<Anim> }) {
   return null;
 }
 
-// Checkpoints: a raised glowing collar on the surface, a soft column of light rising from it
+// Checkpoints: a soft column of light rising from the surface
 // and a pulse that ripples outward now and then, so each spot reads from the default zoom.
 const BEAM_SHADER = {
   uniforms: { uColor: { value: new THREE.Color(C.acc) }, uAlpha: { value: 0.5 } },
@@ -145,7 +190,6 @@ const BEAM_SHADER = {
 const RING_R = 0.09;
 
 function Checkpoint({ p, i, visited, hot, enabled, onPick, setHover }: { p: THREE.Vector3; i: number; visited: boolean; hot: boolean; enabled: boolean; onPick: (i: number) => void; setHover: (i: number) => void }) {
-  const collar = useRef<THREE.Mesh>(null!);
   const pulse = useRef<THREE.Mesh>(null!);
   const beam = useMemo(() => new THREE.ShaderMaterial({ ...BEAM_SHADER, uniforms: THREE.UniformsUtils.clone(BEAM_SHADER.uniforms), transparent: true, depthWrite: false, side: THREE.DoubleSide, blending: THREE.NormalBlending, toneMapped: false }), []);
   useEffect(() => () => beam.dispose(), [beam]);
@@ -153,9 +197,6 @@ function Checkpoint({ p, i, visited, hot, enabled, onPick, setHover }: { p: THRE
     const t = clock.elapsedTime + i * 0.7;
     const breathe = 0.5 + 0.5 * Math.sin(t * 2.2);
     const base = visited ? 0.35 : 1;
-    collar.current.position.y = 0.012 + Math.sin(t * 1.6) * 0.004; // a gentle bob
-    collar.current.rotation.z = t * 0.6;
-    (collar.current.material as THREE.MeshStandardMaterial).emissiveIntensity = (hot ? 3.2 : 1.4 + breathe * 0.9) * base;
     beam.uniforms.uAlpha.value = (hot ? 0.85 : 0.45 + breathe * 0.2) * base;
     const k = (t % 2.4) / 2.4; // outward pulse every couple of seconds
     pulse.current.scale.setScalar(1 + k * 1.1);
@@ -169,11 +210,6 @@ function Checkpoint({ p, i, visited, hot, enabled, onPick, setHover }: { p: THRE
           <meshBasicMaterial color="#3a2414" transparent opacity={0.55} />
         </mesh>
       )}
-      {/* the raised collar */}
-      <mesh ref={collar} rotation={[-Math.PI / 2, 0, 0]} scale={hot ? 1.15 : 1}>
-        <torusGeometry args={[RING_R, 0.012, 10, 48]} />
-        <meshStandardMaterial color={C.acc} emissive={C.acc} toneMapped={false} />
-      </mesh>
       {/* light rising from it */}
       <mesh position={[0, 0.3, 0]} material={beam}>
         <cylinderGeometry args={[RING_R, RING_R * 0.9, 0.6, 32, 1, true]} />
@@ -214,7 +250,7 @@ function Rings({ spots, cupAt, visited, onPick, enabled }: { spots: THREE.Vector
   }, [hover, enabled]);
   return (
     <group>
-      {spots.slice(0, RINGS.length).map((p, i) =>
+      {spots.slice(0, SPOTS.length).map((p, i) =>
         i === cupAt ? null : <Checkpoint key={i} p={p} i={i} visited={visited.has(i)} hot={hover === i && enabled} enabled={enabled} onPick={onPick} setHover={setHover} />,
       )}
     </group>
@@ -445,18 +481,19 @@ interface SceneProps {
 function Scene({ phase, setPhase, cupAt, setCupAt, ring, setRing, visited, setVisited, drained, setDrained, anim, pickRef, riseRef, go }: SceneProps) {
   const markers = useCafeMarkers();
   const spots = useMemo(() => [...markers.rings, markers.cupHome], [markers]);
-  const { camera, size } = useThree();
+  const { camera, size, scene } = useThree();
   const controls = useRef<OrbitControlsImpl>(null);
   const timers = useRef<number[]>([]);
-  const faceYaw = useRef<number[]>(RINGS.map(() => 0));
+  const faceYaw = useRef<number[]>(SPOTS.map(() => 0));
   const saved = useRef<{ pos: THREE.Vector3; target: THREE.Vector3; fov: number } | null>(null);
+  const termN = useRef<THREE.Vector3 | null>(null); // which way the POS screen faced when we zoomed in
   const [up, setUp] = useState(() => new THREE.Vector3(0, 0, 1));
   const reduce = useMemo(() => window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false, []);
   const maxDist = overviewDist(size.width / size.height);
 
   // cup starts at home
   useEffect(() => {
-    const home = spots[RINGS.length];
+    const home = spots[SPOTS.length];
     anim.current.cupFrom.copy(home);
     anim.current.cupTo.copy(home);
     anim.current.cupT = 1;
@@ -542,17 +579,51 @@ function Scene({ phase, setPhase, cupAt, setCupAt, ring, setRing, visited, setVi
   );
 
   const rise = useCallback(() => {
-    if (phase !== "reading" && phase !== "bottom") return;
+    if (phase !== "reading" && phase !== "bottom" && phase !== "terminal") return;
+    const fromTerminal = phase === "terminal";
     setPhase("rise");
     const s = saved.current ?? { pos: OVERVIEW.target.clone().addScaledVector(OVERVIEW.dir, maxDist), target: OVERVIEW.target.clone(), fov: OVERVIEW.fov };
-    flyTo(pose(s.pos, s.target, new THREE.Vector3(0, 1, 0), s.fov), T_RISE, "up");
-    later(T_RISE * 1000, () => {
+    const dur = fromTerminal ? TERM.fly : T_RISE;
+    // out of a cup: lift straight up first; away from the screen: the way we came, backwards
+    flyTo(pose(s.pos, s.target, new THREE.Vector3(0, 1, 0), s.fov), dur, fromTerminal ? undefined : "up");
+    if (fromTerminal && termN.current) {
+      const [a, b, c, d] = screenPath(s.pos, camera.position, termN.current);
+      anim.current.camPath = [d, c, b, a];
+    }
+    later(dur * 1000, () => {
       controls.current?.target.copy(s.target);
       controls.current?.update();
       setPhase("overview");
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [phase, maxDist]);
+
+  // 3. the POS: the first click swivels it to the customer (props.ts); the next one, once it
+  // faces us, zooms onto the screen and opens the terminal
+  const openTerminal = () => {
+    const screen = scene.getObjectByName("pos_screen") as THREE.Mesh | undefined;
+    const sp = screen?.isMesh ? screenPose(screen, size.width / size.height) : null;
+    if (!sp) return false;
+    saved.current = { pos: camera.position.clone(), target: controls.current?.target.clone() ?? OVERVIEW.target.clone(), fov: (camera as THREE.PerspectiveCamera).fov };
+    focusPosInput(); // inside the click, so phones show the keyboard
+    setPhase("to-terminal");
+    flyTo(sp.pose, TERM.fly);
+    anim.current.camPath = screenPath(camera.position, sp.pose.pos, sp.n);
+    termN.current = sp.n;
+    later(TERM.fly * 1000, () => setPhase("terminal"));
+    return true;
+  };
+  // the shell's `exit`: back out as usual, then the POS turns back to the staff (Esc or a
+  // click outside leave it facing you, ready to come back to)
+  const exitTerminal = () => {
+    if (phase !== "terminal") return;
+    rise();
+    later(TERM.fly * 1000, () => propDriver.set("pos-head", 0));
+  };
+  const onProp = (id: string, state: number) => {
+    if (id === "pos-head" && state === 1 && phase === "overview") return openTerminal();
+    return false;
+  };
 
   const drinkUp = () => {
     setDrained(true);
@@ -576,7 +647,7 @@ function Scene({ phase, setPhase, cupAt, setCupAt, ring, setRing, visited, setVi
   const onReceipt = (i: number, action: ReceiptAction) => {
     if (phase === "overview" || (phase === "reading" && i !== ring)) return pick(i);
     if (i !== ring) return;
-    const p = PROJECTS[i];
+    const p = SPOT_PROJECTS[i];
     if (action === "read") go(p.path);
     else if (action === "source") window.open(p.repo, "_blank", "noopener,noreferrer");
     else if (action === "back") rise();
@@ -616,7 +687,10 @@ function Scene({ phase, setPhase, cupAt, setCupAt, ring, setRing, visited, setVi
         }}
       />
       <CameraRig anim={anim} />
-      <Room faceYaw={faceYaw} />
+      <Room faceYaw={faceYaw} propMode={phase === "overview" ? "overview" : phase === "reading" ? "reading" : "busy"} onProp={onProp} />
+      <PosTerminal open={phase === "to-terminal" || phase === "terminal"} typing={phase === "terminal"} onExit={exitTerminal} onOpen={go} />
+      <ScreenGlass />
+      <Steam />
       <Rings spots={spots} cupAt={cupAt} visited={visited} onPick={pick} enabled={phase === "overview" || phase === "reading"} />
       <Cup anim={anim} close={phase !== "overview" && phase !== "carry"} drained={drained} up={up} onClick={onMug} clickable={(phase === "reading" && !drained) || (phase === "overview" && cupAt >= 0)} />
       <Receipts spots={spots} active={phase === "reading" || phase === "bottom" ? ring : -1} bottom={phase === "bottom"} drained={drained} visited={visited} onAction={onReceipt} />
@@ -634,6 +708,13 @@ export default function CafeScene() {
   const pickRef = useRef<(i: number) => void>(() => {});
   const riseRef = useRef<() => void>(() => {});
   const [glKey, setGlKey] = useState(0);
+  // unmounting (e.g. leaving for a project page) also loses the context, on purpose; only a
+  // loss while we're still here is worth rebuilding for. Parent cleanup runs before the Canvas's.
+  const mounted = useRef(true);
+  useEffect(() => {
+    mounted.current = true;
+    return () => void (mounted.current = false);
+  }, []);
   const down = useRef<[number, number]>([0, 0]);
   const anim = useRef<Anim>({
     cupFrom: new THREE.Vector3(),
@@ -650,9 +731,14 @@ export default function CafeScene() {
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape" || "q") riseRef.current();
+      // typing into the terminal (or any field): only Esc means anything here
+      if (isTypingTarget(e.target)) {
+        if (e.key === "Escape") riseRef.current();
+        return;
+      }
+      if (e.key === "Escape" || e.key === "q") riseRef.current();
       const n = Number(e.key);
-      if (n >= 1 && n <= RINGS.length) pickRef.current(n - 1);
+      if (n >= 1 && n <= SPOTS.length) pickRef.current(n - 1);
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
@@ -669,10 +755,11 @@ export default function CafeScene() {
         onCreated={({ gl }) => {
           const el = gl.domElement;
           el.addEventListener("webglcontextlost", (e) => {
+            if (!mounted.current) return;
             e.preventDefault(); // allows the browser to hand the context back
             console.warn("café: WebGL context lost, rebuilding");
           });
-          el.addEventListener("webglcontextrestored", () => setGlKey((k) => k + 1), { once: true });
+          el.addEventListener("webglcontextrestored", () => mounted.current && setGlKey((k) => k + 1), { once: true });
         }}
         dpr={[1, 1.5]}
         camera={{ fov: OVERVIEW.fov, near: 0.01, far: 120, position: [20, 18, 20] }}

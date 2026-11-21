@@ -18,82 +18,38 @@ import {
   SiReact,
   SiTypescript,
 } from "react-icons/si";
-
-// stylized "Z" drawn in the same graded character palette the arch fastfetch
-// art used: light ` . : / + o edges around a dense z-fill core
-const ART = [
-  "    `.:/+ooozzzzzzzzzzzzzzooo+/:.`    ",
-  "    /+oozzzzzzzzzzzzzzzzzzzzzzoo+/    ",
-  "    +ozzzzzzzzzzzzzzzzzzzzzzzzzzo+    ",
-  "    oozzzzzzzzzzzzzzzzzzzzzzzzzzoo    ",
-  "                        /ozzzzzo/     ",
-  "                      +ozozzzo+       ",
-  "                    :+zzzzz+:         ",
-  "                  /oozzzoo/           ",
-  "                +ozzzzzo+             ",
-  "              /:zzozz:/               ",
-  "            o+zzzzz+o                 ",
-  "          /ozzzozo/                   ",
-  "        +ozzzzzo+                     ",
-  "      :+ozzzz+:                       ",
-  "    /ozzzzzo/                         ",
-  "    oozzzzzzzzzzzzzzzzzzzzzzzzzzoo    ",
-  "    +ozzzzzzzzzzzzzzzzzzzzzzzzzzo+    ",
-  "    /+oozzzzzzzzzzzzzzzzzzzzzzoo+/    ",
-  "    `.:/+ooozzzzzzzzzzzzzzooo+/:.`    "
-].join("\n");
-
-const FACTS: [string, string][] = [
-  ["UPTIME", "5 years, still building"],
-  ["THEME", "aperture / warm"],
-];
+import { ART, FACTS, STACK } from "../data/stack";
 
 interface Tool {
   label: string;
   Icon?: IconType;
 }
 
-const GROUPS: { label: string; tone: string; tools: Tool[] }[] = [
-  {
-    label: "LANGUAGES",
-    tone: "var(--stack-c1)",
-    tools: [
-      { label: "Go", Icon: SiGo },
-      { label: "TypeScript", Icon: SiTypescript },
-      { label: "Python", Icon: SiPython },
-      { label: "C++", Icon: SiCplusplus },
-      { label: "Java", Icon: FaJava },
-      { label: "Bash", Icon: SiGnubash },
-    ],
-  },
-  {
-    label: "FRONT-END",
-    tone: "var(--stack-c2)",
-    tools: [
-      { label: "React", Icon: SiReact },
-      { label: "HTML", Icon: SiHtml5 },
-      { label: "CSS", Icon: SiCss3 },
-      { label: "JavaScript", Icon: SiJavascript },
-    ],
-  },
-  {
-    label: "SYSTEMS",
-    tone: "var(--stack-c3)",
-    tools: [
-      { label: "Linux", Icon: SiLinux },
-      { label: "Windows Server" },
-      { label: "PostgreSQL", Icon: SiPostgresql },
-      { label: "MariaDB", Icon: SiMariadb },
-      { label: "MongoDB", Icon: SiMongodb },
-      { label: "Cisco", Icon: SiCisco },
-    ],
-  },
-  {
-    label: "PRACTICES",
-    tone: "var(--stack-c4)",
-    tools: [{ label: "Docker", Icon: SiDocker }, { label: "CI/CD" }, { label: "OOP" }],
-  },
-];
+const ICONS: Record<string, IconType> = {
+  Go: SiGo,
+  TypeScript: SiTypescript,
+  Python: SiPython,
+  "C++": SiCplusplus,
+  Java: FaJava,
+  Bash: SiGnubash,
+  React: SiReact,
+  HTML: SiHtml5,
+  CSS: SiCss3,
+  JavaScript: SiJavascript,
+  Linux: SiLinux,
+  PostgreSQL: SiPostgresql,
+  MariaDB: SiMariadb,
+  MongoDB: SiMongodb,
+  Cisco: SiCisco,
+  Docker: SiDocker,
+};
+
+// the data is shared with the café's POS terminal (neofetch), see src/data/stack.ts
+const GROUPS: { label: string; tone: string; tools: Tool[] }[] = STACK.map((g) => ({
+  label: g.label,
+  tone: `var(${g.tone})`,
+  tools: g.tools.map((label) => ({ label, Icon: ICONS[label] })),
+}));
 
 // Palette chips: neutrals darkest -> lightest, then the accent family
 // darkest -> lightest. Ordered by luminance in the (primary) dark theme.
