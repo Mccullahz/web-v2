@@ -20,7 +20,7 @@ export interface SceneVersion {
 export const SCENE_VERSIONS: SceneVersion[] = [
   {
     id: "cafe",
-    note: "(baked, low)",
+    note: "(baked)",
     Component: lazy(() => import("./cafe/CafeScene")),
   },
 ];
